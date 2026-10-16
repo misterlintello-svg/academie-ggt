@@ -560,7 +560,14 @@ body {
   width: 88%;
   height: 88%;
   border-radius: 50%;
+  -webkit-clip-path: circle(50% at 50% 50%);
+  clip-path: circle(50% at 50% 50%);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
   overflow: hidden;
+  isolation: isolate;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   box-shadow:
     0 35px 75px rgba(3, 14, 26, .72),
     0 0 55px rgba(145, 218, 255, .32),
@@ -572,6 +579,11 @@ body {
 .planet-sphere img {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+  -webkit-clip-path: circle(50% at 50% 50%);
+  clip-path: circle(50% at 50% 50%);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   object-fit: cover;
   transform: scale(1.22) rotate(var(--globe-rot, 0deg));
   animation: globeSpin 80s linear infinite;
@@ -1396,7 +1408,7 @@ body {
       rgba(186, 220, 247, 0.18) 52%,
       rgba(82, 118, 62, 0.38) 78%,
       rgba(48, 74, 36, 0.58) 100%),
-    url('images/campus.png');
+    url('images/campus.jpg');
   background-size: cover;
   background-position: center 58%;
   box-shadow:
@@ -1946,38 +1958,315 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
   .nav-pill { gap: 16px; padding: 9px 18px; }
-  .planet-stage {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 36px;
-  }
-  .planet-metrics { justify-content: center; }
-  .planet-center { width: min(420px, 78vw); }
-  .planet-nodes {
-    flex-direction: row;
-    justify-content: center;
-    gap: 18px;
-  }
-  .planet-node:nth-child(n) { transform: none; }
-  .planet-node .node-label { display: none; }
-
-  .exp-cards {
-    flex-direction: column;
-    height: 680px;
-  }
-  .exp-info { min-width: 0; }
-
-  .cabin-windows-row {
-    grid-template-columns: 1fr;
-    padding: 0 16px;
-  }
-  .cabin-win-side { display: none; }
-  .cabin-forum-cards { grid-template-columns: 1fr; }
-  .cabin-topbar { flex-wrap: wrap; justify-content: center; }
-
   .grid-3 { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .footer-top { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 900px) {
+  /* ── 01. PLANÈTE & HERO ── */
+  .planet-stage {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 22px;
+    padding-top: 10px;
+  }
+  .planet-metrics {
+    justify-content: center;
+    gap: 28px;
+    margin: 14px auto;
+  }
+  .planet-metrics strong { font-size: 28px; }
+  .planet-metrics span { font-size: 11.5px; }
+  .planet-center {
+    width: min(340px, 82vw);
+    margin: 10px auto;
+  }
+  .planet-nodes {
+    flex-direction: row;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .planet-node { width: 50px; height: 50px; }
+  .planet-node:nth-child(n) { transform: none; }
+  .planet-node .node-label { display: none; }
+
+  /* ── 02. PRÉSENTATION DE L'ORGANISATEUR & CARRIERES (tf.jpeg) ── */
+  .organizer-spotlight {
+    grid-template-columns: 1fr;
+    border-radius: 22px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .organizer-badge-col {
+    border-right: none;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+    padding: 24px 18px;
+  }
+  .organizer-bio-col {
+    padding: 22px 18px;
+  }
+  .organizer-kpis {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .org-kpi {
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .org-kpi strong { font-size: 17px; }
+  .org-kpi span { font-size: 10.5px; }
+
+  /* Accordéon vertical élégant pour les 5 cartes sur mobile */
+  .exp-cards {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+    margin: 18px 0 0;
+  }
+  .exp-card {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    height: 74px;
+    min-height: 74px;
+    border-radius: 18px;
+    filter: saturate(0.95) brightness(0.95);
+    transition: height 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.35s ease, box-shadow 0.35s ease;
+  }
+  .exp-card.is-active {
+    flex: none;
+    height: 410px;
+    min-height: 410px;
+    border-radius: 22px;
+    filter: saturate(1.06) brightness(1);
+    box-shadow: 0 16px 40px rgba(11, 25, 44, 0.35);
+  }
+  .exp-card-shade {
+    opacity: 0.94;
+  }
+  .exp-card-content {
+    position: absolute;
+    left: 12px;
+    right: 14px;
+    top: 15px;
+    bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .exp-card.is-active .exp-card-content {
+    top: auto;
+    bottom: 16px;
+    align-items: flex-end;
+  }
+  .exp-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+  }
+  /* Carte inactive sur mobile : montre clairement l'icône + le TITRE */
+  .exp-card:not(.is-active) .exp-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    min-width: 0;
+    flex: 1;
+  }
+  .exp-card:not(.is-active) .exp-tag,
+  .exp-card:not(.is-active) .exp-sub,
+  .exp-card:not(.is-active) .exp-actions,
+  .exp-card:not(.is-active) .exp-pill-btn {
+    display: none !important;
+  }
+  .exp-card:not(.is-active) .exp-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  /* Carte active sur mobile : détails complets */
+  .exp-card.is-active .exp-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    min-width: 0;
+    flex: 1;
+  }
+  .exp-card.is-active .exp-tag {
+    display: block;
+    font-size: 10px;
+  }
+  .exp-card.is-active .exp-title {
+    font-size: 18px;
+    line-height: 1.24;
+    display: block;
+    white-space: normal;
+  }
+  .exp-card.is-active .exp-sub {
+    display: block;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .exp-card.is-active .exp-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .exp-card.is-active .exp-pill-btn {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 7px 16px;
+    font-size: 11.5px;
+  }
+
+  /* ── 03. FORUM ACADÉMIQUE / CABINE (xf.jpeg) ── */
+  .sec-forum-cabin {
+    padding: 24px 0 36px;
+  }
+  .cabin-wall {
+    padding: 10px 0 16px;
+  }
+  .cabin-windows-row {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+    min-height: auto;
+    gap: 0;
+  }
+  .cabin-win-side {
+    display: none !important;
+  }
+  /* SUPPRESSION DES SIÈGES ET DU RAIL QUI MASQUAIENT LE BAS SUR MOBILE */
+  .cabin-seat {
+    display: none !important;
+  }
+  .cabin-sill {
+    display: none !important;
+  }
+  .cabin-win {
+    border-radius: 24px;
+    padding: 6px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+  }
+  .cabin-win::before {
+    border-radius: 20px;
+    inset: 3px;
+  }
+  .cabin-win-glass {
+    min-height: auto;
+    border-radius: 18px;
+    padding: 16px 12px 20px;
+    gap: 14px;
+  }
+  .cabin-topbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  .cabin-brand {
+    font-size: 16px;
+  }
+  .cabin-nav-pill {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 4px 6px;
+    gap: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cabin-nav-pill::-webkit-scrollbar {
+    display: none;
+  }
+  .cabin-filter {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cabin-start-btn {
+    font-size: 12px;
+    padding: 7px 16px;
+    align-self: center;
+  }
+  .cabin-hero-center {
+    max-width: 100%;
+    padding: 12px 4px 4px;
+    border-radius: 18px;
+  }
+  .cabin-sub-badge {
+    font-size: 10.5px;
+    padding: 4px 12px;
+    margin-bottom: 8px;
+    white-space: normal;
+    line-height: 1.3;
+  }
+  .cabin-headline {
+    font-size: clamp(19px, 5.6vw, 25px);
+    line-height: 1.22;
+    margin-bottom: 8px;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+  .cabin-subtext {
+    font-size: 12px;
+    line-height: 1.48;
+    margin-bottom: 12px;
+    padding: 0 2px;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+  .cabin-forum-cards {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .cabin-fcard {
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+  .cabin-fcard h4 {
+    font-size: 12.5px;
+    line-height: 1.3;
+  }
+  .cabin-fcard p {
+    font-size: 11px;
+    line-height: 1.38;
+  }
+  .cabin-input-bar {
+    max-width: 100%;
+    padding: 5px 6px 5px 12px;
+    gap: 6px;
+  }
+  .cabin-input-bar input {
+    font-size: 12px;
+    min-width: 0;
+  }
+  .cabin-input-bar input::placeholder {
+    font-size: 11px;
+  }
+  .cabin-waitlist-btn {
+    padding: 8px 13px;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2018,8 +2307,8 @@ body {
   .ccard { flex: 0 0 230px; height: 310px; margin: 0 -12px; }
   .carousel-track { padding: 36px calc(50% - 115px) 44px; }
 
-  .section { padding: 72px 0; }
-  .wrap { padding: 0 20px; }
+  .section { padding: 56px 0; }
+  .wrap { padding: 0 16px; }
   .stat-n { font-size: 40px; }
   .footer-top { grid-template-columns: 1fr; }
 }
