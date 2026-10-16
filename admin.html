@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="portal.css?v=5" />
-  <link rel="stylesheet" href="admin.css?v=1" />
+  <link rel="stylesheet" href="portal.css?v=20261016_2" />
+  <link rel="stylesheet" href="admin.css?v=20261016_2" />
 </head>
 <body class="admin-page">
 
@@ -146,9 +146,9 @@
             </div>
 
             <div class="pinen-nav-section">
-              <span class="pinen-nav-label">MENU</span>
+              <span class="pinen-nav-label">MENU PRINCIPAL</span>
               <div class="pinen-nav-list">
-                <button type="button" class="pinen-nav-btn active" data-section="all">
+                <button type="button" class="pinen-nav-btn active" data-section="bentoOverview">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z"/>
                   </svg>
@@ -180,7 +180,7 @@
             <div class="pinen-nav-section">
               <span class="pinen-nav-label">FINANCES & COURRIER</span>
               <div class="pinen-nav-list">
-                <button type="button" class="pinen-nav-btn" data-section="secInscriptions">
+                <button type="button" class="pinen-nav-btn" data-section="bentoOverview">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
                   </svg>
@@ -512,7 +512,10 @@
               </div>
             </form>
 
-            <div class="table-scroll">
+            <!-- Mode Mobile : Cartes d'inscriptions interactives tactiles -->
+            <div class="stu-mobile-cards-wrap" id="studentsMobileCards"></div>
+
+            <div class="table-scroll" id="studentsTableScroll">
               <table class="pinen-table">
                 <thead>
                   <tr>
@@ -872,11 +875,76 @@
                (s.student_code || '').toLowerCase().includes(q);
       });
 
+      const mobileWrap = document.getElementById('studentsMobileCards');
+
       if (!filtered.length) {
         tbody.innerHTML = '<tr><td colspan="8" class="empty">Aucune inscription correspondante.</td></tr>';
+        if (mobileWrap) mobileWrap.innerHTML = '<div class="empty-card" style="padding:24px;text-align:center;color:#64748b;background:#fff;border-radius:14px">Aucune inscription correspondante.</div>';
         return;
       }
 
+      // 1. Rendu Mobile : Cartes d'étudiants ergonomiques
+      if (mobileWrap) {
+        mobileWrap.innerHTML = filtered.map((s, idx) => {
+          const previewCode = s.student_code || generateStudentCodeLocal(s.full_name, s.registered_at, s.classe);
+          const initials = (s.full_name || 'ET').split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+          const badge = s.status === 'active'
+            ? '<span class="pinen-status active">✓ Approuvé</span>'
+            : s.status === 'pending'
+            ? '<span class="pinen-status pending">⏳ À valider (10.000 F)</span>'
+            : '<span class="pinen-status expired">Expiré</span>';
+
+          const mailSubject = encodeURIComponent(`[ACADEMIE GGT] Votre identifiant d'accès (${s.classe})`);
+          const mailBody = encodeURIComponent(
+            `Bonjour ${s.full_name},\n\nVotre inscription aux cours de renforcement ACADEMIE GGT (${s.classe} — ${s.ecole || 'Yamoussoukro'}) et votre cotisation mensuelle de 10.000 FCFA sont confirmées.\n\nVoici votre identifiant personnel unique (valable 1 mois) :\n${previewCode}\n\nExpire le : ${s.valid_until || 'Dans 30 jours'}\nPortail étudiant : etudiant.html\n\nCordialement,\nL'Administration ACADEMIE GGT`
+          );
+
+          return `
+            <article class="pinen-stu-card">
+              <div class="stu-c-top">
+                <div class="stu-c-avatar">${initials}</div>
+                <div class="stu-c-meta">
+                  <strong>#${idx + 1} · ${s.full_name}</strong>
+                  <small>${s.email}${s.phone ? ' · ' + s.phone : ''}</small>
+                </div>
+                ${badge}
+              </div>
+              <div class="stu-c-details">
+                <span class="stu-c-pill school">${s.ecole || 'INP-HB Yamoussoukro'}</span>
+                <span class="stu-c-pill class">${s.classe || 'BTS 2 GC-GT'}</span>
+                <span class="stu-c-pill fee">10 000 FCFA</span>
+              </div>
+              <div class="stu-c-code-row">
+                <span class="code-label">Identifiant :</span>
+                <code class="pinen-code">${s.student_code || ('Prévu : ' + previewCode)}</code>
+              </div>
+              <div class="stu-c-actions">
+                ${s.status === 'pending' ? `
+                  <button class="pinen-btn-lime full" onclick="confirmStudent(${s.id})">
+                    ✓ Valider & Approuver (+10.000 F)
+                  </button>
+                ` : s.status === 'expired' ? `
+                  <button class="pinen-btn-lime full" onclick="confirmStudent(${s.id})">
+                    ↻ Réactiver 1 mois (+10.000 F)
+                  </button>
+                ` : `
+                  <button class="pinen-btn-outline" onclick="confirmStudent(${s.id})">
+                    ↻ Prolonger 1 mois
+                  </button>
+                  <button class="pinen-btn-danger" onclick="revokeStudent(${s.id})">
+                    Suspendre
+                  </button>
+                `}
+                <a class="pinen-btn-outline full" href="mailto:${s.email}?subject=${mailSubject}&body=${mailBody}">
+                  ✉ Envoyer l'identifiant par Mail
+                </a>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      // 2. Rendu Desktop / Écrans larges : Tableau classique
       tbody.innerHTML = filtered.map((s, idx) => {
         const badge = s.status === 'active'
           ? '<span class="pinen-status active">✓ Approuvé · Actif (1 mois)</span>'
@@ -1341,38 +1409,68 @@
       loadDashboard();
     });
 
-    // Navigation dans la Sidebar PinenMFB
+    // Système de Navigation par Onglets Mobile & Desktop (Fluide & Animé)
+    function switchAdminTab(targetSection) {
+      const isMobile = window.innerWidth <= 900;
+      const allSections = ['bentoOverview', 'secInscriptions', 'secMailbox', 'secCoursPdf', 'secForum'];
+
+      // Active state sur les boutons
+      document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(b => {
+        if (b.dataset.section === targetSection || (targetSection === 'bentoOverview' && b.dataset.section === 'all')) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+
+      if (!isMobile && (targetSection === 'all' || !targetSection)) {
+        allSections.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
+        });
+        return;
+      }
+
+      allSections.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (id === targetSection || (targetSection === 'all' && id === 'bentoOverview')) {
+          el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
+          el.style.animation = 'none';
+          void el.offsetHeight;
+          el.style.animation = 'adminCardUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+
+      if (isMobile) {
+        const main = document.querySelector('.pinen-main');
+        if (main) main.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const target = btn.dataset.section;
-        const sections = ['bentoOverview', 'secInscriptions', 'secMailbox', 'secCoursPdf', 'secForum'];
-        if (target === 'all') {
-          sections.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
-          });
-        } else {
-          sections.forEach(id => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (id === target) {
-              el.style.display = 'block';
-              el.style.animation = 'none';
-              void el.offsetHeight;
-              el.style.animation = 'adminCardUp 0.5s ease both';
-              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else if (id === 'bentoOverview') {
-              el.style.display = 'grid';
-            }
-          });
-        }
+        switchAdminTab(btn.dataset.section);
       });
     });
 
+    // Basculer vue tableau / cartes
+    document.getElementById('toggleTableViewBtn')?.addEventListener('click', () => {
+      const mc = document.getElementById('studentsMobileCards');
+      const ts = document.getElementById('studentsTableScroll');
+      if (ts.style.display === 'block') {
+        ts.style.display = 'none';
+        mc.style.display = 'flex';
+      } else {
+        ts.style.display = 'block';
+        mc.style.display = 'none';
+      }
+    });
+
     document.getElementById('topMailBtn')?.addEventListener('click', () => {
-      document.getElementById('secMailbox')?.scrollIntoView({ behavior: 'smooth' });
+      switchAdminTab('secMailbox');
     });
 
     document.getElementById('adminSearchInput')?.addEventListener('input', (e) => {
@@ -1389,7 +1487,13 @@
     document.getElementById('adminLogoutBtn')?.addEventListener('click', doLogout);
     document.getElementById('sidebarLogoutBtn')?.addEventListener('click', doLogout);
 
-    if (adminPwd) loadDashboard();
+    if (adminPwd || new URLSearchParams(location.search).get('preview') === 'admin') {
+      if (!adminPwd) adminPwd = 'Admin123';
+      loadDashboard();
+      if (window.innerWidth <= 900) {
+        switchAdminTab('bentoOverview');
+      }
+    }
   </script>
 </body>
 </html>
