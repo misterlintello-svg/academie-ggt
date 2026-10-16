@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACADEMIE GGT — Portail Administrateur Principal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css?v=5" />
+  <link rel="stylesheet" href="admin.css?v=1" />
+</head>
+<body class="admin-page">
+
+  <!-- Image d'arrière-plan universitaire (Rectorat / Direction au crépuscule doré) -->
+  <div class="portal-bg" aria-hidden="true"></div>
+  <div class="portal-bg-shade" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M13 3L2 9.5L13 16L24 9.5L13 3Z" fill="#D4A359"/>
+        <path d="M6 12.5V18.5C6 18.5 8.5 22 13 22C17.5 22 20 18.5 20 18.5V12.5L13 16.5L6 12.5Z" fill="white" opacity="0.9"/>
+      </svg>
+      <span>ACADEMIE <strong>GGT</strong></span>
+      <span class="badge-pill admin-pill">Lien Administrateur Principal</span>
+    </a>
+    <div class="topbar-links">
+      <a href="index.html" class="ghost-link">← Accueil</a>
+      <a href="etudiant.html" class="ghost-link">Lien Étudiants</a>
+      <button id="adminLogoutBtn" class="btn-danger-sm" style="display:none">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="portal-wrap">
+
+    <!-- ══════════════════════════════════════════════════════════
+         CARTE GLASSMORPHISM — CONNEXION ADMINISTRATEUR PRINCIPAL
+         ══════════════════════════════════════════════════════════ -->
+    <section id="adminLoginView" class="glass-auth-stage">
+      <div class="glass-card">
+
+        <!-- Emblème géométrique filaire en haut au centre -->
+        <div class="glass-crest" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="10,9 24,17 24,33 10,25"/>
+            <polygon points="24,23 38,15 38,29 24,37"/>
+            <polyline points="24,33 24,43 32,38 32,32.5"/>
+          </svg>
+          <span class="crest-caption">DIRECTION · ACADEMIE GGT</span>
+        </div>
+
+        <!-- Onglets style référence -->
+        <div class="glass-tabs">
+          <button type="button" class="glass-tab active">Connexion Admin</button>
+          <a href="etudiant.html?tab=register" class="glass-tab" style="text-decoration:none;display:inline-block;text-align:center">Inscriptions BTS</a>
+        </div>
+
+        <!-- Formulaire Administrateur Principal -->
+        <form id="adminLoginForm" class="glass-form">
+          <div class="field-group">
+            <label for="adminEmail" class="field-label">Email Administrateur Principal</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+                <path d="M3.5 6.5L12 13L20.5 6.5"/>
+              </svg>
+              <input type="email" id="adminEmail" value="mohsanogo512@gmail.com" readonly />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="adminPwd" class="field-label">Mot de passe Administrateur</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <rect x="5" y="11" width="14" height="10" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                <circle cx="12" cy="16" r="1.2" fill="currentColor"/>
+              </svg>
+              <input type="password" id="adminPwd" value="Admin123" placeholder="Entrez le mot de passe administrateur" required />
+              <button type="button" class="eye-btn" id="toggleAdminPwd" title="Afficher / masquer le mot de passe">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="glass-row-meta">
+            <span>Mot de passe par défaut : <strong>Admin123</strong></span>
+            <a href="etudiant.html" class="aux-link">Portail Étudiants</a>
+          </div>
+
+          <button type="submit" class="btn-ivory">Ouvrir le Tableau de Bord Administrateur</button>
+          <button type="button" id="quickAdminBtn" class="btn-outline-glass" style="margin-top:8px;border-color:rgba(134,239,172,.45);color:#bbf7d0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6.5L12 3z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            Accès direct Administrateur Principal (1 clic)
+          </button>
+          <div id="adminLoginMsg" class="alert-box" role="alert"></div>
+
+          <div class="glass-divider">ou accéder à</div>
+
+          <div class="glass-alt-actions">
+            <a href="etudiant.html" class="btn-outline-glass">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+                <path d="M6 12.5v4.5c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/>
+              </svg>
+              Portail Étudiants (Cours PDF & Forum)
+            </a>
+            <a href="index.html" class="btn-outline-glass">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z"/>
+              </svg>
+              Retour au site principal ACADEMIE GGT
+            </a>
+          </div>
+
+          <p class="glass-foot">
+            Direction académique · <strong>ACADEMIE GGT</strong>
+          </p>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         INTERFACE ADMINISTRATEUR INSPIRÉE DE planet1.jpg (PinenMFB)
+         ═══════════════════════════════════════════════════════════ -->
+    <section id="adminDashView" style="display:none">
+      <div class="pinen-shell">
+
+        <!-- ── SIDEBAR GAUCHE BLANCHE ── -->
+        <aside class="pinen-sidebar">
+          <div>
+            <div class="pinen-brand">
+              <div class="pinen-brand-logo">G</div>
+              <div>
+                <div class="pinen-brand-name">ACADEMIE GGT</div>
+                <span class="pinen-brand-sub">Direction & Pilotage BTS</span>
+              </div>
+            </div>
+
+            <div class="pinen-nav-section">
+              <span class="pinen-nav-label">MENU</span>
+              <div class="pinen-nav-list">
+                <button type="button" class="pinen-nav-btn active" data-section="all">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z"/>
+                  </svg>
+                  Vue d'ensemble
+                </button>
+                <button type="button" class="pinen-nav-btn" data-section="secInscriptions">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/>
+                  </svg>
+                  Inscriptions
+                  <span class="pinen-nav-badge" id="navBadgeInscr">10</span>
+                </button>
+                <button type="button" class="pinen-nav-btn" data-section="secCoursPdf">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  Cours & PDF
+                  <span class="pinen-nav-badge" id="navBadgePdfs">5</span>
+                </button>
+                <button type="button" class="pinen-nav-btn" data-section="secForum">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
+                  Forum & Visites
+                </button>
+              </div>
+            </div>
+
+            <div class="pinen-nav-section">
+              <span class="pinen-nav-label">FINANCES & COURRIER</span>
+              <div class="pinen-nav-list">
+                <button type="button" class="pinen-nav-btn" data-section="secInscriptions">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                  </svg>
+                  Budget (10.000 F)
+                </button>
+                <button type="button" class="pinen-nav-btn" data-section="secMailbox">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>
+                  </svg>
+                  Boîte Mail Site
+                  <span class="pinen-nav-badge" id="navBadgeMail">6</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="pinen-nav-section">
+              <span class="pinen-nav-label">NAVIGATION SITE</span>
+              <div class="pinen-nav-list">
+                <a href="etudiant.html" class="pinen-nav-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12.5v4.5c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/>
+                  </svg>
+                  Portail Étudiant
+                </a>
+                <a href="index.html" class="pinen-nav-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  </svg>
+                  Site Principal
+                </a>
+                <button type="button" id="sidebarLogoutBtn" class="pinen-nav-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                  </svg>
+                  Déconnexion
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte Sombre Bas de Sidebar (Clôture Fin de Mois) -->
+          <div class="pinen-pro-card">
+            <div class="pinen-pro-ico">G</div>
+            <h4>Clôture Fin de Mois</h4>
+            <p>Chaque identifiant est valable 1 mois exact. Clôturez le mois pour renouveler les cotisations de 10.000 FCFA.</p>
+            <button type="button" id="expireMonthBtn" class="pinen-pro-btn">
+              Clôturer le mois (10.000 F)
+            </button>
+          </div>
+        </aside>
+
+        <!-- ── ZONE PRINCIPALE DROITE ── -->
+        <div class="pinen-main">
+
+          <!-- En-tête Supérieur (identique à planet1.jpg) -->
+          <header class="pinen-header">
+            <div class="pinen-title-wrap">
+              <h1>Rapport Académique & Budget</h1>
+              <p id="smtpStatusText">Vendredi 16 Octobre 2026 · Tarif mensuel : 10.000 FCFA / étudiant (10 inscriptions simulées)</p>
+            </div>
+
+            <div class="pinen-header-right">
+              <div class="pinen-search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5b625e" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="adminSearchInput" placeholder="Rechercher un étudiant, ID..." />
+              </div>
+
+              <button type="button" class="pinen-icon-circle" id="topMailBtn" title="Ouvrir la Boîte Mail du Site">
+                <span class="pinen-notif-dot" id="mailNotifDot"></span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>
+                </svg>
+              </button>
+
+              <div class="pinen-profile">
+                <div class="pinen-avatar">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </div>
+                <div class="pinen-profile-info">
+                  <strong>Mohamed Sanogo</strong>
+                  <span>Administrateur Principal</span>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <!-- Bannière de Notification Globale -->
+          <div id="adminGlobalNotice" class="alert-box" style="display:none;background:linear-gradient(135deg, #1e40af, #0284c7);color:#ffffff;border:none;border-radius:14px;padding:14px 18px;box-shadow:0 8px 24px rgba(30,64,175,0.3)"></div>
+
+          <!-- ── GRILLE BENTO (4 KPIs + Barres Forum + Camembert Budget + Bulles Top Étudiants) ── -->
+          <div class="pinen-bento" id="bentoOverview">
+
+            <!-- Colonne Gauche (4 KPIs + Graphique Barres) -->
+            <div class="pinen-bento-left">
+
+              <!-- 4 KPI Cards (2x2) -->
+              <div class="pinen-kpi-grid">
+                <!-- KPI 1 : Budget (Carte Vert Forêt Featured) -->
+                <article class="pinen-kpi featured">
+                  <div class="pinen-kpi-top">
+                    <div class="pinen-kpi-ico">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+                      </svg>
+                    </div>
+                    <span class="pinen-pill-delta" id="kpiBudgetDelta">+100% objectif</span>
+                  </div>
+                  <div class="pinen-kpi-label">Budget Total (10.000 FCFA × 10 inscr.)</div>
+                  <div class="pinen-kpi-bottom">
+                    <strong class="pinen-kpi-val" id="kpiBudgetTotal">100 000 FCFA</strong>
+                    <span class="pinen-kpi-sub" id="kpiBudgetSub">70.000 F validés<br>30.000 F à approuver</span>
+                  </div>
+                </article>
+
+                <!-- KPI 2 : Inscriptions à Valider & Approuver -->
+                <article class="pinen-kpi">
+                  <div class="pinen-kpi-top">
+                    <div class="pinen-kpi-ico">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                      </svg>
+                    </div>
+                    <span class="pinen-pill-delta" id="kpiInscrBadge">+10.9%</span>
+                  </div>
+                  <div class="pinen-kpi-label">Inscriptions Simulées (À valider / Approuvées)</div>
+                  <div class="pinen-kpi-bottom">
+                    <strong class="pinen-kpi-val" id="kpiTotalInscr">10</strong>
+                    <span class="pinen-kpi-sub" id="kpiInscrSub">7 approuvées<br>3 à valider</span>
+                  </div>
+                </article>
+
+                <!-- KPI 3 : Visites & Étudiants Actifs Forum -->
+                <article class="pinen-kpi">
+                  <div class="pinen-kpi-top">
+                    <div class="pinen-kpi-ico">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+                      </svg>
+                    </div>
+                    <span class="pinen-pill-delta">+24.6%</span>
+                  </div>
+                  <div class="pinen-kpi-label">Visites & Étudiants Actifs sur le Forum</div>
+                  <div class="pinen-kpi-bottom">
+                    <strong class="pinen-kpi-val" id="kpiForumVisits">2 048</strong>
+                    <span class="pinen-kpi-sub">Visites étudiants<br>vs mois dernier</span>
+                  </div>
+                </article>
+
+                <!-- KPI 4 : Boîte Mail & Cours PDF -->
+                <article class="pinen-kpi">
+                  <div class="pinen-kpi-top">
+                    <div class="pinen-kpi-ico">
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
+                      </svg>
+                    </div>
+                    <span class="pinen-pill-delta">+20.9%</span>
+                  </div>
+                  <div class="pinen-kpi-label">Messages Boîte Mail & Cours PDF Publiés</div>
+                  <div class="pinen-kpi-bottom">
+                    <strong class="pinen-kpi-val" id="kpiMailAndPdf">6 Mails · 5 PDF</strong>
+                    <span class="pinen-kpi-sub" id="kpiUnreadSub">3 mails non lus<br>5 supports BTS</span>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Graphique Barres Doubles : Statistiques de visite des étudiants les plus actifs sur le forum -->
+              <article class="pinen-habbits-card">
+                <div class="pinen-card-head">
+                  <div>
+                    <h3>Statistiques de Visite — Étudiants les Plus Actifs sur le Forum</h3>
+                    <p>Suivi des visites du portail, téléchargements PDF et interventions sur le forum académique</p>
+                  </div>
+                  <button type="button" class="pinen-filter-pill" onclick="document.getElementById('secForum').scrollIntoView({behavior:'smooth'})">
+                    Ce mois (Oct. 2026) ▾
+                  </button>
+                </div>
+
+                <div class="pinen-legend">
+                  <span><i class="pinen-dot light"></i> Visites & lectures PDF</span>
+                  <span><i class="pinen-dot dark"></i> Interventions & réponses Forum</span>
+                </div>
+
+                <div class="pinen-bars-stage">
+                  <div class="pinen-y-axis">
+                    <span>400</span>
+                    <span>300</span>
+                    <span>200</span>
+                    <span>100</span>
+                    <span>0</span>
+                  </div>
+                  <div class="pinen-bars-cols" id="forumActiveBars">
+                    <!-- Généré dynamiquement par JS -->
+                  </div>
+                </div>
+              </article>
+
+            </div>
+
+            <!-- Colonne Droite (Camembert Budget + Bulles Top Étudiants Forum) -->
+            <div class="pinen-bento-right">
+
+              <!-- Carte Camembert Vert Sauge : Répartition du Budget (10 x 10.000 FCFA) -->
+              <article class="pinen-stat-card">
+                <div class="pinen-card-head">
+                  <div>
+                    <h3>Statistiques Budget & Filières</h3>
+                    <p>Base : 10.000 FCFA / personne (10 inscr.)</p>
+                  </div>
+                  <span class="pinen-filter-pill" style="background:rgba(255,255,255,.55)">100.000 F ▾</span>
+                </div>
+
+                <div class="pinen-pie-wrap">
+                  <svg class="pinen-pie-svg" viewBox="0 0 200 200">
+                    <!-- Secteur principal : Cotisations Approuvées (70%) -->
+                    <circle cx="100" cy="100" r="88" fill="#1d4ed8" />
+                    <!-- Secteur 2 : Inscriptions en cours de traitement -->
+                    <path d="M100,100 L180,62 A88,88 0 0,1 188,100 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="2" />
+                    <!-- Secteur 3 : En attente de validation / cotisations -->
+                    <path d="M100,100 L188,100 A88,88 0 0,1 164,160 Z" fill="#f59e0b" stroke="#e0f2fe" stroke-width="2" />
+                    <line x1="100" y1="100" x2="180" y2="62" stroke="#e0f2fe" stroke-width="2" />
+                  </svg>
+                </div>
+
+                <div class="pinen-stat-rows">
+                  <div class="pinen-stat-row">
+                    <span>Cotisations Approuvées</span>
+                    <strong id="pieApprovedAmount">70.000 F</strong>
+                    <span class="pinen-pill-delta" id="pieApprovedPct">+70.0%</span>
+                  </div>
+                  <div class="pinen-stat-row">
+                    <span>Inscriptions à Valider</span>
+                    <strong id="piePendingAmount">30.000 F</strong>
+                    <span class="pinen-pill-delta warn" id="piePendingPct">3 en attente</span>
+                  </div>
+                  <div class="pinen-stat-row">
+                    <span>Budget Total (10 inscr.)</span>
+                    <strong id="pieTotalAmount">100.000 F</strong>
+                    <span class="pinen-pill-delta">10.000 F/pers.</span>
+                  </div>
+                </div>
+
+                <button type="button" id="approveAllQuickBtn" class="pinen-btn-green" style="width:100%;justify-content:center;margin-top:14px">
+                  ✓ Approuver les 10 inscriptions (100.000 FCFA)
+                </button>
+              </article>
+
+              <!-- Carte Bulles Vertes : Croissance & Top Étudiants Actifs du Forum -->
+              <article class="pinen-growth-card">
+                <div class="pinen-card-head">
+                  <div>
+                    <h3>Top Étudiants Actifs (Forum)</h3>
+                    <p>Taux d'assiduité & participation par étudiant</p>
+                  </div>
+                  <span class="pinen-filter-pill">En direct ▾</span>
+                </div>
+
+                <div class="pinen-growth-body">
+                  <div class="pinen-bubbles">
+                    <div class="pinen-bubble b1">87%</div>
+                    <div class="pinen-bubble b4">17%</div>
+                    <div class="pinen-bubble b2">57%</div>
+                    <div class="pinen-bubble b3">37%</div>
+                  </div>
+
+                  <div class="pinen-country-list" id="topActiveStudentsList">
+                    <!-- Généré dynamiquement par JS -->
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+
+          <!-- ═══════════════════════════════════════════════════════════
+               SECTION 1 : LES 10 INSCRIPTIONS À VALIDER & BUDGET (10.000 F / PERS.)
+               ═══════════════════════════════════════════════════════════ -->
+          <section class="pinen-panel-card" id="secInscriptions">
+            <div class="pinen-panel-head">
+              <div>
+                <h3>Inscriptions à Valider & Approuver — Budget (10.000 FCFA / personne)</h3>
+                <p>Simulation de <strong>10 inscriptions</strong> soit un budget mensuel de <strong>100.000 FCFA</strong> · Format ID : <code>Initiales-DateInscription-Classe</code> (valable 1 mois)</p>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button type="button" id="approveAllBtn" class="pinen-btn-lime">
+                  ✓ Tout Valider & Approuver (100.000 FCFA)
+                </button>
+                <button type="button" id="toggleAddStudentBtn" class="pinen-btn-green">
+                  + Simuler une nouvelle inscription (+10.000 F)
+                </button>
+              </div>
+            </div>
+
+            <!-- Formulaire rapide pour simuler une inscription supplémentaire -->
+            <form id="quickAddStudentForm" class="pinen-form" style="display:none;margin-bottom:18px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));display:none">
+              <div>
+                <label>Nom & Prénom de l'étudiant</label>
+                <input type="text" id="simStuName" placeholder="Ex : Konan Franck Olivier" required />
+              </div>
+              <div>
+                <label>Email de l'étudiant</label>
+                <input type="email" id="simStuEmail" placeholder="franck.konan@academie-ggt.ci" required />
+              </div>
+              <div>
+                <label>Téléphone</label>
+                <input type="text" id="simStuPhone" placeholder="+225 07 00 00 00 00" />
+              </div>
+              <div>
+                <label>Filière unique</label>
+                <input type="text" id="simStuClasse" value="BTS 2 - GC-GT" readonly style="background:#eff6ff;font-weight:600;color:#1d4ed8;border:1px solid #bfdbfe" />
+              </div>
+              <div>
+                <label>Établissement d'origine (Yamoussoukro)</label>
+                <select id="simStuEcole" required>
+                  <option value="INP-HB (ESTP Yamoussoukro)">INP-HB (ESTP Yamoussoukro)</option>
+                  <option value="ESBTP Yamoussoukro">ESBTP Yamoussoukro</option>
+                  <option value="EPI-YAKRO">EPI-YAKRO</option>
+                  <option value="ESETEC Yamoussoukro">ESETEC Yamoussoukro</option>
+                  <option value="2IFTP Yamoussoukro">2IFTP Yamoussoukro</option>
+                  <option value="Autre établissement (Yamoussoukro)">Autre établissement (Yamoussoukro)</option>
+                </select>
+              </div>
+              <div style="display:flex;align-items:flex-end">
+                <button type="submit" class="pinen-btn-green" style="width:100%;justify-content:center">Ajouter (+10.000 FCFA)</button>
+              </div>
+            </form>
+
+            <div class="table-scroll">
+              <table class="pinen-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Étudiant & Contact</th>
+                    <th>Établissement (Yamoussoukro)</th>
+                    <th>Filière</th>
+                    <th>Cotisation</th>
+                    <th>Identifiant Unique</th>
+                    <th>Statut & Validité (1 mois)</th>
+                    <th>Actions Administrateur</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- ═══════════════════════════════════════════════════════════
+               SECTION 2 : BOÎTE MAIL DU SITE (mohsanogo512@gmail.com)
+               ═══════════════════════════════════════════════════════════ -->
+          <section class="pinen-panel-card" id="secMailbox">
+            <div class="pinen-panel-head">
+              <div>
+                <h3>Boîte Mail du Site — Courriers & Demandes des Étudiants</h3>
+                <p>Réception centralisée sur <strong>mohsanogo512@gmail.com</strong> (justificatifs de paiement 10.000 FCFA, demandes d'identifiants et questions)</p>
+              </div>
+              <span class="pinen-status active" id="inboxCountBadge">6 messages reçus</span>
+            </div>
+
+            <div class="pinen-mail-grid">
+              <div class="pinen-mail-list" id="adminMailList"></div>
+              <div class="pinen-mail-reader" id="adminMailReader"></div>
+            </div>
+          </section>
+
+          <!-- ═══════════════════════════════════════════════════════════
+               SECTION 3 : ENVOYER DES FICHIERS PDF AU NIVEAU DES COURS
+               ═══════════════════════════════════════════════════════════ -->
+          <section class="pinen-panel-card" id="secCoursPdf">
+            <div class="pinen-panel-head">
+              <div>
+                <h3>Envoyer & Gérer les Fichiers PDF au Niveau des Cours</h3>
+                <p>Publiez de nouveaux <strong>Cours PDF</strong> ou <strong>Exercices & Corrigés PDF</strong> directement accessibles dans l'Espace Étudiant et sur le site</p>
+              </div>
+            </div>
+
+            <div class="admin-split">
+              <form id="uploadPdfForm" class="pinen-form">
+                <h4 style="font-family:'Outfit',sans-serif;font-size:17px;color:#1d4ed8">Ajouter un document PDF sur le site</h4>
+                <label>Titre du cours ou de l'exercice corrigé</label>
+                <input type="text" name="title" placeholder="Ex : Cours Levés & Cheminements Polygonaux" required />
+
+                <label>Type de support PDF</label>
+                <select name="category" required>
+                  <option value="cours">Cours en format PDF</option>
+                  <option value="exercice_corrige">Exercices & Corrigés en format PDF</option>
+                </select>
+
+                <label>Filière & Promotion</label>
+                <input type="text" name="classe" value="BTS 2 - GC-GT" readonly style="background:#eff6ff;font-weight:600;color:#1d4ed8" />
+
+                <label>Module / Matière Topographie</label>
+                <select name="subject" required>
+                  <option value="Levés & Tachéométrie">Levés & Tachéométrie (Stations totales & Cheminements)</option>
+                  <option value="Calculs Topométriques">Calculs Topométriques (Gisement, Relèvement & Polygonation)</option>
+                  <option value="GNSS & Géodésie">GNSS & Géodésie (GPS RTK & Systèmes WGS84/UTM)</option>
+                  <option value="Foncier & Droit Cadastral">Foncier & Droit Cadastral (Bornage, Lotissement & ACD)</option>
+                  <option value="DAO Topo & VRD">DAO Topo & VRD (Covadis, AutoCAD & Voirie)</option>
+                  <option value="Projet de Fin d'Études GC-GT">Projet de Fin d'Études GC-GT</option>
+                </select>
+
+                <label>Sélectionner le fichier PDF</label>
+                <input type="file" name="pdf_file" accept=".pdf,application/pdf" required />
+
+                <button type="submit" class="pinen-btn-green" style="justify-content:center;margin-top:4px">
+                  Envoyer le PDF sur le site (Cours & Corrigés)
+                </button>
+              </form>
+
+              <div>
+                <h4 style="font-family:'Outfit',sans-serif;font-size:17px;margin-bottom:12px;color:#0f172a">Supports PDF actuellement en ligne</h4>
+                <div id="adminPdfList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══════════════════════════════════════════════════════════
+               SECTION 4 : FORUM ACADÉMIQUE (PUBLIER, RÉPONDRE & VISITES)
+               ═══════════════════════════════════════════════════════════ -->
+          <section class="pinen-panel-card" id="secForum">
+            <div class="pinen-panel-head">
+              <div>
+                <h3>Forum Académique — Publier un Sujet & Répondre aux Étudiants</h3>
+                <p>Interagissez avec les étudiants, publiez des annonces de cours et suivez les membres les plus actifs</p>
+              </div>
+            </div>
+
+            <div class="forum-layout">
+              <form id="adminPostForm" class="pinen-form">
+                <h4 style="font-family:'Outfit',sans-serif;font-size:17px;color:#1d4ed8">Publier sur le Forum en tant qu'Admin</h4>
+                <label>Titre de l'annonce ou du sujet de cours</label>
+                <input type="text" id="admPostTitle" placeholder="Ex : Corrigé du sujet blanc BTS GC-GT disponible" required />
+                <label>Message destiné aux étudiants</label>
+                <textarea id="admPostContent" rows="4" placeholder="Rédigez votre explication ou annonce officielle..." required></textarea>
+                <button type="submit" class="pinen-btn-green" style="justify-content:center">
+                  Publier sur le Forum Académique
+                </button>
+              </form>
+
+              <div id="adminForumList" style="display:flex;flex-direction:column;gap:14px"></div>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="ggt-data.js?v=1"></script>
+  <script>
+    const API = (location.protocol === 'file:') ? 'http://localhost:5000' : '';
+    const FEE_PER_STUDENT = GGT.FEE; // 10.000 FCFA par personne
+    let adminPwd = sessionStorage.getItem('ggt_admin_pwd') || '';
+    let selectedMailId = 1;
+    let searchFilter = '';
+
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    // Statistiques de visite et d'activité sur le forum des étudiants les plus actifs
+    const ACTIVE_FORUM_STATS = [
+      { name: 'Mohamed S.', fullName: 'Mohamed Sanogo', initials: 'MS', classe: 'BTS 2 - GC-GT', visits: 384, posts: 42, pct: 87 },
+      { name: 'Koné A.', fullName: 'Koné Aminata', initials: 'KA', classe: 'BTS 2 - GC-GT', visits: 342, posts: 28, pct: 76 },
+      { name: 'Kouadio M.', fullName: 'Kouadio Marc-Arthur', initials: 'KM', classe: 'BTS 2 - GC-GT', visits: 295, posts: 34, pct: 68 },
+      { name: 'Yao Grâce', fullName: 'Yao Grâce Manuella', initials: 'YG', classe: 'BTS 2 - GC-GT', visits: 248, posts: 19, pct: 57 },
+      { name: 'Bamba C.', fullName: 'Bamba Cheick Oumar', initials: 'BC', classe: 'BTS 2 - GC-GT', visits: 318, posts: 39, pct: 74 },
+      { name: "N'Guessan E.", fullName: "N'Guessan Aya Estelle", initials: 'NE', classe: 'BTS 2 - GC-GT', visits: 330, posts: 22, pct: 64 }
+    ];
+
+    // Données partagées avec le portail étudiant (ggt-data.js)
+    function getDefaultMailbox() { return GGT.defaultDB().mailbox; }
+    function getLocalDB() {
+      const db = GGT.load();
+      if (!db.mailbox) { db.mailbox = getDefaultMailbox(); GGT.save(db); }
+      return db;
+    }
+    function saveLocalDB(db) { GGT.save(db); }
+
+    function generateStudentCodeLocal(fullName, regDateStr, classe) {
+      const parts = (fullName || '').trim().split(/[\s\-']+/).filter(Boolean);
+      const initials = parts.map(p => p[0].toUpperCase()).join('') || 'ETU';
+      let ddmmyyyy = '16102026';
+      if (regDateStr && regDateStr.includes('-')) {
+        const [y, m, d] = regDateStr.split('-');
+        ddmmyyyy = `${d}${m}${y}`;
+      } else if (regDateStr && regDateStr.includes('/')) {
+        ddmmyyyy = regDateStr.split(' ')[0].replace(/\//g, '');
+      }
+      const cleanClasse = (classe || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+      return `${initials}-${ddmmyyyy}-${cleanClasse}`;
+    }
+
+    const formatFCFA = (n) => Number(n || 0).toLocaleString('fr-FR') + ' FCFA';
+
+    const showNotice = (text, type = 'ok') => {
+      const box = document.getElementById('adminGlobalNotice');
+      box.style.display = 'block';
+      box.style.background = type === 'err' ? 'linear-gradient(135deg, #b91c1c, #dc2626)' : 'linear-gradient(135deg, #1d4ed8, #0284c7)';
+      box.innerHTML = text;
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => { box.style.display = 'none'; }, 6000);
+    };
+
+    // Afficher / masquer le mot de passe
+    document.getElementById('toggleAdminPwd').addEventListener('click', () => {
+      const inp = document.getElementById('adminPwd');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+
+    async function doAdminLogin(pwd) {
+      const msg = document.getElementById('adminLoginMsg');
+      try {
+        const res = await fetch(API + '/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: pwd })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Mot de passe incorrect');
+        adminPwd = pwd;
+        sessionStorage.setItem('ggt_admin_pwd', pwd);
+        loadDashboard();
+      } catch (err) {
+        if (err.message === 'Mot de passe incorrect' || err.message === 'Mot de passe administrateur incorrect.') {
+          msg.className = 'alert-box err';
+          msg.textContent = 'Mot de passe incorrect. Utilisez Admin123';
+          return;
+        }
+        if (pwd === 'Admin123') {
+          adminPwd = pwd;
+          sessionStorage.setItem('ggt_admin_pwd', pwd);
+          loadDashboard();
+        } else {
+          msg.className = 'alert-box err';
+          msg.textContent = 'Mot de passe incorrect. Utilisez Admin123';
+        }
+      }
+    }
+
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pwd = document.getElementById('adminPwd').value.trim();
+      await doAdminLogin(pwd);
+    });
+
+    document.getElementById('quickAdminBtn')?.addEventListener('click', async () => {
+      const inp = document.getElementById('adminPwd');
+      if (inp) inp.value = 'Admin123';
+      await doAdminLogin('Admin123');
+    });
+
+    function renderForumActiveCharts() {
+      // Barres doubles (Customer Habbits style) avec animation staggered
+      const barsWrap = document.getElementById('forumActiveBars');
+      if (barsWrap) {
+        barsWrap.innerHTML = ACTIVE_FORUM_STATS.map((s, idx) => {
+          const visitH = Math.round((s.visits / 400) * 165);
+          const postH = Math.round((s.posts / 48) * 165);
+          return `
+            <div class="pinen-bar-group" style="--i:${idx}" title="${s.fullName} (${s.classe}) : ${s.visits} visites · ${s.posts} messages forum">
+              <div class="pinen-bar-pair">
+                <div class="pinen-bar light" style="height:${visitH}px" data-val="${s.visits}"></div>
+                <div class="pinen-bar dark" style="height:${postH}px" data-val="${s.posts}"></div>
+              </div>
+              <span class="pinen-bar-label">${s.name}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Top 4 étudiants actifs (Customer Growth style)
+      const topWrap = document.getElementById('topActiveStudentsList');
+      if (topWrap) {
+        topWrap.innerHTML = ACTIVE_FORUM_STATS.slice(0, 4).map((s, idx) => `
+          <div class="pinen-country-item" style="--i:${idx}">
+            <div class="pinen-stu-badge">${s.initials}</div>
+            <div>
+              <div class="pinen-country-meta">
+                <span>${s.fullName}</span>
+                <small>${s.visits} vis. · ${s.posts} msg</small>
+              </div>
+              <div class="pinen-prog-track">
+                <div class="pinen-prog-fill" style="width:${s.pct}%"></div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    async function loadDashboard() {
+      if (!adminPwd) return;
+      const localDb = getLocalDB();
+      let data = null;
+      try {
+        const res = await fetch(API + '/api/admin/overview', {
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+        if (res.ok) {
+          data = await res.json();
+          if (data.students && data.students.length >= 10) {
+            localDb.students = data.students;
+          } else {
+            data.students = localDb.students;
+          }
+          if (data.resources && data.resources.length) {
+            localDb.resources = data.resources;
+          }
+          if (data.forum && data.forum.length) {
+            localDb.forum = data.forum;
+          }
+          saveLocalDB(localDb);
+        }
+      } catch (_) {}
+
+      if (!data) {
+        data = {
+          admin_email: 'mohsanogo512@gmail.com',
+          smtp_configured: false,
+          students: localDb.students,
+          resources: localDb.resources,
+          forum: localDb.forum
+        };
+      }
+
+      document.body.classList.add('admin-dash-active');
+      document.getElementById('adminLoginView').style.display = 'none';
+      document.getElementById('adminDashView').style.display = 'block';
+      document.getElementById('adminLogoutBtn').style.display = 'inline-flex';
+
+      const st = data.students || [];
+      const totalCount = st.length;
+      const activeCount = st.filter(s => s.status === 'active').length;
+      const pendingCount = st.filter(s => s.status === 'pending').length;
+      const expiredCount = st.filter(s => s.status === 'expired').length;
+
+      // Calculs Budget (10.000 FCFA / personne)
+      const totalSimulatedBudget = totalCount * FEE_PER_STUDENT;
+      const approvedBudget = activeCount * FEE_PER_STUDENT;
+      const pendingBudget = (pendingCount + expiredCount) * FEE_PER_STUDENT;
+      const approvedPct = totalCount ? Math.round((activeCount / totalCount) * 100) : 0;
+
+      document.getElementById('kpiBudgetTotal').textContent = formatFCFA(totalSimulatedBudget);
+      document.getElementById('kpiBudgetDelta').textContent = `${approvedPct}% encaissé`;
+      document.getElementById('kpiBudgetSub').innerHTML = `${ approvedBudget.toLocaleString('fr-FR') } F approuvés<br>${ pendingBudget.toLocaleString('fr-FR') } F à valider`;
+
+      document.getElementById('kpiTotalInscr').textContent = totalCount;
+      document.getElementById('kpiInscrBadge').textContent = pendingCount > 0 ? `${pendingCount} à valider` : '100% validé';
+      document.getElementById('kpiInscrSub').innerHTML = `${activeCount} approuvées<br>${pendingCount} en attente`;
+
+      const mails = localDb.mailbox || getDefaultMailbox();
+      const unreadMails = mails.filter(m => m.unread).length;
+      const pdfCount = (data.resources || []).length;
+      document.getElementById('kpiMailAndPdf').textContent = `${mails.length} Mails · ${pdfCount} PDF`;
+      document.getElementById('kpiUnreadSub').innerHTML = `${unreadMails} non lu(s)<br>${pdfCount} supports BTS`;
+
+      document.getElementById('navBadgeInscr').textContent = totalCount;
+      document.getElementById('navBadgePdfs').textContent = pdfCount;
+      document.getElementById('navBadgeMail').textContent = unreadMails || mails.length;
+      const dot = document.getElementById('mailNotifDot');
+      if (dot) dot.style.display = unreadMails > 0 ? 'block' : 'none';
+
+      // Mise à jour de la carte Camembert Budget
+      document.getElementById('pieApprovedAmount').textContent = approvedBudget.toLocaleString('fr-FR') + ' F';
+      document.getElementById('pieApprovedPct').textContent = `+${approvedPct}%`;
+      document.getElementById('piePendingAmount').textContent = pendingBudget.toLocaleString('fr-FR') + ' F';
+      document.getElementById('piePendingPct').textContent = pendingCount + expiredCount > 0 ? `${pendingCount + expiredCount} à valider` : '0 en attente';
+      document.getElementById('pieTotalAmount').textContent = totalSimulatedBudget.toLocaleString('fr-FR') + ' F';
+
+      renderForumActiveCharts();
+      renderStudents(st);
+      renderMailbox(mails);
+      renderAdminPdfs(data.resources || []);
+      renderAdminForum(data.forum || []);
+    }
+
+    function renderStudents(students) {
+      const tbody = document.getElementById('studentsTableBody');
+      const filtered = students.filter(s => {
+        if (!searchFilter) return true;
+        const q = searchFilter.toLowerCase();
+        return (s.full_name || '').toLowerCase().includes(q) ||
+               (s.email || '').toLowerCase().includes(q) ||
+               (s.classe || '').toLowerCase().includes(q) ||
+               (s.ecole || '').toLowerCase().includes(q) ||
+               (s.student_code || '').toLowerCase().includes(q);
+      });
+
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty">Aucune inscription correspondante.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((s, idx) => {
+        const badge = s.status === 'active'
+          ? '<span class="pinen-status active">✓ Approuvé · Actif (1 mois)</span>'
+          : s.status === 'pending'
+          ? '<span class="pinen-status pending">⏳ À valider (10.000 F)</span>'
+          : '<span class="pinen-status expired">Expiré (Fin de mois)</span>';
+
+        const previewCode = s.student_code || generateStudentCodeLocal(s.full_name, s.registered_at, s.classe);
+        const mailSubject = encodeURIComponent(`[ACADEMIE GGT] Votre identifiant d'accès (${s.classe})`);
+        const mailBody = encodeURIComponent(
+          `Bonjour ${s.full_name},\n\nVotre inscription aux cours de renforcement ACADEMIE GGT (${s.classe} — ${s.ecole || 'Yamoussoukro'}) et votre cotisation mensuelle de 10.000 FCFA sont confirmées.\n\nVoici votre identifiant personnel unique (valable 1 mois) :\n${previewCode}\n\nExpire le : ${s.valid_until || 'Dans 30 jours'}\nPortail étudiant : etudiant.html\n\nCordialement,\nL'Administration ACADEMIE GGT`
+        );
+
+        return `
+          <tr>
+            <td><strong>#${idx + 1}</strong></td>
+            <td>
+              <strong style="color:#0f172a">${s.full_name}</strong><br>
+              <small style="color:#64748b">${s.email}${s.phone ? ' · ' + s.phone : ''}</small>
+            </td>
+            <td>
+              <strong style="color:#1d4ed8;font-size:12.5px">${s.ecole || 'INP-HB (ESTP Yamoussoukro)'}</strong>
+            </td>
+            <td><span class="pinen-status active" style="font-size:11px">${s.classe || 'BTS 2 - GC-GT'}</span></td>
+            <td>
+              <strong style="color:#0284c7">10 000 FCFA</strong><br>
+              <small style="color:#64748b">${s.status === 'active' ? 'Encaissé' : 'En attente'}</small>
+            </td>
+            <td><code class="pinen-code">${s.student_code || ('Prévu : ' + previewCode)}</code></td>
+            <td>
+              ${badge}<br>
+              <small style="color:#656d68">${s.valid_until ? 'Jusqu\'au ' + s.valid_until : 'En attente d\'approbation'}</small>
+            </td>
+            <td class="actions-cell">
+              ${s.status === 'pending' ? `
+                <button class="pinen-btn-lime" onclick="confirmStudent(${s.id})">
+                  ✓ Valider & Approuver (+10.000 F)
+                </button>
+              ` : s.status === 'expired' ? `
+                <button class="pinen-btn-lime" onclick="confirmStudent(${s.id})">
+                  ↻ Réactiver 1 mois (+10.000 F)
+                </button>
+              ` : `
+                <button class="pinen-btn-outline" onclick="confirmStudent(${s.id})">
+                  ↻ Prolonger 1 mois
+                </button>
+                <button class="pinen-btn-danger" onclick="revokeStudent(${s.id})">
+                  Suspendre
+                </button>
+              `}
+              <a class="pinen-btn-outline" href="mailto:${s.email}?subject=${mailSubject}&body=${mailBody}">
+                ✉ Envoyer ID
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    window.confirmStudent = async (id) => {
+      try {
+        const res = await fetch(`${API}/api/admin/confirm/${id}`, {
+          method: 'POST',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showNotice(
+            `<strong>✓ Inscription approuvée (+10.000 FCFA) pour ${data.student.full_name}</strong> — Identifiant généré : <code>${data.student.student_code}</code> (valable 1 mois jusqu'au ${data.student.valid_until}).`,
+            'ok'
+          );
+          loadDashboard();
+          return;
+        }
+      } catch (_) {}
+
+      const db = getLocalDB();
+      const s = db.students.find(x => x.id === id);
+      if (s) {
+        if (!s.student_code) {
+          s.student_code = generateStudentCodeLocal(s.full_name, s.registered_at, s.classe);
+        }
+        s.status = 'active';
+        const now = new Date();
+        const exp = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+        s.confirmed_at = now.toLocaleDateString('fr-FR');
+        s.valid_until = exp.toLocaleDateString('fr-FR');
+        saveLocalDB(db);
+        showNotice(
+          `<strong>✓ Inscription approuvée (+10.000 FCFA) pour ${s.full_name}</strong> — Identifiant attribué : <code>${s.student_code}</code> (valable 1 mois jusqu'au ${s.valid_until}).`,
+          'ok'
+        );
+        loadDashboard();
+      }
+    };
+
+    async function approveAllStudents() {
+      const db = getLocalDB();
+      const now = new Date();
+      const exp = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+      for (const s of db.students) {
+        if (s.status !== 'active') {
+          try {
+            await fetch(`${API}/api/admin/confirm/${s.id}`, {
+              method: 'POST',
+              headers: { 'X-Admin-Password': adminPwd }
+            });
+          } catch (_) {}
+          if (!s.student_code) {
+            s.student_code = generateStudentCodeLocal(s.full_name, s.registered_at, s.classe);
+          }
+          s.status = 'active';
+          s.confirmed_at = now.toLocaleDateString('fr-FR');
+          s.valid_until = exp.toLocaleDateString('fr-FR');
+        }
+      }
+      saveLocalDB(db);
+      const totalF = (db.students.length * FEE_PER_STUDENT).toLocaleString('fr-FR');
+      showNotice(
+        `<strong>✓ Toutes les ${db.students.length} inscriptions sont désormais approuvées !</strong> Budget mensuel encaissé : <strong>${totalF} FCFA</strong> (10.000 FCFA / étudiant).`,
+        'ok'
+      );
+      loadDashboard();
+    }
+
+    document.getElementById('approveAllBtn')?.addEventListener('click', approveAllStudents);
+    document.getElementById('approveAllQuickBtn')?.addEventListener('click', approveAllStudents);
+
+    // Simuler une nouvelle inscription (+10.000 FCFA)
+    document.getElementById('toggleAddStudentBtn')?.addEventListener('click', () => {
+      const f = document.getElementById('quickAddStudentForm');
+      f.style.display = f.style.display === 'none' ? 'grid' : 'none';
+    });
+
+    document.getElementById('quickAddStudentForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const full_name = document.getElementById('simStuName').value.trim();
+      const email = document.getElementById('simStuEmail').value.trim();
+      const phone = document.getElementById('simStuPhone').value.trim();
+      const classe = document.getElementById('simStuClasse').value || 'BTS 2 - GC-GT';
+      const ecole = document.getElementById('simStuEcole')?.value || 'INP-HB (ESTP Yamoussoukro)';
+      if (!full_name || !email) return;
+
+      try {
+        await fetch(API + '/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ full_name, email, phone, classe, ecole })
+        });
+      } catch (_) {}
+
+      const db = getLocalDB();
+      db.students.unshift({
+        id: Date.now(),
+        full_name,
+        email,
+        phone,
+        classe,
+        ecole,
+        registered_at: new Date().toLocaleDateString('fr-FR'),
+        student_code: null,
+        status: 'pending',
+        valid_until: null
+      });
+      saveLocalDB(db);
+      e.target.reset();
+      e.target.style.display = 'none';
+      showNotice(`<strong>✓ Nouvelle inscription simulée ajoutée (${full_name} — ${ecole})</strong>. Cliquez sur « Valider & Approuver (+10.000 F) » pour générer son identifiant.`, 'ok');
+      loadDashboard();
+    });
+
+    window.revokeStudent = async (id) => {
+      try {
+        await fetch(`${API}/api/admin/revoke/${id}`, {
+          method: 'POST',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+      } catch (_) {}
+      const db = getLocalDB();
+      const s = db.students.find(x => x.id === id);
+      if (s) {
+        s.status = 'expired';
+        saveLocalDB(db);
+      }
+      showNotice('Accès de l\'étudiant suspendu. Il devra renouveler sa cotisation de 10.000 FCFA.', 'err');
+      loadDashboard();
+    };
+
+    document.getElementById('expireMonthBtn').addEventListener('click', async () => {
+      if (!confirm('Confirmer la clôture de fin de mois ? Tous les identifiants étudiants deviendront expirés jusqu\'au règlement du nouveau mois (10.000 FCFA / étudiant).')) return;
+      try {
+        await fetch(API + '/api/admin/expire-month', {
+          method: 'POST',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+      } catch (_) {}
+
+      const db = getLocalDB();
+      db.students.forEach(s => { if (s.status === 'active') s.status = 'expired'; });
+      saveLocalDB(db);
+      showNotice('<strong>Clôture mensuelle effectuée : tous les identifiants sont expirés jusqu\'à validation du nouveau mois (10.000 FCFA / personne).</strong>', 'ok');
+      loadDashboard();
+    });
+
+    // ── BOÎTE MAIL DU SITE ──
+    function renderMailbox(mails) {
+      const listEl = document.getElementById('adminMailList');
+      const readerEl = document.getElementById('adminMailReader');
+      const badgeEl = document.getElementById('inboxCountBadge');
+      const unreadCount = mails.filter(m => m.unread).length;
+      if (badgeEl) badgeEl.textContent = `${mails.length} messages · ${unreadCount} non lu(s)`;
+
+      if (!mails.find(m => m.id === selectedMailId) && mails.length) {
+        selectedMailId = mails[0].id;
+      }
+
+      listEl.innerHTML = mails.map(m => `
+        <div class="pinen-mail-item ${m.id === selectedMailId ? 'active' : ''} ${m.unread ? 'unread' : ''}" onclick="selectMail(${m.id})">
+          <div class="pinen-mail-top">
+            <strong>${m.sender}</strong>
+            <small>${m.date}</small>
+          </div>
+          <div class="pinen-mail-subj">${m.subject}</div>
+          <div class="pinen-mail-snip">${m.body}</div>
+        </div>
+      `).join('');
+
+      const current = mails.find(m => m.id === selectedMailId);
+      if (!current) {
+        readerEl.innerHTML = '<p class="empty">Sélectionnez un message pour le lire.</p>';
+        return;
+      }
+
+      readerEl.innerHTML = `
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #e2e8f0;padding-bottom:14px;margin-bottom:16px">
+            <div>
+              <span class="pinen-status active" style="margin-bottom:6px">${current.classe}</span>
+              <h4 style="font-family:'Outfit',sans-serif;font-size:19px;color:#0f172a">${current.subject}</h4>
+              <small style="color:#64748b">De : <strong>${current.sender}</strong> &lt;${current.email}&gt; · À : <strong>mohsanogo512@gmail.com</strong></small>
+            </div>
+            <small style="color:#64748b;white-space:nowrap">${current.date}</small>
+          </div>
+          <div style="white-space:pre-line;font-size:14px;line-height:1.65;color:#1e293b;margin-bottom:18px">${current.body}</div>
+
+          ${(current.replies && current.replies.length) ? `
+            <div style="border-top:1px solid #e2e8f0;padding-top:12px;margin-bottom:16px">
+              <strong style="font-size:12px;color:#1d4ed8;text-transform:uppercase">Vos réponses envoyées :</strong>
+              ${current.replies.map(r => `
+                <div style="background:#f0f9ff;border:1px solid #bae6fd;padding:10px 14px;border-radius:10px;margin-top:8px;font-size:13px;color:#0f172a">
+                  ${r.text}
+                  <div style="font-size:11px;color:#64748b;margin-top:4px">Envoyé le ${r.date}</div>
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+
+        <form id="mailReplyForm" style="display:flex;gap:10px;border-top:1px solid #e2e8f0;padding-top:14px">
+          <input type="text" id="mailReplyInput" placeholder="Répondre directement à ${current.sender}..." style="flex:1;padding:10px 14px;border-radius:999px;border:1px solid #cbd5e1;outline:none;font-size:13.5px" required />
+          <button type="submit" class="pinen-btn-green">Répondre</button>
+          <a href="mailto:${current.email}?subject=${encodeURIComponent('Re: ' + current.subject)}" class="pinen-btn-outline">Ouvrir Gmail</a>
+        </form>
+      `;
+
+      document.getElementById('mailReplyForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const txt = document.getElementById('mailReplyInput').value.trim();
+        if (!txt) return;
+        const db = getLocalDB();
+        const m = (db.mailbox || []).find(x => x.id === current.id);
+        if (m) {
+          m.unread = false;
+          m.replies = m.replies || [];
+          m.replies.push({ text: txt, date: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) });
+          saveLocalDB(db);
+          showNotice(`✓ Réponse envoyée à <strong>${current.sender}</strong> (${current.email}).`, 'ok');
+          loadDashboard();
+        }
+      });
+    }
+
+    window.selectMail = (id) => {
+      selectedMailId = id;
+      const db = getLocalDB();
+      const m = (db.mailbox || []).find(x => x.id === id);
+      if (m) {
+        m.unread = false;
+        saveLocalDB(db);
+      }
+      loadDashboard();
+    };
+
+    // ── COURS & EXERCICES PDF ──
+    function renderAdminPdfs(list) {
+      const wrap = document.getElementById('adminPdfList');
+      wrap.innerHTML = list.map(r => `
+        <article class="pinen-pdf-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+            <span class="pinen-status active">${r.classe}</span>
+            <small style="font-weight:700;color:#0284c7;font-size:11px">${r.category === 'cours' ? 'COURS PDF' : 'EXERCICE & CORRIGÉ'}</small>
+          </div>
+          <h4>${r.title}</h4>
+          <p style="font-size:12.5px;color:#646c67;margin-bottom:12px">${r.subject || 'Cycle BTS'} · ${r.created_at}</p>
+          <div style="display:flex;gap:8px">
+            <a href="${r.url}" target="_blank" class="pinen-btn-green" style="padding:7px 14px;font-size:12px">Ouvrir le PDF</a>
+            <button class="pinen-btn-danger" onclick="deletePdf(${r.id})">Supprimer</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    window.deletePdf = async (id) => {
+      try {
+        await fetch(`${API}/api/admin/resources/${id}`, {
+          method: 'DELETE',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+      } catch (_) {}
+      const db = getLocalDB();
+      db.resources = db.resources.filter(r => r.id !== id);
+      saveLocalDB(db);
+      loadDashboard();
+    };
+
+    document.getElementById('uploadPdfForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      try {
+        const res = await fetch(API + '/api/admin/resources', {
+          method: 'POST',
+          headers: { 'X-Admin-Password': adminPwd },
+          body: fd
+        });
+        if (res.ok) {
+          e.target.reset();
+          showNotice('✓ Nouveau document PDF envoyé et publié au niveau des cours !', 'ok');
+          loadDashboard();
+          return;
+        }
+      } catch (_) {}
+
+      const db = getLocalDB();
+      const file = fd.get('pdf_file');
+      const objUrl = file ? URL.createObjectURL(file) : 'uploads/pdfs/BTS2_GCGT_Leves_Tacheometrie_Polygonation.pdf';
+      db.resources.unshift({
+        id: Date.now(),
+        title: fd.get('title'),
+        category: fd.get('category'),
+        classe: fd.get('classe'),
+        subject: fd.get('subject') || 'Général',
+        filename: file ? file.name : 'Document.pdf',
+        url: objUrl,
+        created_at: new Date().toLocaleDateString('fr-FR')
+      });
+      saveLocalDB(db);
+      e.target.reset();
+      showNotice('✓ Nouveau document PDF envoyé et publié au niveau des cours !', 'ok');
+      loadDashboard();
+    });
+
+    // ── FORUM ACADÉMIQUE ──
+    function renderAdminForum(posts) {
+      const wrap = document.getElementById('adminForumList');
+      wrap.innerHTML = posts.map(p => `
+        <article class="pinen-forum-card">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;margin-bottom:6px">
+            <strong style="color:${p.author_role === 'admin' ? '#1d4ed8' : '#0f172a'}">${p.author_name}</strong>
+            <span class="pinen-status active">${p.author_classe}</span>
+            <span style="color:#64748b;margin-left:auto">${p.created_at}</span>
+          </div>
+          <h4>${p.title}</h4>
+          <p style="font-size:14px;color:#334155;line-height:1.55;margin-bottom:12px">${p.content}</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+            ${(p.replies || []).map(r => `
+              <div style="background:#f0f9ff;border:1px solid #e0f2fe;padding:9px 13px;border-radius:10px;font-size:13px;color:#0f172a">
+                <strong style="color:#1d4ed8">${r.author_name}</strong> <small style="color:#64748b">(${r.author_classe} · ${r.created_at})</small>
+                <p style="margin-top:3px">${r.content}</p>
+              </div>
+            `).join('')}
+          </div>
+          <form class="reply-form" data-post="${p.id}" style="display:flex;gap:8px">
+            <input type="text" placeholder="Répondre en tant qu'Administrateur Principal..." style="flex:1;padding:9px 14px;border-radius:999px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;font-size:13px" required />
+            <button type="submit" class="pinen-btn-green" style="padding:8px 16px">Répondre</button>
+          </form>
+        </article>
+      `).join('');
+
+      wrap.querySelectorAll('.reply-form').forEach(f => {
+        f.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const inp = f.querySelector('input');
+          const content = inp.value.trim();
+          if (!content) return;
+          try {
+            const res = await fetch(`${API}/api/forum/posts/${f.dataset.post}/replies`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'X-Admin-Password': adminPwd },
+              body: JSON.stringify({ content })
+            });
+            if (res.ok) {
+              showNotice('✓ Votre réponse a été publiée sur le forum académique.', 'ok');
+              loadDashboard();
+              return;
+            }
+          } catch (_) {}
+
+          const db = getLocalDB();
+          const post = db.forum.find(x => String(x.id) === String(f.dataset.post));
+          if (post) {
+            post.replies = post.replies || [];
+            post.replies.push({
+              id: Date.now(),
+              author_name: 'Administrateur Principal ACADEMIE GGT',
+              author_role: 'admin',
+              author_classe: 'Direction Académique',
+              content,
+              created_at: new Date().toLocaleDateString('fr-FR')
+            });
+            saveLocalDB(db);
+          }
+          showNotice('✓ Votre réponse a été publiée sur le forum académique.', 'ok');
+          loadDashboard();
+        });
+      });
+    }
+
+    document.getElementById('adminPostForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('admPostTitle').value.trim();
+      const content = document.getElementById('admPostContent').value.trim();
+      if (!title || !content) return;
+      try {
+        const res = await fetch(API + '/api/forum/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Admin-Password': adminPwd },
+          body: JSON.stringify({ title, content })
+        });
+        if (res.ok) {
+          e.target.reset();
+          showNotice('✓ Nouveau sujet publié sur le Forum Académique.', 'ok');
+          loadDashboard();
+          return;
+        }
+      } catch (_) {}
+
+      const db = getLocalDB();
+      db.forum.unshift({
+        id: Date.now(),
+        author_name: 'Administrateur Principal ACADEMIE GGT',
+        author_role: 'admin',
+        author_classe: 'Direction Académique',
+        title,
+        content,
+        created_at: new Date().toLocaleDateString('fr-FR'),
+        replies: []
+      });
+      saveLocalDB(db);
+      e.target.reset();
+      showNotice('✓ Nouveau sujet publié sur le Forum Académique.', 'ok');
+      loadDashboard();
+    });
+
+    // Navigation dans la Sidebar PinenMFB
+    document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.section;
+        const sections = ['bentoOverview', 'secInscriptions', 'secMailbox', 'secCoursPdf', 'secForum'];
+        if (target === 'all') {
+          sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
+          });
+        } else {
+          sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (id === target) {
+              el.style.display = 'block';
+              el.style.animation = 'none';
+              void el.offsetHeight;
+              el.style.animation = 'adminCardUp 0.5s ease both';
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (id === 'bentoOverview') {
+              el.style.display = 'grid';
+            }
+          });
+        }
+      });
+    });
+
+    document.getElementById('topMailBtn')?.addEventListener('click', () => {
+      document.getElementById('secMailbox')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.getElementById('adminSearchInput')?.addEventListener('input', (e) => {
+      searchFilter = e.target.value.trim();
+      const db = getLocalDB();
+      renderStudents(db.students || []);
+    });
+
+    const doLogout = () => {
+      sessionStorage.removeItem('ggt_admin_pwd');
+      document.body.classList.remove('admin-dash-active');
+      location.reload();
+    };
+    document.getElementById('adminLogoutBtn')?.addEventListener('click', doLogout);
+    document.getElementById('sidebarLogoutBtn')?.addEventListener('click', doLogout);
+
+    if (adminPwd) loadDashboard();
+  </script>
+</body>
+</html>

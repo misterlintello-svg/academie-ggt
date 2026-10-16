@@ -1,0 +1,10 @@
+Je souhaite créer un site web pour simplifier des cours de renforcement. Le principe est simple : Il y aura deux liens, un lie pour l'administrateur principal et un autre lien pour tous les étudiants. Les étudiants s'enregistreront eux-mêmes sur le site via un portail d'inscription. Ensuite, ils devront attendre que l'administrateur confirme leurs inscriptions et leurs envoient leurs identifiants. Chaque élève aura un identifiant différent. Il sera composé des initiales de son nom, sa date d'inscription et sa classe. Les identifiants seront valables pendant une durée exacte d'un mois. Chaque fin du mois, ils deviennent tous invalides et les étudiants doivent attendre que l'administrateur leur redonnent l'accès. Cette méthode permet ainsi à l'administrateur de leur encaisser les frais mensuels de renforcement.
+Sur le site, ils auront accès aux cours en format PDF, à des exercices et corrigés du même format, et un forum où ils pourront s'échanger des messages et des réponses sur certaines questions toujours dans le cadre académique.
+
+Adaptes cette consigne générale au site que tu viens de créer. Demandes moi toute information importante supplémentaire. Pour le reste, tu as le feu vert.
+
+
+
+NOM DU SITE : ACADEMIE GGT
+MOT DE PASSE POSTGRES : Admin123
+Email d'essai : mohsanogo512@gmail.com

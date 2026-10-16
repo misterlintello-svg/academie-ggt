@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACADEMIE GGT — Espace Étudiant BTS 2 Génie Civil · Géomètre Topographe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="portal.css?v=6" />
+  <link rel="stylesheet" href="espace.css?v=1" />
+</head>
+<body class="student-page">
+
+  <!-- Arrière-plan du PORTAIL D'INSCRIPTION (bibliothèque universitaire) — remplacé dans l'espace étudiant -->
+  <div class="portal-bg" aria-hidden="true"></div>
+  <div class="portal-bg-shade" aria-hidden="true"></div>
+
+  <!-- Barre supérieure du portail d'inscription / connexion -->
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <svg width="26" height="26" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.8">
+        <polygon points="18,4 6,11 6,25 18,18" stroke-linejoin="round"/>
+        <polygon points="18,18 30,11 30,25 18,32" stroke-linejoin="round"/>
+      </svg>
+      <span>ACADEMIE <strong>GGT</strong></span>
+      <span class="badge-pill">Lien Étudiants · BTS 2 Géomètre Topographe</span>
+    </a>
+    <div class="topbar-links">
+      <a href="index.html" class="ghost-link">← Campus</a>
+      <a href="admin.html" class="ghost-link">Portail Admin</a>
+    </div>
+  </header>
+
+  <main class="portal-wrap">
+
+    <!-- ═══════════════════════════════════════════════════════
+         VUE 1 : CARTE VITRÉE — CONNEXION / INSCRIPTION
+    ═══════════════════════════════════════════════════════ -->
+    <section id="authView" class="glass-auth-stage">
+      <div class="glass-card">
+
+        <div class="glass-crest">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="10,9 24,17 24,33 10,25"/>
+            <polygon points="24,23 38,15 38,29 24,37"/>
+            <polyline points="24,33 24,43 32,38 32,32.5"/>
+          </svg>
+          <span class="crest-caption">ACADEMIE GGT · BTS 2 GÉOMÈTRE TOPOGRAPHE</span>
+        </div>
+
+        <div class="glass-tabs" role="tablist">
+          <button type="button" class="glass-tab active" id="tabLoginBtn" data-tab="login">Connexion</button>
+          <button type="button" class="glass-tab" id="tabRegBtn" data-tab="register">Inscription</button>
+        </div>
+
+        <!-- CONNEXION PAR IDENTIFIANT UNIQUE -->
+        <form id="loginForm" class="glass-form" novalidate>
+          <div class="field-group">
+            <label for="loginEmail" class="field-label">Email étudiant</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+                <path d="M3.5 6.5L12 13L20.5 6.5"/>
+              </svg>
+              <input type="email" id="loginEmail" value="mohsanogo512@gmail.com" placeholder="vous@exemple.com" autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="studentCodeInput" class="field-label">Identifiant mensuel unique (Ex : MS-16102026-BTS2GCGT)</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="5" y="11" width="14" height="10" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                <circle cx="12" cy="16" r="1.2" fill="currentColor"/>
+              </svg>
+              <input type="text" id="studentCodeInput" value="MS-16102026-BTS2GCGT" placeholder="Ex : MS-16102026-BTS2GCGT" autocomplete="off" required style="letter-spacing:0.06em" />
+              <button type="button" class="eye-btn" id="toggleStudentCode" aria-label="Afficher ou masquer l'identifiant">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="field-aux-row">
+            <button type="button" class="aux-link" id="forgotCodeBtn">Identifiant oublié ou expiré ?</button>
+          </div>
+
+          <button type="submit" class="btn-ivory">Se connecter</button>
+          <div id="loginMsg" class="alert-box" role="alert"></div>
+        </form>
+
+        <!-- NOUVELLE INSCRIPTION ÉTUDIANT -->
+        <form id="registerForm" class="glass-form" style="display:none" novalidate>
+          <div class="field-group">
+            <label for="regName" class="field-label">Nom et Prénom(s)</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c1.8-3.8 5-6 8-6s6.2 2.2 8 6"/>
+              </svg>
+              <input type="text" id="regName" placeholder="Mohamed Sanogo" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="regEmail" class="field-label">Email</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+                <path d="M3.5 6.5L12 13L20.5 6.5"/>
+              </svg>
+              <input type="email" id="regEmail" placeholder="vous@exemple.com" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="regPhone" class="field-label">Téléphone / WhatsApp</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <rect x="6" y="2" width="12" height="20" rx="2.5"/>
+                <circle cx="12" cy="18" r="1" fill="currentColor"/>
+              </svg>
+              <input type="tel" id="regPhone" placeholder="+225 07 00 00 00 00" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="regFiliere" class="field-label">Filière</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M12 3L2 8l10 5 10-5-10-5Z"/>
+                <path d="M6 10.5V16c0 2 2.7 3.5 6 3.5s6-1.5 6-3.5v-5.5"/>
+              </svg>
+              <input type="text" id="regFiliere" value="BTS 2 — Génie Civil option Géomètre Topographe" readonly style="cursor:default" />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="regEcole" class="field-label">École de provenance (Yamoussoukro)</label>
+            <div class="field-box">
+              <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                <path d="M3 21h18"/>
+                <path d="M5 21V8l7-5 7 5v13"/>
+                <path d="M9 21v-6h6v6"/>
+              </svg>
+              <select id="regEcole" required>
+                <option value="">Sélectionnez votre école</option>
+                <option value="INP-HB — École Supérieure des Travaux Publics (ESTP)">INP-HB — École Supérieure des Travaux Publics (ESTP)</option>
+                <option value="ESBTP Yamoussoukro">ESBTP Yamoussoukro</option>
+                <option value="EPI-YAKRO (École Polytechnique Internationale)">EPI-YAKRO (École Polytechnique Internationale)</option>
+                <option value="ESETEC Yamoussoukro">ESETEC Yamoussoukro</option>
+                <option value="2IFTP (Institut International de Formation Technique et Professionnelle)">2IFTP (Institut International de Formation Technique et Professionnelle)</option>
+                <option value="Autre établissement de Yamoussoukro">Autre établissement de Yamoussoukro</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-ivory">S'inscrire maintenant</button>
+          <div id="regMsg" class="alert-box" role="alert"></div>
+        </form>
+
+        <div class="glass-divider">ou continuer avec</div>
+
+        <div class="glass-alt-actions">
+          <button type="button" id="quickDemoStudentBtn" class="btn-outline-glass" style="border-color:rgba(125,211,252,0.5);background:rgba(56,140,200,0.16)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#bae6fd" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            Accès direct à l'Espace Étudiant (MS-16102026-BTS2GCGT)
+          </button>
+          <a href="admin.html" class="btn-outline-glass">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2L4 5v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V5l-8-3Z"/>
+            </svg>
+            Accès Administrateur Principal
+          </a>
+          <a href="index.html" class="btn-outline-glass">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z"/>
+            </svg>
+            Retour à la vitrine ACADEMIE GGT
+          </a>
+        </div>
+
+        <div class="glass-foot" id="glassFootSwitch">
+          Pas encore inscrit ? <button type="button" id="bottomSwitchBtn">Créer mon dossier</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         VUE 2 : ESPACE ÉTUDIANT « GÉOMÈTRE TOPOGRAPHE »
+         Ouverture inspirée de téléchargement (15).jpg
+    ═══════════════════════════════════════════════════════ -->
+    <section id="studentWorkspace" class="space-root" style="display:none">
+
+      <div class="space-bg" aria-hidden="true"></div>
+
+      <header class="space-nav" id="spaceNav">
+        <a href="index.html" class="space-brand">
+          <svg width="26" height="26" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.8">
+            <polygon points="18,4 6,11 6,25 18,18" stroke-linejoin="round"/>
+            <polygon points="18,18 30,11 30,25 18,32" stroke-linejoin="round"/>
+          </svg>
+          <span>ACADEMIE <strong>GGT</strong></span>
+        </a>
+        <nav class="space-nav-links">
+          <a href="#secModules">Modules Topo</a>
+          <a href="#secCoursPdf">Cours PDF</a>
+          <a href="#secExosPdf">Corrigés PDF</a>
+          <a href="#secForum">Forum</a>
+          <a href="index.html">Accueil Site</a>
+          <button id="logoutBtn" class="space-logout keep" type="button">Déconnexion</button>
+        </nav>
+      </header>
+
+      <!-- Première d'ouverture : planète Géomètre Topographe (Hanergy style) -->
+      <div class="space-hero" id="spaceHero">
+
+        <div class="space-hero-top">
+          <span class="space-cap">Espace Étudiant</span>
+          <strong>ACADEMIE GGT · GÉOMÈTRE TOPOGRAPHE</strong>
+          <i class="space-bar"></i>
+        </div>
+
+        <div class="space-hero-left">
+          <h1>Mesurer la terre<br />pour <em>bâtir</em><br />le monde de demain</h1>
+          <p>
+            ACADEMIE GGT accompagne les étudiants de BTS 2 Génie Civil option Géomètre Topographe
+            de Yamoussoukro : cours PDF, exercices corrigés et forum d'entraide, pensés pour le terrain
+            et pour l'examen.
+          </p>
+          <div class="space-chip" id="spaceChip">
+            <span class="chip-k">Étudiant actif</span>
+            <span class="chip-name" id="stWelcomeName">Bienvenue</span>
+            <span class="chip-school" id="stWelcomeMeta">—</span>
+            <span class="chip-code" id="stCodeBadge">—</span>
+            <span class="chip-valid" id="stValidUntil">Valable jusqu'au —</span>
+          </div>
+        </div>
+
+        <div class="space-planet-wrap">
+          <div class="space-planet">
+            <svg class="space-orbit" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <circle cx="200" cy="200" r="196" stroke="#bfe6ff" stroke-width="0.8" stroke-dasharray="3 9"/>
+              <circle cx="200" cy="4" r="3.5" fill="#bfe6ff"/>
+            </svg>
+            <svg class="space-orbit space-orbit-2" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+              <circle cx="200" cy="200" r="196" stroke="#bfe6ff" stroke-width="0.6" stroke-dasharray="1 12"/>
+              <circle cx="396" cy="200" r="2.6" fill="#7dd3fc"/>
+            </svg>
+            <img src="images/planet-topo.jpg" alt="Planète du géomètre topographe avec courbes de niveau et tachéomètre" onerror="this.onerror=null;this.src='images/planet.jpg'" />
+            <span class="space-glow"></span>
+          </div>
+        </div>
+
+        <ul class="space-orbit-icons" aria-label="Accès directs aux sections">
+          <li>
+            <button type="button" class="space-ico" data-label="Modules Topo" data-target="secModules" aria-label="Modules Topographie">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/></svg>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="space-ico" data-label="Cours PDF" data-target="secCoursPdf" aria-label="Cours en PDF">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="14" y2="17"/></svg>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="space-ico" data-label="Exercices & Corrigés" data-target="secExosPdf" aria-label="Exercices et corrigés">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="space-ico" data-label="Forum d'entraide" data-target="secForum" aria-label="Forum d'entraide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </button>
+          </li>
+        </ul>
+
+        <div class="space-mist" aria-hidden="true"></div>
+        <a href="#secModules" class="space-scroll" id="spaceScrollCue">
+          Découvrir les modules
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+      </div>
+
+      <!-- Contenu unifié sur une SEULE PAGE (sans onglets) avec animations dédiées -->
+      <div class="space-content" id="spaceContent">
+
+        <!-- ═══════════════════════════════════════════════════════
+             SECTION 1 : TABLEAU DE BORD & MODULES DE TOPOGRAPHIE
+        ═══════════════════════════════════════════════════════ -->
+        <section class="ws-single-section sec-anim-modules" id="secModules">
+          <div class="space-content-head">
+            <span class="kicker">PARTIE 01 · VUE D'ENSEMBLE & SPÉCIALITÉS</span>
+            <h2>Vos Modules de <b>Génie Civil · Géomètre Topographe</b></h2>
+            <p class="ws-sec-desc">Explorez les 5 spécialités clés du programme de Yamoussoukro avec les fiches de cours et calculs associés.</p>
+          </div>
+
+          <div class="space-stats">
+            <div class="space-stat"><span>Cours en PDF</span><strong id="stCountCours">0</strong></div>
+            <div class="space-stat"><span>Exercices & corrigés</span><strong id="stCountExos">0</strong></div>
+            <div class="space-stat"><span>Sujets du forum</span><strong id="stCountForum">0</strong></div>
+            <div class="space-stat"><span>Accès mensuel restant</span><strong id="stDaysLeft">—<small>jours</small></strong></div>
+          </div>
+
+          <!-- Expanding Flex Cards des 5 modules -->
+          <div class="exp-cards" id="portalExpCourses">
+
+            <article class="exp-card is-active" tabindex="0" style="--bg: url('images/t-leve.jpg')">
+              <div class="exp-card-shade"></div>
+              <div class="exp-card-content">
+                <div class="exp-icon" style="--ico-color:#0369a1">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+                </div>
+                <div class="exp-info">
+                  <span class="exp-tag">Spécialité 01 — Terrain</span>
+                  <h3 class="exp-title">Levés au tachéomètre & Polygonation</h3>
+                  <p class="exp-sub">Mise en station, rayonnement, cheminements polygonaux encadrés et nivellement direct.</p>
+                  <div class="exp-actions">
+                    <a href="uploads/pdfs/BTS2_GCGT_Leves_Tacheometrie_Polygonation.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                    <a href="uploads/pdfs/Exercices_Corriges_Calculs_Topometriques_BTS2_GCGT.pdf" target="_blank" class="exp-pill-btn">Exercices & Corrigé</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="exp-card" tabindex="0" style="--bg: url('images/t-calcul.jpg')">
+              <div class="exp-card-shade"></div>
+              <div class="exp-card-content">
+                <div class="exp-icon" style="--ico-color:#0f766e">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8.01" y2="11"/><line x1="12" y1="11" x2="12.01" y2="11"/><line x1="16" y1="11" x2="16.01" y2="11"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="12" y1="16" x2="16" y2="16"/></svg>
+                </div>
+                <div class="exp-info">
+                  <span class="exp-tag">Spécialité 02 — Calculs</span>
+                  <h3 class="exp-title">Gisements, Relèvements & Compensation</h3>
+                  <p class="exp-sub">Fermeture angulaire, calculs de coordonnées (X, Y), relèvement de Hansen et formule de Gauss.</p>
+                  <div class="exp-actions">
+                    <a href="uploads/pdfs/Exercices_Corriges_Calculs_Topometriques_BTS2_GCGT.pdf" target="_blank" class="exp-pill-btn primary">Exercices & Corrigé PDF</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="exp-card" tabindex="0" style="--bg: url('images/t-gnss.jpg')">
+              <div class="exp-card-shade"></div>
+              <div class="exp-card-content">
+                <div class="exp-icon" style="--ico-color:#1d4ed8">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>
+                </div>
+                <div class="exp-info">
+                  <span class="exp-tag">Spécialité 03 — Satellites</span>
+                  <h3 class="exp-title">GNSS, Géodésie & WGS84 / UTM 30N</h3>
+                  <p class="exp-sub">Positionnement différentiel RTK, pivot/mobile, ellipsoïde et projection UTM 30 Nord Côte d'Ivoire.</p>
+                  <div class="exp-actions">
+                    <a href="uploads/pdfs/BTS2_GCGT_GNSS_Geodesie_Spatiale.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="exp-card" tabindex="0" style="--bg: url('images/t-foncier.jpg')">
+              <div class="exp-card-shade"></div>
+              <div class="exp-card-content">
+                <div class="exp-icon" style="--ico-color:#b45309">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                </div>
+                <div class="exp-info">
+                  <span class="exp-tag">Spécialité 04 — Cadastre</span>
+                  <h3 class="exp-title">Bornage, Foncier & Procédure ACD</h3>
+                  <p class="exp-sub">Bornage contradictoire, morcellement, lotissements et constitution du dossier technique.</p>
+                  <div class="exp-actions">
+                    <a href="uploads/pdfs/BTS2_GCGT_Droit_Foncier_Bornage_Cadastre.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="exp-card" tabindex="0" style="--bg: url('images/t-dao.jpg')">
+              <div class="exp-card-shade"></div>
+              <div class="exp-card-content">
+                <div class="exp-icon" style="--ico-color:#7c3aed">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div class="exp-info">
+                  <span class="exp-tag">Spécialité 05 — DAO & VRD</span>
+                  <h3 class="exp-title">DAO Covadis, MNT 3D & Voiries (VRD)</h3>
+                  <p class="exp-sub">Semis de points, courbes de niveau, profils en long/travers et calculs de cubatures.</p>
+                  <div class="exp-actions">
+                    <a href="uploads/pdfs/BTS2_GCGT_DAO_Topo_Covadis_VRD.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════
+             SECTION 2 : TOUS LES COURS EN FORMAT PDF
+        ═══════════════════════════════════════════════════════ -->
+        <section class="ws-single-section sec-anim-cours" id="secCoursPdf">
+          <div class="space-content-head">
+            <span class="kicker">PARTIE 02 · BIBLIOTHÈQUE OFFICIELLE</span>
+            <h2>Cours Théoriques & Méthodologiques <b>en Format PDF</b></h2>
+            <p class="ws-sec-desc">Téléchargez et consultez directement tous vos polycopiés de cours rédigés pour le BTS 2 Géomètre Topographe.</p>
+          </div>
+
+          <div id="coursGrid" class="pdf-grid"></div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════
+             SECTION 3 : EXERCICES & SUJETS TYPES CORRIGÉS PDF
+        ═══════════════════════════════════════════════════════ -->
+        <section class="ws-single-section sec-anim-exos" id="secExosPdf">
+          <div class="space-content-head">
+            <span class="kicker">PARTIE 03 · ENTRAÎNEMENT & CORRIGÉS</span>
+            <h2>Exercices & Sujets Types d'Examen <b>Intégralement Corrigés</b></h2>
+            <p class="ws-sec-desc">Fiches de travaux dirigés, calculs pas à pas et annales d'examens nationaux BTS décortiqués pour vous entraîner.</p>
+          </div>
+
+          <div id="exosGrid" class="pdf-grid"></div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════
+             SECTION 4 : FORUM D'ENTRAIDE ACADÉMIQUE
+        ═══════════════════════════════════════════════════════ -->
+        <section class="ws-single-section sec-anim-forum" id="secForum">
+          <div class="space-content-head">
+            <span class="kicker">PARTIE 04 · COMMUNAUTÉ DE YAMOUSSOUKRO</span>
+            <h2>Forum d'Entraide & Questions <b>au Professeur Coordinateur</b></h2>
+            <p class="ws-sec-desc">Posez vos questions sur les calculs topométriques ou le foncier, échangez avec les étudiants de l'INP-HB, ESBTP, EPI-YAKRO, ESETEC et 2IFTP.</p>
+          </div>
+
+          <div class="forum-layout">
+            <form id="newPostForm" class="forum-compose">
+              <h3>Poser une question sur un cours ou un exercice</h3>
+              <input type="text" id="postTitle" placeholder="Sujet (ex : Erreur de fermeture angulaire sur cheminement encadré)" required />
+              <textarea id="postContent" rows="4" placeholder="Décrivez votre question ou votre démarche de calcul pour recevoir une explication détaillée..." required></textarea>
+              <button type="submit" class="btn-primary">Publier la question sur le forum</button>
+            </form>
+            <div id="forumList" class="forum-list"></div>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="ggt-data.js?v=1"></script>
+  <script>
+    const API = location.protocol === 'file:' ? 'http://localhost:5000' : '';
+    const DEMO_CODE = 'MS-16102026-BTS2GCGT';
+    const CODE_KEY = 'ggt_student_code_v3';
+    let currentCode = localStorage.getItem(CODE_KEY) || '';
+    let currentStudent = null;
+    let allResources = [];
+    let forumCache = [];
+
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const getLocalStore = () => GGT.load();
+    const saveLocalStore = (db) => GGT.save(db);
+
+    function parseFR(d) {
+      if (!d) return null;
+      const m = String(d).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+      if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+      const t = new Date(d);
+      return isNaN(t) ? null : t;
+    }
+
+    /* ───────── Onglets Connexion / Inscription ───────── */
+    const tabLoginBtn = document.getElementById('tabLoginBtn');
+    const tabRegBtn = document.getElementById('tabRegBtn');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const glassFootSwitch = document.getElementById('glassFootSwitch');
+
+    function setAuthTab(mode) {
+      const isLogin = mode === 'login';
+      tabLoginBtn.classList.toggle('active', isLogin);
+      tabRegBtn.classList.toggle('active', !isLogin);
+      loginForm.style.display = isLogin ? 'flex' : 'none';
+      registerForm.style.display = isLogin ? 'none' : 'flex';
+      glassFootSwitch.innerHTML = isLogin
+        ? 'Pas encore inscrit ? <button type="button" id="bottomSwitchBtn">Créer mon dossier</button>'
+        : 'Vous avez déjà votre identifiant ? <button type="button" id="bottomSwitchBtn">Se connecter</button>';
+      document.getElementById('bottomSwitchBtn').addEventListener('click', () => setAuthTab(isLogin ? 'register' : 'login'));
+    }
+    tabLoginBtn.addEventListener('click', () => setAuthTab('login'));
+    tabRegBtn.addEventListener('click', () => setAuthTab('register'));
+    document.getElementById('bottomSwitchBtn').addEventListener('click', () => setAuthTab('register'));
+
+    document.getElementById('toggleStudentCode').addEventListener('click', () => {
+      const inp = document.getElementById('studentCodeInput');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('quickDemoStudentBtn').addEventListener('click', async () => {
+      document.getElementById('studentCodeInput').value = DEMO_CODE;
+      currentCode = DEMO_CODE;
+      localStorage.setItem(CODE_KEY, currentCode);
+      await loadPortal();
+    });
+
+    document.getElementById('forgotCodeBtn').addEventListener('click', () => {
+      const msg = document.getElementById('loginMsg');
+      msg.className = 'alert-box ok';
+      msg.innerHTML = `Identifiant actif de démonstration : <code>${DEMO_CODE}</code>. Chaque identifiant est composé des <strong>initiales + date d'inscription + filière</strong> et reste valable <strong>1 mois exact</strong>.`;
+    });
+
+    const params = new URLSearchParams(location.search);
+    if (location.hash === '#register' || params.get('tab') === 'register') setAuthTab('register');
+    if (params.get('email')) {
+      document.getElementById('regEmail').value = params.get('email');
+      setAuthTab('register');
+    }
+
+    /* ───────── Inscription ───────── */
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('regMsg');
+      msg.className = 'alert-box';
+      msg.textContent = 'Enregistrement en cours...';
+      const payload = {
+        full_name: document.getElementById('regName').value.trim(),
+        email: document.getElementById('regEmail').value.trim(),
+        phone: document.getElementById('regPhone').value.trim(),
+        classe: GGT.FILIERE_CODE,
+        ecole: document.getElementById('regEcole').value.trim()
+      };
+      if (!payload.full_name || !payload.email || !payload.ecole) {
+        msg.className = 'alert-box err';
+        msg.textContent = 'Veuillez renseigner votre nom, votre email et votre école de provenance à Yamoussoukro.';
+        return;
+      }
+      try {
+        const res = await fetch(API + '/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Erreur lors de l'inscription");
+        msg.className = 'alert-box ok';
+        msg.innerHTML = `<strong>✓ ${esc(data.message)}</strong><br><small>Format prévu de votre identifiant : <code>${esc(data.preview_format)}</code></small>`;
+        e.target.reset();
+      } catch (err) {
+        const db = getLocalStore();
+        const preview = GGT.previewCode(payload.full_name);
+        db.students.unshift({
+          id: Date.now(), full_name: payload.full_name, email: payload.email, phone: payload.phone,
+          classe: payload.classe, ecole: payload.ecole,
+          registered_at: new Date().toLocaleDateString('fr-FR'),
+          status: 'pending', student_code: null, valid_until: null
+        });
+        saveLocalStore(db);
+        msg.className = 'alert-box ok';
+        msg.innerHTML = `<strong>✓ Inscription enregistrée !</strong> Votre demande est en attente de confirmation par l'administrateur principal.<br><small>Format prévu de votre identifiant : <code>${esc(preview)}</code></small>`;
+        e.target.reset();
+      }
+    });
+
+    /* ───────── Connexion ───────── */
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const code = document.getElementById('studentCodeInput').value.trim().toUpperCase();
+      const msg = document.getElementById('loginMsg');
+      msg.className = 'alert-box';
+      msg.textContent = 'Vérification de votre identifiant mensuel...';
+      try {
+        const res = await fetch(API + '/api/student/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ student_code: code })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          const err = new Error(data.error || 'Connexion refusée');
+          err.fromServer = true;
+          throw err;
+        }
+        currentCode = code;
+        localStorage.setItem(CODE_KEY, code);
+        await loadPortal();
+      } catch (err) {
+        if (err.fromServer) {
+          msg.className = 'alert-box err';
+          msg.textContent = err.message;
+          return;
+        }
+        const db = getLocalStore();
+        const found = db.students.find(s => (s.student_code || '').toUpperCase() === code);
+        if (!found) {
+          msg.className = 'alert-box err';
+          msg.innerHTML = `Identifiant introuvable. Utilisez <code>${DEMO_CODE}</code> ou attendez la confirmation de l'administrateur.`;
+          return;
+        }
+        if (found.status !== 'active') {
+          msg.className = 'alert-box err';
+          msg.textContent = "Votre identifiant mensuel n'est pas actif (en attente ou expiré). Contactez l'administrateur principal.";
+          return;
+        }
+        currentCode = code;
+        localStorage.setItem(CODE_KEY, code);
+        await loadPortal();
+      }
+    });
+
+    /* ───────── Chargement de l'espace ───────── */
+    async function loadPortal() {
+      if (!currentCode) return;
+      try {
+        const res = await fetch(API + '/api/student/portal', { headers: { 'X-Student-Code': currentCode } });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Session expirée');
+        currentStudent = data.student;
+        allResources = (data.resources || []).map(r => ({
+          ...r, url: r.url && r.url.startsWith('/') ? r.url.slice(1) : r.url
+        }));
+        openWorkspaceUI(data.forum || []);
+      } catch (e) {
+        const db = getLocalStore();
+        const found = db.students.find(s => (s.student_code || '').toUpperCase() === currentCode.toUpperCase());
+        if (!found || found.status !== 'active') {
+          localStorage.removeItem(CODE_KEY);
+          currentCode = '';
+          return;
+        }
+        currentStudent = found;
+        allResources = db.resources || [];
+        openWorkspaceUI(db.forum || []);
+      }
+    }
+
+    function openWorkspaceUI(forumPosts) {
+      document.body.classList.add('space-active');
+      document.getElementById('authView').style.display = 'none';
+      document.getElementById('studentWorkspace').style.display = 'block';
+      window.scrollTo(0, 0);
+
+      document.getElementById('stWelcomeName').textContent = `Bienvenue, ${currentStudent.full_name}`;
+      document.getElementById('stWelcomeMeta').textContent =
+        `${currentStudent.ecole ? currentStudent.ecole + ' · ' : ''}${GGT.FILIERE_LABEL}`;
+      document.getElementById('stCodeBadge').textContent = currentStudent.student_code;
+      document.getElementById('stValidUntil').textContent = `Valable 1 mois — expire le ${currentStudent.valid_until || '—'}`;
+
+      const until = parseFR(currentStudent.valid_until);
+      const days = until ? Math.max(0, Math.ceil((until - new Date()) / 86400000)) : null;
+      document.getElementById('stDaysLeft').innerHTML = days === null ? '—' : `${days}<small>jours</small>`;
+
+      forumCache = forumPosts;
+      renderResources();
+      renderForum(forumPosts);
+      document.getElementById('stCountForum').textContent = forumPosts.length;
+
+      const q = params.get('forum_q');
+      if (q) {
+        scrollToSection('secForum');
+        document.getElementById('postTitle').value = q;
+      }
+    }
+
+    function renderResources() {
+      const cours = allResources.filter(r => r.category === 'cours');
+      const exos = allResources.filter(r => r.category === 'exercice_corrige');
+      document.getElementById('stCountCours').textContent = cours.length;
+      document.getElementById('stCountExos').textContent = exos.length;
+
+      const cardHTML = (r, badge) => `
+        <article class="pdf-card">
+          <div class="pdf-top">
+            <span class="pdf-tag">${esc(r.subject || 'Géomètre Topographe')}</span>
+            <span class="pdf-type">${badge}</span>
+          </div>
+          <h3>${esc(r.title)}</h3>
+          <p class="pdf-sub">${esc(GGT.FILIERE_LABEL)} · Publié le ${esc(r.created_at)}</p>
+          <div class="pdf-actions">
+            <a href="${esc(r.url)}" target="_blank" rel="noopener" class="btn-primary-sm">Ouvrir le PDF</a>
+            <a href="${esc(r.url)}" download class="btn-ghost-sm">Télécharger</a>
+          </div>
+        </article>`;
+
+      document.getElementById('coursGrid').innerHTML =
+        cours.map(r => cardHTML(r, 'COURS PDF')).join('') || '<p class="empty">Aucun cours PDF pour le moment.</p>';
+      document.getElementById('exosGrid').innerHTML =
+        exos.map(r => cardHTML(r, 'EXERCICE & CORRIGÉ PDF')).join('') || '<p class="empty">Aucun exercice ou corrigé PDF pour le moment.</p>';
+    }
+
+    /* ───────── Forum ───────── */
+    function renderForum(posts) {
+      const wrap = document.getElementById('forumList');
+      wrap.innerHTML = posts.map(p => `
+        <article class="forum-post">
+          <div class="post-head">
+            <span class="post-author ${p.author_role === 'admin' ? 'is-admin' : ''}">${esc(p.author_name)}</span>
+            <span class="post-class">${esc(p.author_classe)}</span>
+            <span class="post-date">${esc(p.created_at)}</span>
+          </div>
+          <h4>${esc(p.title)}</h4>
+          <p class="post-body">${esc(p.content)}</p>
+          <div class="replies-list">
+            ${(p.replies || []).map(rep => `
+              <div class="reply-item">
+                <strong>${esc(rep.author_name)} <em>(${esc(rep.author_classe)})</em> :</strong>
+                <span>${esc(rep.content)}</span>
+                <small>${esc(rep.created_at)}</small>
+              </div>`).join('')}
+          </div>
+          <form class="reply-form" data-post="${esc(p.id)}">
+            <input type="text" placeholder="Répondre à cette question..." required />
+            <button type="submit" class="btn-primary-sm">Répondre</button>
+          </form>
+        </article>`).join('') || '<p class="empty">Aucun sujet pour le moment. Soyez le premier à poser une question.</p>';
+
+      wrap.querySelectorAll('.reply-form').forEach(f => {
+        f.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const inp = f.querySelector('input');
+          const content = inp.value.trim();
+          if (!content) return;
+          try {
+            const res = await fetch(`${API}/api/forum/posts/${f.dataset.post}/replies`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'X-Student-Code': currentCode },
+              body: JSON.stringify({ content })
+            });
+            if (!res.ok) throw new Error();
+          } catch (err) {
+            const db = getLocalStore();
+            const post = db.forum.find(x => String(x.id) === String(f.dataset.post));
+            if (post) {
+              post.replies = post.replies || [];
+              post.replies.push({
+                id: Date.now(), author_name: currentStudent.full_name, author_classe: currentStudent.classe,
+                author_role: 'etudiant', content, created_at: new Date().toLocaleDateString('fr-FR')
+              });
+              saveLocalStore(db);
+            }
+          }
+          loadPortal();
+        });
+      });
+    }
+
+    document.getElementById('newPostForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('postTitle').value.trim();
+      const content = document.getElementById('postContent').value.trim();
+      if (!title || !content) return;
+      try {
+        const res = await fetch(API + '/api/forum/posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Student-Code': currentCode },
+          body: JSON.stringify({ title, content })
+        });
+        if (!res.ok) throw new Error();
+      } catch (err) {
+        const db = getLocalStore();
+        db.forum.unshift({
+          id: Date.now(), author_name: currentStudent.full_name, author_classe: currentStudent.classe,
+          author_role: 'etudiant', title, content, created_at: new Date().toLocaleDateString('fr-FR'), replies: []
+        });
+        saveLocalStore(db);
+      }
+      e.target.reset();
+      await loadPortal();
+      scrollToSection('secForum');
+    });
+
+    /* ───────── Navigation interne & Défilement Fluide (Sans onglets) ───────── */
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    // Gestionnaires de clic pour tous les liens d'ancrage et boutons d'orbite
+    document.querySelectorAll('.space-nav-links a[href^="#"], .space-orbit-icons [data-target], [data-go]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const href = btn.getAttribute('href');
+        const targetId = btn.dataset.target || btn.dataset.go || (href && href.startsWith('#') ? href.slice(1) : null);
+        if (targetId && document.getElementById(targetId)) {
+          e.preventDefault();
+          scrollToSection(targetId);
+        }
+      });
+    });
+
+    document.getElementById('spaceScrollCue').addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToSection('secModules');
+    });
+    document.getElementById('icoMyId').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const chip = document.getElementById('spaceChip');
+      chip.animate(
+        [{ boxShadow: '0 0 0 0 rgba(125,211,252,.8)' }, { boxShadow: '0 0 0 22px rgba(125,211,252,0)' }],
+        { duration: 1100, iterations: 2 }
+      );
+    });
+
+    // Accordéon Expanding Flex Cards
+    document.querySelectorAll('#portalExpCourses .exp-card').forEach(card => {
+      const activate = () => document.querySelectorAll('#portalExpCourses .exp-card').forEach(c => c.classList.toggle('is-active', c === card));
+      card.addEventListener('click', (e) => { if (!e.target.closest('a')) activate(); });
+      card.addEventListener('keydown', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('a')) { e.preventDefault(); activate(); }
+      });
+    });
+
+    // Barre de navigation : fond au défilement
+    const spaceNav = document.getElementById('spaceNav');
+    window.addEventListener('scroll', () => spaceNav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem(CODE_KEY);
+      document.body.classList.remove('space-active');
+      location.reload();
+    });
+
+    if (currentCode) loadPortal();
+  </script>
+</body>
+</html>

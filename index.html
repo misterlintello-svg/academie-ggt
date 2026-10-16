@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACADEMIE GGT — L'avenir sur le terrain (Cycle BTS)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=4" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════
+       HERO — Premier écran immersif (cadre panoramique)
+  ══════════════════════════════════════════════════════════ -->
+  <section class="hero" id="accueil">
+
+    <!-- 3-layer metallic frame -->
+    <div class="frame-bezel">
+      <div class="frame-ring">
+        <div class="frame-viewport">
+
+          <!-- Campus photograph (background) -->
+          <div class="campus-photo" id="campusPhoto"></div>
+
+          <!-- ── HEADER ── -->
+          <header class="header" id="header">
+            <!-- Logo -->
+            <a href="#accueil" class="logo">
+              <svg class="logo-icon" width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path d="M13 3L2 9.5L13 16L24 9.5L13 3Z" fill="white"/>
+                <path d="M6 12.5V18.5C6 18.5 8.5 22 13 22C17.5 22 20 18.5 20 18.5V12.5L13 16.5L6 12.5Z" fill="white" opacity="0.8"/>
+              </svg>
+              <span class="logo-text">ACADEMIE GGT</span>
+            </a>
+
+            <!-- Nav pill -->
+            <nav class="nav-pill" aria-label="Navigation principale">
+              <a href="#accueil" class="nav-link active">Accueil</a>
+              <a href="#apropos" class="nav-link">À propos</a>
+              <a href="#organisateur" class="nav-link">L'Organisateur</a>
+              <a href="#thematiques" class="nav-link">Thématiques</a>
+              <a href="etudiant.html" class="nav-link">Espace Étudiants</a>
+              <a href="admin.html" class="nav-link">Admin Principal</a>
+            </nav>
+
+            <!-- CTA -->
+            <a href="etudiant.html?tab=register" class="btn-cta">S'inscrire</a>
+
+            <!-- Hamburger (mobile) -->
+            <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+              <span></span><span></span><span></span>
+            </button>
+          </header>
+
+          <!-- Mobile overlay nav -->
+          <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+            <a href="#accueil" class="mob-link">Accueil</a>
+            <a href="#apropos" class="mob-link">À propos</a>
+            <a href="#organisateur" class="mob-link">L'Organisateur</a>
+            <a href="#thematiques" class="mob-link">Nos Thématiques</a>
+            <a href="etudiant.html" class="mob-link">Espace Étudiants</a>
+            <a href="admin.html" class="mob-link">Admin Principal</a>
+            <a href="etudiant.html?tab=register" class="mob-link mob-cta">S'inscrire</a>
+          </div>
+
+          <!-- ── HERO CONTENT (over image) ── -->
+          <div class="hero-content">
+
+            <h1 class="hero-title">
+              <span class="line line-strong">QUOI QU'ON DISE,</span>
+              <span class="line line-strong">QUOI QU'ON FASSE,</span>
+              <span class="line line-light">C'EST LE TERRAIN QUI DÉTERMINE</span>
+            </h1>
+
+            <p class="hero-sub">
+              Un cadre d'exception pour apprendre, grandir et construire<br />
+              votre avenir. Ici, chaque talent trouve sa place.
+            </p>
+
+            <form class="email-form" id="emailForm" novalidate>
+              <label for="email" class="sr-only">Votre adresse email</label>
+              <div class="email-bar">
+                <svg class="email-icon" width="22" height="18" viewBox="0 0 22 18" fill="none">
+                  <rect x="1" y="1" width="20" height="16" rx="3" stroke="rgba(255,255,255,0.55)" stroke-width="1.4"/>
+                  <path d="M1.5 2L11 10L20.5 2" stroke="rgba(255,255,255,0.55)" stroke-width="1.4" stroke-linecap="round"/>
+                </svg>
+                <input type="email" id="email" class="email-input" placeholder="Votre adresse email" autocomplete="email" required />
+                <button type="submit" class="email-btn">Rejoindre</button>
+              </div>
+              <p class="email-msg" id="emailMsg" role="alert" aria-live="polite"></p>
+            </form>
+
+          </div>
+
+        </div><!-- /frame-viewport -->
+      </div><!-- /frame-ring -->
+    </div><!-- /frame-bezel -->
+
+  </section>
+  <!-- /HERO -->
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 02 — À propos (Style Globe Hanergy)
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section sec-planet" id="apropos">
+    <div class="planet-header reveal">
+      <span class="planet-kicker">ACADEMIE GGT · RENFORCEMENT CYCLE BTS</span>
+      <h2 class="planet-top-title">NOTRE ÉCOSYSTÈME ACADÉMIQUE</h2>
+      <span class="planet-bar"></span>
+    </div>
+
+    <div class="planet-stage">
+      <!-- Colonne texte dynamique à gauche -->
+      <div class="planet-copy reveal" id="planetCopy" aria-live="polite">
+        <span class="planet-step" id="planetStep">PILIER 01 / 04</span>
+        <h3 class="planet-title" id="planetTitle">L'innovation au cœur du terrain</h3>
+        <p class="planet-desc" id="planetDesc">
+          Fondée sur la conviction que la pratique forge l'excellence, ACADEMIE GGT accompagne les étudiants du Cycle BTS avec des cours en PDF, des exercices corrigés et un suivi mensuel rigoureux.
+        </p>
+        <div class="planet-metrics">
+          <div><strong id="planetMetric1">42 Labos</strong><span>Recherche & prototypage</span></div>
+          <div><strong id="planetMetric2">100%</strong><span>Projets réels dès la 1re année</span></div>
+        </div>
+      </div>
+
+      <!-- Globe central animé -->
+      <div class="planet-center reveal">
+        <div class="planet-halo"></div>
+        <div class="planet-orbit-ring"></div>
+        <div class="planet-orbit-plane" aria-hidden="true">
+          <span class="plane-dot">✈</span>
+        </div>
+        <div class="planet-sphere" id="planetSphere">
+          <img src="images/planet.jpg" alt="Globe du campus CampusPlus entouré de nuages" />
+          <div class="planet-clouds"></div>
+          <div class="planet-shine"></div>
+        </div>
+      </div>
+
+      <!-- Boutons orbitaux en arc à droite -->
+      <div class="planet-nodes reveal" role="tablist" aria-label="Piliers CampusPlus">
+        <button class="planet-node active" role="tab" aria-selected="true" data-index="0" title="Innovation & Recherche">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="node-label">Innovation</span>
+        </button>
+
+        <button class="planet-node" role="tab" aria-selected="false" data-index="1" title="Campus Durable">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M7 19H4.8a1.8 1.8 0 0 1-1.5-2.7L6 11.5M17 19h2.2a1.8 1.8 0 0 0 1.5-2.7L18 11.5M12 3l3.2 5.5H8.8L12 3ZM7 19l2.5-4.5h5L17 19H7Z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="node-label">Éco-campus</span>
+        </button>
+
+        <button class="planet-node" role="tab" aria-selected="false" data-index="2" title="Sciences & Technologies">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <ellipse cx="12" cy="12" rx="9" ry="4"/>
+            <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(120 12 12)"/>
+            <circle cx="12" cy="12" r="1.8" fill="currentColor"/>
+          </svg>
+          <span class="node-label">Sciences</span>
+        </button>
+
+        <button class="planet-node" role="tab" aria-selected="false" data-index="3" title="Énergie du Terrain">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M12 3c1.5 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.5 1.3-4.5 2.5-6 .4 1.5 1.5 2.2 2.5 2.2 0-2.2-.5-4.2 0-6.2Z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="node-label">Terrain</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="planet-floor"></div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 03 — PRÉSENTATION DE L'ORGANISATEUR
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section sec-exp-courses" id="organisateur">
+    <div class="wrap">
+      <div class="carousel-head reveal">
+        <span class="sec-num">03 · PRÉSENTATION DE L'ORGANISATEUR</span>
+        <h2 class="carousel-title">
+          Présentation de <span class="accent-word">l'Organisateur</span>
+        </h2>
+        <p class="carousel-sub">Une initiative académique de terrain dédiée aux étudiants de 2e année BTS Génie Civil option Géomètre Topographe à Yamoussoukro</p>
+      </div>
+
+      <!-- Carte maîtresse de présentation de l'organisateur -->
+      <div class="organizer-spotlight reveal">
+        <div class="organizer-badge-col">
+          <div class="organizer-avatar-ring">
+            <img src="images/t-leve.jpg" alt="Coordinateur ACADEMIE GGT sur le terrain" />
+            <span class="organizer-verified" title="Organisateur Principal Certifié">✓</span>
+          </div>
+          <div class="organizer-id-meta">
+            <span class="org-role-pill">FONDATEUR & COORDINATEUR PRINCIPAL</span>
+            <h3>Mohamed Sanogo</h3>
+            <p>Direction Pédagogique · ACADEMIE GGT Yamoussoukro</p>
+            <a href="mailto:mohsanogo512@gmail.com" class="org-mail-chip">✉ mohsanogo512@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="organizer-bio-col">
+          <blockquote class="org-quote">
+            « Quoi qu'on dise, quoi qu'on fasse, c'est le terrain qui détermine. Notre mission est d'offrir à chaque étudiant Géomètre Topographe de Yamoussoukro les outils, les calculs corrigés et la rigueur nécessaires pour exceller à l'examen national du BTS et sur les chantiers. »
+          </blockquote>
+          <p class="org-desc">
+            Conçue pour fédérer les étudiants de <strong>2e année BTS Génie Civil option Géomètre Topographe</strong> issus des grands établissements de <strong>Yamoussoukro</strong> (<em>INP-HB ESTP, ESBTP, EPI-YAKRO, ESETEC, 2IFTP</em>), <strong>ACADEMIE GGT</strong> structure un programme de renforcement mensuel intensif alliant supports PDF de haute précision, sujets types corrigés et entraide directe.
+          </p>
+          <div class="organizer-kpis">
+            <div class="org-kpi">
+              <strong>5 Écoles</strong>
+              <span>Fédérées à Yamoussoukro</span>
+            </div>
+            <div class="org-kpi">
+              <strong>BTS 2 GC-GT</strong>
+              <span>Spécialisation exclusive</span>
+            </div>
+            <div class="org-kpi">
+              <strong>10.000 FCFA</strong>
+              <span>Accès mensuel tout inclus</span>
+            </div>
+            <div class="org-kpi">
+              <strong>7j / 7</strong>
+              <span>Suivi & Forum d'entraide</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accordéon horizontal des 5 engagements de l'organisateur (Style Expanding flex cards) -->
+      <div class="exp-cards reveal" id="expandingCourses" role="region" aria-label="Les 5 engagements de l'organisateur ACADEMIE GGT">
+
+        <!-- Carte 1 : Active par défaut -->
+        <article class="exp-card is-active" tabindex="0" style="--bg: url('images/t-leve.jpg')">
+          <div class="exp-card-shade"></div>
+          <div class="exp-card-content">
+            <div class="exp-icon" style="--ico-color:#16a34a">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 19l2.5-4.5h9L19 19"/>
+              </svg>
+            </div>
+            <div class="exp-info">
+              <span class="exp-tag">ENGAGEMENT 01 — VISION DE TERRAIN</span>
+              <h3 class="exp-title">L'Excellence Pratique à Yamoussoukro</h3>
+              <p class="exp-sub">Un encadrement pensé par et pour les géomètres topographes, reliant directement la théorie des salles de classe aux réalités des brigades topographiques.</p>
+              <div class="exp-actions">
+                <a href="etudiant.html?tab=register" class="exp-pill-btn primary">Rejoindre la promotion</a>
+                <a href="etudiant.html" class="exp-pill-btn">Accéder à l'Espace Étudiant</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Carte 2 -->
+        <article class="exp-card" tabindex="0" style="--bg: url('images/t-calcul.jpg')">
+          <div class="exp-card-shade"></div>
+          <div class="exp-card-content">
+            <div class="exp-icon" style="--ico-color:#ea580c">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/>
+              </svg>
+            </div>
+            <div class="exp-info">
+              <span class="exp-tag">ENGAGEMENT 02 — MÉTHODOLOGIE</span>
+              <h3 class="exp-title">Maîtrise Absolue des Calculs Topométriques</h3>
+              <p class="exp-sub">Chaque formule de gisement, de polygonation et de compensation angulaire est démontrée pas à pas avec tableaux de calcul types BTS.</p>
+              <div class="exp-actions">
+                <a href="etudiant.html" class="exp-pill-btn primary">Découvrir la méthode</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Carte 3 -->
+        <article class="exp-card" tabindex="0" style="--bg: url('images/t-gnss.jpg')">
+          <div class="exp-card-shade"></div>
+          <div class="exp-card-content">
+            <div class="exp-icon" style="--ico-color:#0284c7">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="exp-info">
+              <span class="exp-tag">ENGAGEMENT 03 — TECHNOLOGIES MODERNES</span>
+              <h3 class="exp-title">Instrumentation GNSS RTK & Géodésie</h3>
+              <p class="exp-sub">Préparation aux standards professionnels actuels : récepteurs bi-fréquence, rattachement géodésique et projection UTM Zone 30N.</p>
+              <div class="exp-actions">
+                <a href="etudiant.html" class="exp-pill-btn primary">Explorer l'Espace Étudiant</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Carte 4 -->
+        <article class="exp-card" tabindex="0" style="--bg: url('images/t-foncier.jpg')">
+          <div class="exp-card-shade"></div>
+          <div class="exp-card-content">
+            <div class="exp-icon" style="--ico-color:#d97706">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v18"/><path d="M5 7l7-4 7 4"/><path d="M3 13l3-6 3 6a3 3 0 0 1-6 0Z"/><path d="M15 13l3-6 3 6a3 3 0 0 1-6 0Z"/>
+              </svg>
+            </div>
+            <div class="exp-info">
+              <span class="exp-tag">ENGAGEMENT 04 — RÉGLEMENTATION IVOIRIENNE</span>
+              <h3 class="exp-title">Expertise Foncière, Cadastre & ACD</h3>
+              <p class="exp-sub">Assimilation complète des procédures de bornage contradictoire, de lotissement et de constitution des dossiers techniques en Côte d'Ivoire.</p>
+              <div class="exp-actions">
+                <a href="#thematiques" class="exp-pill-btn primary">Voir les thématiques</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Carte 5 -->
+        <article class="exp-card" tabindex="0" style="--bg: url('images/t-dao.jpg')">
+          <div class="exp-card-shade"></div>
+          <div class="exp-card-content">
+            <div class="exp-icon" style="--ico-color:#8b5cf6">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+              </svg>
+            </div>
+            <div class="exp-info">
+              <span class="exp-tag">ENGAGEMENT 05 — SUIVI & COHÉSION</span>
+              <h3 class="exp-title">Un Réseau Uni entre les Écoles de Yamoussoukro</h3>
+              <p class="exp-sub">Interconnexion des étudiants de l'INP-HB, ESBTP, EPI-YAKRO, ESETEC et 2IFTP autour d'un forum actif et d'un identifiant mensuel personnel.</p>
+              <div class="exp-actions">
+                <a href="#contact" class="exp-pill-btn primary">S'inscrire maintenant</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 04 — NOS THÉMATIQUES ESSENTIELLES (Carrousel 3D)
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section sec-carousel" id="thematiques">
+    <div class="carousel-head reveal">
+      <span class="sec-num">04 · NOS THÉMATIQUES ESSENTIELLES</span>
+      <h2 class="carousel-title">
+        Nos <span class="accent-word">Thématiques Essentielles</span>
+      </h2>
+      <p class="carousel-sub">Les 7 piliers fondamentaux du programme de 2e année BTS Génie Civil option Géomètre Topographe</p>
+    </div>
+
+    <div class="carousel-stage">
+      <button class="carousel-arrow prev" id="carPrev" aria-label="Thématique précédente">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="carousel-track" id="carouselTrack" tabindex="0" aria-label="Carrousel des thématiques essentielles">
+        <article class="ccard" data-index="0"
+          data-desc="Mise en station du tachéomètre électronique, levés par rayonnement, cheminements polygonaux encadrés et fermés, et fautes à éviter sur le terrain.">
+          <img src="images/t-leve.jpg" alt="Levés & Tachéométrie" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#2563eb">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg>
+              </span>
+              <h3>Levés & Tachéométrie</h3>
+            </div>
+            <span class="ccard-cta">Thématique 01 · Terrain</span>
+          </div>
+        </article>
+
+        <article class="ccard" data-index="1"
+          data-desc="Calculs de gisements, transmission d'angles, coordonnées rectangulaires (X, Y), compensation angulaire et planimétrique, et superficies par la formule de Gauss.">
+          <img src="images/t-calcul.jpg" alt="Calculs Topométriques" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#7c3aed">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+              </span>
+              <h3>Calculs Topométriques</h3>
+            </div>
+            <span class="ccard-cta">Thématique 02 · Précision</span>
+          </div>
+        </article>
+
+        <article class="ccard is-center" data-index="2"
+          data-desc="Positionnement par satellites GPS/GNSS en mode différentiel RTK (Base/Rover), ellipsoïde WGS84, géoïde et projection plane UTM Zone 30 Nord appliquée en Côte d'Ivoire.">
+          <img src="images/t-gnss.jpg" alt="GNSS & Géodésie Spatiale" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#ea580c">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg>
+              </span>
+              <h3>GNSS & Géodésie</h3>
+            </div>
+            <span class="ccard-cta">Thématique 03 · Satellites</span>
+          </div>
+        </article>
+
+        <article class="ccard" data-index="3"
+          data-desc="Bornage contradictoire, états des lieux, morcellements, lotissements urbains et ruraux, et constitution du dossier technique d'Arrêté de Concession Définitive (ACD).">
+          <img src="images/t-foncier.jpg" alt="Droit Foncier & Cadastre" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#0891b2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><line x1="9" y1="3" x2="9" y2="18"/></svg>
+              </span>
+              <h3>Foncier & Cadastre</h3>
+            </div>
+            <span class="ccard-cta">Thématique 04 · Législation</span>
+          </div>
+        </article>
+
+        <article class="ccard" data-index="4"
+          data-desc="Dessin Assisté par Ordinateur sous AutoCAD et Covadis : import de semis de points, triangulation de Delaunay, Modèle Numérique de Terrain (MNT) et courbes de niveau.">
+          <img src="images/t-dao.jpg" alt="DAO Topo & MNT Covadis" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#16a34a">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </span>
+              <h3>DAO Topo & Covadis</h3>
+            </div>
+            <span class="ccard-cta">Thématique 05 · Modélisation</span>
+          </div>
+        </article>
+
+        <article class="ccard" data-index="5"
+          data-desc="Voiries et Réseaux Divers (VRD) : tracé en plan d'un axe routier, raccordements circulaires et clothoïdes, profils en long et en travers, et cubatures Déblais/Remblais.">
+          <img src="images/t-vrd.jpg" alt="VRD & Implantation Routière" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#db2777">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
+              </span>
+              <h3>VRD & Implantation</h3>
+            </div>
+            <span class="ccard-cta">Thématique 06 · Chantier</span>
+          </div>
+        </article>
+
+        <article class="ccard" data-index="6"
+          data-desc="Nivellement direct et indirect de haute précision, contrôle d'ouvrages de génie civil et méthodologie de soutenance du Projet de Fin d'Études (PFE) au BTS.">
+          <img src="images/planet-topo.jpg" alt="Nivellement & Projet BTS" loading="lazy" />
+          <div class="ccard-shade"></div>
+          <div class="ccard-info">
+            <div class="ccard-title-row">
+              <span class="ccard-badge" style="background:#ca8a04">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </span>
+              <h3>Nivellement & PFE</h3>
+            </div>
+            <span class="ccard-cta">Thématique 07 · Examen BTS</span>
+          </div>
+        </article>
+      </div>
+
+      <button class="carousel-arrow next" id="carNext" aria-label="Thématique suivante">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Description dynamique + pagination -->
+    <div class="carousel-foot">
+      <p class="carousel-desc" id="carouselDesc">
+        Positionnement par satellites GPS/GNSS en mode différentiel RTK (Base/Rover), ellipsoïde WGS84, géoïde et projection plane UTM Zone 30 Nord appliquée en Côte d'Ivoire.
+      </p>
+      <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Pagination des thématiques"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 05 — FORUM ACADÉMIQUE (Style Cabine Panoramique 3 Fenêtres — téléchargement 14)
+  ══════════════════════════════════════════════════════════ -->
+  <section class="sec-forum-cabin" id="actualites">
+    <div class="cabin-wall">
+      <!-- Grille des 3 hublots panoramiques (gauche, central, droite) -->
+      <div class="cabin-windows-row">
+
+        <!-- Fenêtre latérale gauche -->
+        <div class="cabin-win cabin-win-side left" aria-hidden="true">
+          <div class="cabin-win-glass"></div>
+        </div>
+
+        <!-- Grande fenêtre panoramique centrale (Forum Académique) -->
+        <div class="cabin-win cabin-win-center">
+          <div class="cabin-win-glass">
+
+            <!-- Barre supérieure de la fenêtre centrale (Logo + Pilule verre + Bouton blanc) -->
+            <div class="cabin-topbar">
+              <div class="cabin-brand">
+                <svg width="24" height="20" viewBox="0 0 28 22" fill="none">
+                  <path d="M7 18h13a5 5 0 0 0 .6-9.96A7 7 0 0 0 7.2 6.5 4.5 4.5 0 0 0 7 18Z" fill="#fff"/>
+                </svg>
+                <span>Forum<strong>GGT</strong></span>
+              </div>
+
+              <div class="cabin-nav-pill" role="tablist" aria-label="Filtres du forum">
+                <button type="button" class="cabin-filter active" data-filter="all">Tous les sujets</button>
+                <button type="button" class="cabin-filter" data-filter="leve">Levés & Calculs</button>
+                <button type="button" class="cabin-filter" data-filter="gnss">GNSS & Géodésie</button>
+                <button type="button" class="cabin-filter" data-filter="foncier">Foncier & VRD</button>
+              </div>
+
+              <a href="etudiant.html" class="cabin-start-btn">Rejoindre</a>
+            </div>
+
+            <!-- Contenu central façon "Focus in a Constantly Distracted World" -->
+            <div class="cabin-hero-center">
+              <span class="cabin-sub-badge" id="forumCountBadge">Communauté Géomètre Topographe · Yamoussoukro</span>
+
+              <h2 class="cabin-headline">
+                Concentrez-vous sur le <span class="muted-tone">Terrain</span> & les<br/>
+                <span class="muted-tone">Calculs Topo</span> Exigeants
+              </h2>
+
+              <p class="cabin-subtext">
+                Posez vos questions sur les cheminements polygonaux, partagez vos relevés GNSS<br/>
+                et progressez chaque semaine avec les étudiants et enseignants en Topographie de Yamoussoukro.
+              </p>
+
+              <!-- Aperçu en direct des discussions du forum PostgreSQL -->
+              <div class="cabin-forum-cards" id="homeForumFeed">
+                <article class="cabin-fcard" data-cat="leve">
+                  <div class="cabin-fcard-top">
+                    <span class="cabin-fcard-badge">BTS 2 GC-GT (INP-HB ESTP)</span>
+                    <span class="cabin-fcard-meta">Levés & Polygonation</span>
+                  </div>
+                  <h4>Comment répartir l'erreur de fermeture angulaire sur un cheminement encadré ?</h4>
+                  <p>Sur la polygonale de 6 sommets, nous obtenons un écart de fermeture de 45 mgon. Voici la formule de compensation proportionnelle...</p>
+                </article>
+
+                <article class="cabin-fcard" data-cat="gnss">
+                  <div class="cabin-fcard-top">
+                    <span class="cabin-fcard-badge">BTS 2 GC-GT (ESBTP)</span>
+                    <span class="cabin-fcard-meta">GNSS RTK & Géodésie</span>
+                  </div>
+                  <h4>Paramétrage du mobile RTK et rattachement aux bornes géodésiques nationales</h4>
+                  <p>Pour le passage des coordonnées ellipsoïdales WGS84 aux coordonnées planes UTM Zone 30N avec le système de référence ivoirien...</p>
+                </article>
+
+                <article class="cabin-fcard" data-cat="foncier">
+                  <div class="cabin-fcard-top">
+                    <span class="cabin-fcard-badge">DIRECTION GGT</span>
+                    <span class="cabin-fcard-meta">Foncier & ACD</span>
+                  </div>
+                  <h4>Nouveau support PDF : Dossier technique de bornage et constitution de l'ACD</h4>
+                  <p>Retrouvez le modèle complet de plan de délimitation parcellaire et la fiche de contrôle pour l'examen du BTS 2026...</p>
+                </article>
+              </div>
+
+              <!-- Barre de saisie en verre dépoli en bas de la fenêtre (identique à "Enter your email / Join Waitlist") -->
+              <form class="cabin-input-bar" id="homeForumQuickForm" novalidate>
+                <input
+                  type="text"
+                  id="homeForumQuestion"
+                  placeholder="Posez votre question de cours ou de calcul topométrique BTS 2..."
+                  aria-label="Posez votre question au forum"
+                />
+                <button type="submit" class="cabin-waitlist-btn">Publier au Forum</button>
+              </form>
+              <p id="homeForumMsg" class="cabin-feedback"></p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Fenêtre latérale droite -->
+        <div class="cabin-win cabin-win-side right" aria-hidden="true">
+          <div class="cabin-win-glass"></div>
+        </div>
+
+      </div>
+
+      <!-- Rail métallique riveté horizontal sous les 3 fenêtres -->
+      <div class="cabin-sill" aria-hidden="true">
+        <span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
+        <span class="rivet"></span><span class="rivet"></span><span class="rivet"></span>
+      </div>
+
+      <!-- Accoudoirs / sièges cuir ambré aux coins inférieurs -->
+      <div class="cabin-seat left" aria-hidden="true"></div>
+      <div class="cabin-seat right" aria-hidden="true"></div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION — Chiffres clés
+  ══════════════════════════════════════════════════════════ -->
+  <section class="sec-stats">
+    <div class="wrap">
+      <div class="stats-row">
+        <div class="stat reveal"><span class="stat-n" data-target="12000">0</span><span class="stat-lbl">Étudiants inscrits</span></div>
+        <div class="stat reveal"><span class="stat-n" data-target="98">0</span><span class="stat-pct">%</span><span class="stat-lbl">Taux d'insertion</span></div>
+        <div class="stat reveal"><span class="stat-n" data-target="50">0</span><span class="stat-pct">+</span><span class="stat-lbl">Partenaires internationaux</span></div>
+        <div class="stat reveal"><span class="stat-n" data-target="25">0</span><span class="stat-lbl">Années d'excellence</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       SECTION 06 — Inscription Cycle BTS & Portails (Fond Académie GGT)
+  ══════════════════════════════════════════════════════════ -->
+  <section class="section sec-contact" id="contact">
+    <div class="sec-contact-bg" aria-hidden="true"></div>
+    <div class="sec-contact-shade" aria-hidden="true"></div>
+
+    <div class="wrap sec-contact-inner">
+      <div class="contact-header-center reveal" id="inscriptions">
+        <span class="sec-num">06 · INSCRIPTIONS & ACCÈS</span>
+        <h2 class="sec-heading">Portail d'Inscription — BTS 2 Géomètre Topographe</h2>
+        <p class="sec-lead" style="margin-inline:auto">
+          Réservé exclusivement aux étudiants en 2e année de Génie Civil option Géomètre Topographe à Yamoussoukro. Recevez votre identifiant mensuel unique (<code>Initiales-Date-BTS2GCGT</code>) validé par l'administrateur principal.
+        </p>
+      </div>
+
+      <!-- Carte centrale en verre dépoli sombre sur fond de la Grande Bibliothèque & Campus ACADEMIE GGT -->
+      <div class="home-glass-card reveal">
+        <div class="home-glass-crest" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="10,9 24,17 24,33 10,25"/>
+            <polygon points="24,23 38,15 38,29 24,37"/>
+            <polyline points="24,33 24,43 32,38 32,32.5"/>
+          </svg>
+        </div>
+
+        <div class="home-glass-tabs">
+          <span class="home-glass-tab active">Inscription BTS 2 GC-GT</span>
+          <a href="etudiant.html" class="home-glass-tab">Connexion Étudiant</a>
+        </div>
+
+        <form class="cform" id="contactForm" novalidate>
+          <div class="home-field">
+            <label for="homeRegName">Nom et Prénom(s)</label>
+            <div class="home-field-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 20c1.8-3.8 5-6 8-6s6.2 2.2 8 6"/>
+              </svg>
+              <input type="text" id="homeRegName" placeholder="Ex : Mohamed Sanogo" required />
+            </div>
+          </div>
+
+          <div class="home-field">
+            <label for="homeRegEmail">Adresse Email</label>
+            <div class="home-field-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M3 7l9 6 9-6"/>
+              </svg>
+              <input type="email" id="homeRegEmail" placeholder="votre.email@exemple.com" required />
+            </div>
+          </div>
+
+          <div class="home-field">
+            <label for="homeRegPhone">Téléphone / WhatsApp</label>
+            <div class="home-field-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="6" y="2" width="12" height="20" rx="2"/>
+                <circle cx="12" cy="18" r="1"/>
+              </svg>
+              <input type="tel" id="homeRegPhone" placeholder="+225 07 00 00 00 00" />
+            </div>
+          </div>
+
+          <div class="home-field">
+            <label for="homeRegClasse">Filière unique</label>
+            <div class="home-field-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M12 3L2 8l10 5 10-5-10-5Z"/>
+                <path d="M6 10.5v5.5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/>
+              </svg>
+              <input type="text" id="homeRegClasse" value="BTS 2 — Génie Civil option Géomètre Topographe" readonly style="background:rgba(255,255,255,0.08);color:#86efac;font-weight:600" />
+            </div>
+          </div>
+
+          <div class="home-field">
+            <label for="homeRegEcole">Votre établissement d'origine à Yamoussoukro</label>
+            <div class="home-field-box">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 10h1M14 10h1M9 14h1M14 14h1M9 18h1M14 18h1"/>
+              </svg>
+              <select id="homeRegEcole" required>
+                <option value="">— Sélectionnez votre école (Yamoussoukro) —</option>
+                <option value="INP-HB (ESTP Yamoussoukro)">INP-HB (ESTP Yamoussoukro)</option>
+                <option value="ESBTP Yamoussoukro">ESBTP Yamoussoukro</option>
+                <option value="EPI-YAKRO">EPI-YAKRO</option>
+                <option value="ESETEC Yamoussoukro">ESETEC Yamoussoukro</option>
+                <option value="2IFTP Yamoussoukro">2IFTP Yamoussoukro</option>
+                <option value="Autre établissement (Yamoussoukro)">Autre établissement (Yamoussoukro)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="cform-btn">S'inscrire maintenant</button>
+          <p id="homeRegFeedback" style="font-size:13.5px;margin-top:6px;text-align:center"></p>
+
+          <div class="home-glass-divider"><span>ou accéder aux portails</span></div>
+
+          <a href="etudiant.html" class="home-glass-outline-btn">
+            <span class="portal-svg-badge student">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+                <path d="M6 12.5v4.5c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/>
+                <path d="M22 10v6"/>
+              </svg>
+            </span>
+            <span>Ouvrir le Portail Étudiants (Cours PDF & Forum)</span>
+          </a>
+          <a href="admin.html" class="home-glass-outline-btn">
+            <span class="portal-svg-badge admin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </span>
+            <span>Ouvrir le Portail Administrateur Principal</span>
+          </a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg width="24" height="24" viewBox="0 0 26 26" fill="none"><path d="M13 3L2 9.5L13 16L24 9.5L13 3Z" fill="white"/><path d="M6 12.5V18.5C6 18.5 8.5 22 13 22C17.5 22 20 18.5 20 18.5V12.5L13 16.5L6 12.5Z" fill="white" opacity="0.8"/></svg>
+            ACADEMIE GGT
+          </div>
+          <p>Cours de renforcement universitaire Cycle BTS — Cours PDF, Exercices & Corrigés PDF et Forum d'entraide.</p>
+          <div class="socials">
+            <a href="etudiant.html" title="Portail Étudiant" aria-label="Portail Étudiant">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12.5v4.5c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg>
+            </a>
+            <a href="admin.html" title="Portail Admin" aria-label="Portail Administrateur">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="fcol"><h4>Les 2 Liens</h4><ul><li><a href="etudiant.html">Lien Étudiants (Cours & Forum)</a></li><li><a href="etudiant.html?tab=register">Portail d'inscription BTS</a></li><li><a href="admin.html">Lien Administrateur Principal</a></li></ul></div>
+        <div class="fcol"><h4>Filières BTS</h4><ul><li><a href="#formations">BTS IDA & RIT</a></li><li><a href="#formations">BTS FCGE & GEC</a></li><li><a href="#formations">BTS RHC & LOG</a></li><li><a href="#formations">BTS Génie Civil</a></li></ul></div>
+        <div class="fcol"><h4>Contact</h4><ul><li><a href="mailto:mohsanogo512@gmail.com">mohsanogo512@gmail.com</a></li><li><a href="etudiant.html">Connexion par Identifiant</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 ACADEMIE GGT — Tous droits réservés.</p></div>
+    </div>
+  </footer>
+
+  <script src="script.js?v=4"></script>
+</body>
+</html>

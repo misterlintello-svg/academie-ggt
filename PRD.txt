@@ -1,0 +1,462 @@
+Voici un PRD complet et professionnel pour développer un site web qui reproduit fidèlement le design de ta maquette : un campus universitaire en arrière-plan, un grand cadre panoramique métallique, une navigation transparente et un message central puissant :
+
+« QUOI QU’ON DISE, QUOI QU’ON FASSE, C’EST LE TERRAIN QUI DÉTERMINE »
+
+Le document est conçu pour être utilisé dans un outil de développement assisté par IA comme Antigravity, Cursor, Lovable ou un environnement équivalent.
+
+# PRD — Site web académique immersif « CampusPlus »
+
+[Wayne State University - Admissions, Rankings, and Acceptance Rate | Varsity Tutors](https://images.openai.com/static-rsc-4/FRreEDmUWFOkzudU_7eT6q4lPPZun1IZ9xiO5rrgshpBK9IIeSOEJZYuN3bTQx84kmR6ZBNthY7w5ilN3LiVUh7mvmxE27fk5vuO36iuoxaspVeGeBBvDFi4f_o3skI2pyODfSqfoLPEAMeqJO29MgbO-vyfqQQMNdaQ73Mbvi0?purpose=inline)
+
+[varsitytutors.com](https://www.varsitytutors.com/colleges/wayne-state-university-mi)
+
+Direction artistique : architecture universitaire, lumière naturelle et composition panoramique.
+
+Type de projet
+
+Site vitrine
+
+Style
+
+Académique, immersif, moderne
+
+Priorité
+
+Reproduction du premier écran
+
+Responsive
+
+Ordinateur, tablette, mobile
+
+Langue
+
+Français
+
+## 1. Présentation générale du projet
+
+### 1.1. Vision
+
+Créer un site web institutionnel qui valorise la formation, l'apprentissage et l'expérience du terrain à travers une interface visuelle originale.
+
+Le site doit donner l'impression que le visiteur regarde un campus universitaire à travers une grande fenêtre panoramique intégrée à une structure métallique. Le contenu du site apparaît directement sur cette vue, sans masquer inutilement l'architecture.
+
+### 1.2. Objectifs
+
+- Créer une première impression visuelle forte dès l'ouverture du site.
+- Mettre en avant la phrase centrale comme élément principal de communication.
+- Présenter l'établissement, ses formations et ses activités.
+- Permettre aux visiteurs de découvrir les informations essentielles.
+- Proposer un accès aux inscriptions ou aux demandes de renseignements.
+- Assurer une expérience fluide sur tous les appareils.
+
+### 1.3. Public cible
+
+- Étudiants et futurs étudiants.
+- Élèves en recherche d'orientation.
+- Parents et responsables d'étudiants.
+- Professionnels et partenaires académiques.
+- Visiteurs souhaitant découvrir l'établissement.
+
+## 2. Direction artistique et identité visuelle
+
+### 2.1. Concept graphique
+
+L'interface repose sur quatre éléments indissociables :
+
+[Las mejores universidades públicas de España](https://images.openai.com/static-rsc-4/dhobHZ3hErhBkSJQ49w7C1EAvHxudQBtIbL6Zg5TeIQYlx2BJaSDRCL5pmFwJcZpqYEcP3E7kCV2XewQWL3s0fF2e4hlG8JTkSkBC-rgpB4DeLEW4iYqULPwxvZsWaUfZPaI-vTg2uCwSZLGjBey8Pnw_8KGUqKSsTgxHBuDexQ?purpose=inline)
+
+A. Photographie du campus
+
+Une image réaliste de haute résolution représentant un bâtiment universitaire, une cour intérieure, des espaces verts et un ciel lumineux. L'architecture doit rester visible et reconnaissable.
+
+[Custom RV Accessories Manufacturer](https://images.openai.com/static-rsc-4/QaaHlYzUQ5Q8ouYjQ2NXVkA_Zf6PLWb4_JVilyS6_K2Y24NS22RmS8tz2z5Gm06gSLfmg5WTX0Lwz7JNXU2kcUMm-JWjkrJOeqOpXHrpUcmMK67w0e6AImjU5fHFzj_PMrtYrr8hBYStVHhP_HCUWtTXS6WXaJzoQIE1ys5KKJw?purpose=inline)
+
+B. Cadre panoramique
+
+Un contour sombre, épais et arrondi, avec plusieurs couches métalliques, des reflets, des ombres internes et de subtils détails cuivrés. Il doit encadrer l'image sur les quatre côtés.
+
+[Liquid glass navigation by Roman Vasylovskyi on Dribbble](https://images.openai.com/static-rsc-4/2Gy-psxn15rc8GC9GnPiggilrDIF1bR0M9p72DtwXateGWxxaNIAxKa_a8ks-bYo7eQSzH6aw5jY-3SEuiH-BAYABS5H5KLYVzgwEBRQ1eTlFM29fkYQDex42jIPW4MtqYM62MynrA2bv5DVneUaooj1Ca_n0yuBOTt5q8HOnoc?purpose=inline)
+
+C. Navigation flottante
+
+Une barre translucide aux bords arrondis, située dans la partie supérieure de l'image, avec des liens blancs et un indicateur discret pour la page active.
+
+[Supernotes - Hero | Sections.wtf](https://images.openai.com/static-rsc-4/S63hXP_LA86eJU3xjk-0rV3WGvaJznWOcedquWmq0lsM0RRpFe91ZAXN8XokisBrwFsT6_6MLWu3OPluXv1k7fABmq7Zp1GN0mIaUAeJl44NMfr_NpiK-5XozNc33hDhG5BhRn0EZ3eTu5hwXwZ9CP9BU-dJk7y9QkeZvGl8gbI?purpose=inline)
+
+D. Message central
+
+Un titre en majuscules, une typographie sans-serif forte et un alignement central. Le ciel sert de zone de contraste pour que le message reste immédiatement lisible.
+
+### 2.2. Palette de couleurs
+
+| Élément         | Code couleur | Utilisation                     |
+| --------------- | ------------ | ------------------------------- |
+| Noir bleuté     | `#101820`    | Cadre, boutons foncés           |
+| Gris métallique | `#454E53`    | Reliefs et bordures             |
+| Cuivre          | `#A66A4A`    | Reflets et détails du cadre     |
+| Bleu ciel       | `#6CB4E5`    | Dominante du paysage            |
+| Vert campus     | `#6F9450`    | Pelouses et végétation          |
+| Blanc           | `#FFFFFF`    | Navigation et éléments clairs   |
+| Texte principal | `#071C32`    | Titre central                   |
+| Gris secondaire | `#465665`    | Description et texte secondaire |
+
+Les couleurs du campus proviennent principalement de la photographie. Les couleurs CSS doivent servir à harmoniser le cadre et les composants, sans recolorer artificiellement toute l'image.
+
+### 2.3. Typographie
+
+- Titre principal : Inter, Manrope ou Geist, en graisse 600 à 800.
+- Navigation : Inter ou équivalent, taille de 12 à 14 px sur ordinateur.
+- Description : police sans-serif régulière, taille de 15 à 18 px.
+- Boutons : police de poids moyen, taille de 13 à 15 px.
+
+Le titre doit être assez imposant pour structurer l'écran, sans couvrir le bâtiment central.
+
+## 3. Architecture de la page d'accueil
+
+Le premier écran est prioritaire. Il doit reproduire la composition de la maquette avant d'ajouter des fonctionnalités secondaires.
+
+Logo + CampusPlus
+
+S'inscrire
+
+Accueil · À propos · Formations · Actualités · Contact
+
+ANNÉE ACADÉMIQUE 2026–2027
+
+# QUOI QU'ON DISE,QUOI QU'ON FASSE,C'EST LE TERRAIN QUI DÉTERMINE
+
+Apprendre, pratiquer et construire son avenir.
+
+Votre adresse email
+
+Rejoindre
+
+Schéma de composition fonctionnelle, et non rendu final du cadre métallique.
+
+### Zone 1 — En-tête
+
+À gauche :
+
+- Logo académique.
+- Nom de l'établissement, par défaut « CampusPlus ».
+
+Au centre :
+
+- Accueil.
+- À propos.
+- Formations.
+- Actualités.
+- Contact.
+
+À droite :
+
+\- Bouton « S'inscrire ».
+
+La navigation doit rester discrète et ne pas dominer la photographie.
+
+### Zone 2 — Message principal
+
+Le texte exact à afficher est :
+
+# QUOI QU'ON DISE,
+
+# QUOI QU'ON FASSE,
+
+# C'EST LE TERRAIN QUI DÉTERMINE
+
+Le message doit être intégré dans le code HTML et non incrusté dans la photographie. Cela permettra de modifier ultérieurement le texte sans devoir recréer l'image.
+
+Règles de mise en forme :
+
+- Texte en majuscules.
+- Alignement horizontal centré.
+- Couleur bleu-noir très foncé.
+- Interlignage compact.
+- Largeur maximale contrôlée.
+- Adaptation automatique sur mobile.
+- Aucun élément décoratif ne doit masquer les lettres.
+
+### Zone 3 — Texte secondaire
+
+Texte proposé :
+
+> Un cadre d'exception pour apprendre, grandir et construire votre avenir. Ici, chaque talent trouve sa place.
+
+Ce texte reste facultatif et pourra être remplacé par la présentation réelle de l'établissement.
+
+### Zone 4 — Formulaire d'action
+
+Prévoir un champ email avec le libellé « Votre adresse email » et un bouton « Rejoindre ».
+
+Le formulaire pourra servir à recueillir des demandes d'information ou des inscriptions à une liste d'attente. Si l'objectif est une véritable inscription universitaire, il faudra prévoir un formulaire plus complet et un backend adapté.
+
+## 4. Spécifications du cadre panoramique
+
+Le cadre est le principal élément visuel différenciant. Il ne faut pas le remplacer par une simple bordure rectangulaire.
+
+### Caractéristiques attendues
+
+- Forme rectangulaire horizontale avec angles fortement arrondis.
+- Bord extérieur sombre, presque noir.
+- Plusieurs bandes métalliques avec des reflets subtils.
+- Ombres intérieures donnant une impression de profondeur.
+- Détails cuivrés très discrets.
+- Bord inférieur plus épais, inspiré de l'intérieur d'un véhicule.
+- Image du campus visible derrière le cadre.
+- Aucun espace blanc parasite entre le cadre et la photographie.
+
+### Méthode de réalisation recommandée
+
+Construire le cadre en CSS à l'aide de plusieurs conteneurs superposés et de pseudo-éléments. Utiliser des dégradés pour les reflets et des ombres pour la profondeur.
+
+La photographie doit être positionnée dans la fenêtre intérieure du cadre avec `object-fit: cover` ou `background-size: cover`, selon l'implémentation.
+
+Si un rendu métallique suffisamment réaliste ne peut pas être obtenu proprement en CSS, utiliser une texture graphique dédiée au cadre, tout en gardant le texte et la navigation en HTML.
+
+Important : le cadre et le contenu doivent rester séparés. Cela permet d'adapter la fenêtre, le texte et les images indépendamment.
+
+## 5. Animations et transitions
+
+Les animations doivent renforcer l'immersion sans ralentir l'accès aux informations.
+
+| Élément     | Animation                           | Durée indicative |
+| ----------- | ----------------------------------- | ---------------- |
+| Paysage     | Zoom très lent                      | 8 à 15 s         |
+| Cadre       | Apparition progressive              | 600 à 900 ms     |
+| Titre       | Fondu et léger déplacement vertical | 500 à 800 ms     |
+| Description | Apparition après le titre           | 400 à 600 ms     |
+| Formulaire  | Fondu léger                         | 400 à 600 ms     |
+| Boutons     | Transition d'opacité et de couleur  | 150 à 250 ms     |
+| Navigation  | Soulignement discret au survol      | 150 à 250 ms     |
+
+Les animations doivent se déclencher au chargement initial ou lors de l'interaction, sans mouvement permanent excessif. La préférence `prefers-reduced-motion` doit être respectée.
+
+## 6. Architecture complète du site
+
+Au-delà du premier écran, le site peut être organisé en sections cohérentes avec l'univers académique.
+
+01
+
+Accueil immersif
+
+Cadre panoramique, slogan, navigation et appel à l'action.
+
+02
+
+Présentation
+
+Mission, vision, valeurs et présentation de l'établissement.
+
+03
+
+Formations
+
+Programmes, filières, conditions d'accès et débouchés.
+
+04
+
+Vie universitaire
+
+Campus, activités étudiantes, clubs et événements.
+
+05
+
+Actualités
+
+Annonces, calendrier académique et informations récentes.
+
+06
+
+Admissions
+
+Procédure de candidature, pièces requises et contact.
+
+07
+
+Pied de page
+
+Coordonnées, réseaux sociaux, mentions légales et confidentialité.
+
+Les sections secondaires peuvent utiliser des images académiques, des cartes de formation et des blocs de contenu plus classiques. Le cadre métallique doit rester la signature visuelle principale, sans obliger toutes les pages à reprendre exactement la même composition.
+
+## 7. Exigences techniques
+
+### Stack recommandée
+
+| Partie      | Technologie                                  |
+| ----------- | -------------------------------------------- |
+| Interface   | React + Vite                                 |
+| Styles      | CSS3, Flexbox, Grid                          |
+| Animations  | CSS natif, éventuellement Framer Motion      |
+| Formulaires | React avec validation                        |
+| Backend     | À déterminer selon les besoins d'inscription |
+| Images      | WebP ou AVIF                                 |
+| Déploiement | Vercel, Netlify ou hébergement compatible    |
+
+Pour une simple page vitrine, HTML, CSS et JavaScript peuvent suffire. React est préférable si le site doit évoluer vers plusieurs pages et composants réutilisables.
+
+### Organisation des fichiers
+
+```
+campusplus/
+├── public/
+│   ├── images/
+│   │   ├── campus.webp
+│   │   └── cadre-metal.png
+│   └── favicon.svg
+├── src/
+│   ├── components/
+│   │   ├── PanoramicFrame.jsx
+│   │   ├── Header.jsx
+│   │   ├── HeroContent.jsx
+│   │   └── EmailForm.jsx
+│   ├── pages/
+│   │   └── Home.jsx
+│   ├── styles/
+│   │   ├── global.css
+│   │   └── hero.css
+│   ├── App.jsx
+│   └── main.jsx
+├── package.json
+└── README.md
+```
+
+Cette architecture facilite les corrections du cadre, du contenu central et des images sans modifier l'ensemble du site.
+
+## 8. Responsive design
+
+[Carnegie Mellon University - Niche](https://images.openai.com/static-rsc-4/d-bwArE-C0pCakKtLeWZsbPlDj1VmqS1PwP0akpBqE9yF9sh6fPUWgx-qDH0cD4W_69BYWc6LkFBJzebxSBq5zOmjAsH6MP6r45oVPc2iusV3_pYOV7xfWiSUm6sXXESNWq0AtgBoypbjtVZWZIZjZ5WfYK8rX6_2wjNAObKkGY?purpose=inline)
+
+Ordinateur — 1024 px et plus
+
+Cadre large sur presque toute la fenêtre du navigateur. Navigation horizontale, titre central sur deux ou trois lignes selon sa longueur, formulaire horizontal.
+
+[BAUWELT - Bocconi-Campus in Mailand](https://images.openai.com/static-rsc-4/O4lOQ_U9fj5IvXAIL9Q3CdonWi_Ssvo2510RLCdtczZpJQYYMH1ZqbJzLFL1SRZ8-49x-MqxVkowW_E2nzJuwA06QHTn29I_y-XZAljEtvjJI26B2vbkqGXUfDqJ1y9TuNW9ER7ZSODJL5n5rQqcgSWE4xfLCgsaBRSKDYqYnkM?purpose=inline)
+
+Tablette — 768 à 1023 px
+
+Réduction de l'épaisseur du cadre, espacement plus compact et titre ajusté à la largeur de la fenêtre.
+
+[Workforce | Stark Development Board](https://images.openai.com/static-rsc-4/5nLwOGFjSPy5qfJi9SZ8X24GfZlau3vAxritqjZaA6OJ8Z3dMJgyGhYl6bqEFGPfyQxEcHcHiBpzBUahbvB0qtdwpnVgSYqLm8y-N9X4DZuVuFspwtHJXVSCyu55GxTsqiHkxJ2UmEK6ShDbhA-Z26nu45kDEh96LGW6D57fBjU?purpose=inline)
+
+Mobile — moins de 768 px
+
+Cadre moins épais, navigation simplifiée, texte réorganisé et formulaire vertical. Le bâtiment doit rester visible sans sacrifier la lisibilité du slogan.
+
+Les images de chaque format doivent utiliser un point focal adapté. Il ne faut pas appliquer uniquement un zoom automatique qui risquerait de couper le bâtiment central.
+
+## 9. Fonctionnalités détaillées
+
+### Fonctionnalités indispensables — MVP
+
+- Affichage de la page d'accueil immersive.
+- Navigation fonctionnelle.
+- Affichage du slogan exact.
+- Bouton d'inscription redirigeant vers une section ou une page dédiée.
+- Formulaire email avec validation.
+- Messages d'erreur et de confirmation.
+- Responsive design.
+- Animations légères et accessibles.
+
+### Fonctionnalités complémentaires
+
+- Page de présentation de l'établissement.
+- Catalogue des formations.
+- Actualités administrables.
+- Formulaire de candidature.
+- Gestion des inscriptions et des demandes d'information.
+- Tableau de bord d'administration, si nécessaire.
+
+Ces fonctionnalités complémentaires ne doivent pas être ajoutées artificiellement si le besoin immédiat se limite à une page d'accueil.
+
+## 10. Critères d'acceptation
+
+Le projet est considéré comme validé lorsque :
+
+- Le campus est affiché en haute qualité, sans déformation.
+- Le cadre métallique est visible sur les quatre côtés.
+- La navigation est positionnée comme sur la maquette.
+- Le slogan est exact, lisible et centré.
+- Les composants restent indépendants de l'image.
+- Les boutons et les formulaires fonctionnent réellement.
+- Le site s'adapte aux tailles d'écran courantes.
+- Les performances sont correctes sur une connexion mobile.
+- Aucun texte ne déborde ni ne se superpose de manière involontaire.
+- Les animations respectent les préférences d'accessibilité.
+
+## 11. Prompt final à transmettre à Antigravity ou à un autre outil IA
+
+# PROMPT — DÉVELOPPEMENT DU SITE CAMPUSPLUS
+
+Développe un site web académique immersif en reproduisant fidèlement la maquette de référence fournie.
+
+## Objectif prioritaire
+
+Reproduire le premier écran avec un grand cadre panoramique métallique sombre et arrondi, une photographie réaliste de campus universitaire, une navigation transparente et un message central.
+
+Le rendu doit être professionnel, cinématographique, moderne et responsive.
+
+## Composition exacte
+
+1. Une grande fenêtre panoramique occupant presque toute la zone visible du navigateur.
+2. Un cadre extérieur métallique noir bleuté, avec relief, reflets et détails cuivrés.
+3. Une photographie haute résolution d'un campus universitaire en brique, avec ciel bleu, végétation et entrée centrale.
+4. Un logo blanc et le nom CampusPlus en haut à gauche.
+5. Une navigation translucide centrée en haut : Accueil, À propos, Formations, Actualités, Contact.
+6. Un bouton blanc « S'inscrire » en haut à droite.
+7. Un titre central en majuscules :\
+   « QUOI QU'ON DISE,\
+   QUOI QU'ON FASSE,\
+   C'EST LE TERRAIN QUI DÉTERMINE »
+8. Une courte description sous le titre.
+9. Un formulaire email arrondi dans la partie inférieure.
+
+## Direction artistique
+
+Utiliser les couleurs noir bleuté, gris métallique, cuivre, bleu ciel, vert naturel et blanc. Le titre doit être bleu-noir et contrasté avec le ciel. Utiliser une police moderne de type Inter ou Manrope.
+
+Le cadre doit sembler physique, avec plusieurs couches, des ombres internes et des reflets subtils. Éviter une simple bordure CSS plate.
+
+## Architecture
+
+Développer l'interface en composants indépendants. Séparer le cadre, l'image, la navigation, le contenu central et le formulaire. Tous les textes doivent être éditables sans modifier l'image.
+
+Utiliser React avec Vite ou une architecture équivalente adaptée au projet. Produire un code clair, maintenable et documenté.
+
+## Interactions
+
+Ajouter des animations discrètes d'apparition, un zoom très lent du paysage et des transitions au survol des boutons. Rendre la navigation fonctionnelle. Le formulaire doit valider les emails et afficher des messages appropriés. Ne pas simuler un enregistrement sans backend.
+
+## Responsive design
+
+Créer des adaptations spécifiques pour ordinateur, tablette et mobile. Sur mobile, ajuster la forme du cadre, le recadrage du campus et la disposition des éléments. Préserver la lisibilité du slogan.
+
+## Contraintes
+
+Ne pas ajouter d'éléments inutiles au premier écran. Ne pas déformer la photographie. Ne pas incruster les textes dans l'image. Éviter les animations excessives. Optimiser les images et respecter les préférences de réduction des animations.
+
+## Livrables
+
+Fournir tous les fichiers du projet, les composants, les styles, les images optimisées, les instructions de lancement et une version fonctionnelle prête à être testée et déployée.
+
+Commencer par finaliser la reproduction du premier écran avant de développer les sections secondaires. Comparer régulièrement le résultat à la référence fournie.
+
+## 12. Ordre de réalisation recommandé
+
+1. Étape 1 — Reproduire le hero
+
+   Intégrer l'image du campus, construire le cadre métallique et positionner les éléments principaux.
+2. Étape 2 — Régler les proportions
+
+   Ajuster les marges, la hauteur du cadre, la taille du titre et l'emplacement de la navigation.
+3. Étape 3 — Ajouter les interactions
+
+   Configurer les boutons, le formulaire et les animations.
+4. Étape 4 — Adapter aux mobiles
+
+   Tester les recadrages, la lisibilité et la navigation sur plusieurs largeurs.
+5. Étape 5 — Développer les autres pages
+
+   Ajouter les formations, la présentation, les actualités et les admissions une fois le premier écran validé.
+
+Conseil final : pour obtenir une reproduction proche de ta maquette, fournis à ton outil de développement les deux images de référence : la photographie du campus et le rendu final avec le cadre métallique. Demande-lui de les utiliser comme références visuelles directes, puis de construire le texte et les interactions séparément en HTML/CSS. C'est la meilleure manière de préserver la composition tout en obtenant un site réellement modifiable.

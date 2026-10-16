@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: academie-ggt
+    runtime: python
+    region: frankfurt
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ADMIN_PASSWORD
+        value: Admin123
+      - key: ADMIN_EMAIL
+        value: mohsanogo512@gmail.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: academie-ggt-db
+          property: connectionString
+
+databases:
+  - name: academie-ggt-db
+    databaseName: academie_ggt
+    user: academie_user
+    plan: free
+    region: frankfurt
