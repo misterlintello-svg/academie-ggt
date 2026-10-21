@@ -1,0 +1,32 @@
+# Configuration officielle Netlify — ACADEMIE GGT (Production)
+[build]
+  publish = "."
+  command = "echo 'ACADEMIE GGT Production Build Ready'"
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/etudiant"
+  to = "/etudiant.html"
+  status = 200
+
+[[redirects]]
+  from = "/inscription"
+  to = "/etudiant.html?tab=register"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/uploads/pdfs/*"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Cache-Control = "public, max-age=86400"

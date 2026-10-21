@@ -1,19 +1,47 @@
 /* ══════════════════════════════════════════════════════════════════
-   ACADEMIE GGT — INTERFACE ADMINISTRATEUR PRINCIPAL
-   Palette harmonisée avec le site (Bleu Nuit, Bleu Royal, Cyan, Émeraude)
-   Animations dynamiques, effets 3D et micro-interactions interactives
+   ACADEMIE GGT — INTERFACE ADMINISTRATEUR PRINCIPAL (PRODUCTION)
+   Palette harmonisée (Bleu Nuit, Bleu Royal, Cyan, Émeraude)
+   Transitions fluides, physique ressort (Spring), Donut SVG animé & Toasts
    ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --adm-blue: #1d4ed8;
+  --adm-blue-light: #2563eb;
+  --adm-cyan: #0284c7;
+  --adm-sky: #38bdf8;
+  --adm-emerald: #10b981;
+  --adm-amber: #f59e0b;
+  --adm-slate: #0f172a;
+}
+
+/* ── Transitions de la Carte de Connexion Admin ── */
+.glass-auth-stage {
+  transition:
+    opacity 0.38s var(--ease-spring),
+    transform 0.38s var(--ease-spring),
+    filter 0.38s var(--ease-spring);
+}
+.glass-auth-stage.is-leaving {
+  opacity: 0;
+  transform: scale(0.95) translateY(-18px);
+  filter: blur(8px);
+  pointer-events: none;
+}
 
 /* ── Fond Atmosphérique & Ambiance Globale ── */
 body.admin-dash-active {
   background:
-    radial-gradient(75% 55% at 50% 8%, rgba(37, 99, 235, 0.22) 0%, rgba(14, 165, 233, 0.08) 45%, transparent 75%),
-    radial-gradient(60% 50% at 85% 90%, rgba(14, 165, 233, 0.12) 0%, transparent 60%),
+    radial-gradient(75% 55% at 50% 8%, rgba(37, 99, 235, 0.24) 0%, rgba(14, 165, 233, 0.09) 45%, transparent 75%),
+    radial-gradient(60% 50% at 85% 90%, rgba(14, 165, 233, 0.14) 0%, transparent 60%),
     linear-gradient(180deg, #071e33 0%, #0a2d4a 45%, #06192b 100%) !important;
   color: #0f172a;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  transition: background 0.5s ease;
 }
 
 body.admin-dash-active::before {
@@ -27,49 +55,108 @@ body.admin-dash-active::before {
   z-index: 0;
 }
 
-/* ── Coquille Exécutive PinenMFB Modernisée ── */
+/* ── Coquille Exécutive Modernisée ── */
 .pinen-shell {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 268px 1fr;
   gap: 24px;
   background: rgba(241, 246, 252, 0.96) !important;
-  border: 1px solid rgba(186, 215, 240, 0.7) !important;
+  border: 1px solid rgba(186, 215, 240, 0.75) !important;
   border-radius: 28px !important;
   padding: 22px !important;
   min-height: calc(100vh - 36px);
   box-shadow:
     0 28px 75px rgba(3, 14, 26, 0.55),
-    0 0 45px rgba(56, 189, 248, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    0 0 45px rgba(56, 189, 248, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
   color: #0f172a !important;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   position: relative;
   z-index: 1;
-  animation: adminShellIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: opacity 0.35s var(--ease-spring), transform 0.35s var(--ease-spring);
+}
+
+/* Chorégraphie d'ouverture uniquement lors de l'entrée (.is-entering)
+   pour ne jamais bloquer les transformations :hover par la suite */
+#adminDashView.is-entering .pinen-shell {
+  animation: adminShellIn 0.65s var(--ease-out-expo);
+}
+#adminDashView.is-entering .pinen-sidebar {
+  animation: adminSlideLeft 0.62s 0.06s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-header {
+  animation: adminFadeDown 0.58s 0.10s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-kpi:nth-child(1) {
+  animation: adminCardUp 0.58s 0.12s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-kpi:nth-child(2) {
+  animation: adminCardUp 0.58s 0.17s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-kpi:nth-child(3) {
+  animation: adminCardUp 0.58s 0.22s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-kpi:nth-child(4) {
+  animation: adminCardUp 0.58s 0.27s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-habbits-card {
+  animation: adminCardUp 0.62s 0.24s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-stat-card {
+  animation: adminCardUp 0.62s 0.20s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-growth-card {
+  animation: adminCardUp 0.62s 0.28s var(--ease-out-expo) backwards;
+}
+#adminDashView.is-entering .pinen-panel-card {
+  animation: adminCardUp 0.62s 0.32s var(--ease-out-expo) backwards;
 }
 
 @keyframes adminShellIn {
-  from { opacity: 0; transform: scale(0.98) translateY(14px); }
+  from { opacity: 0; transform: scale(0.975) translateY(16px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes adminSlideLeft {
+  from { opacity: 0; transform: translateX(-26px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes adminFadeDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes adminCardUp {
+  from { opacity: 0; transform: translateY(22px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sectionSwitchIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.992); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+.section-anim-in {
+  animation: sectionSwitchIn 0.44s var(--ease-spring);
 }
 
 /* ── Sidebar Gauche ── */
 .pinen-sidebar {
   background: #ffffff !important;
-  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border: 1px solid rgba(226, 232, 240, 0.92) !important;
   border-radius: 24px !important;
   padding: 24px 18px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04) !important;
-  animation: adminSlideLeft 0.6s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes adminSlideLeft {
-  from { opacity: 0; transform: translateX(-24px); }
-  to   { opacity: 1; transform: translateX(0); }
+  position: sticky;
+  top: 18px;
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .pinen-brand {
@@ -90,11 +177,11 @@ body.admin-dash-active::before {
   font-size: 22px;
   font-weight: 700;
   box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35) !important;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  transition: transform 0.4s var(--ease-bounce), box-shadow 0.3s ease;
 }
 .pinen-brand:hover .pinen-brand-logo {
-  transform: rotate(8deg) scale(1.1);
-  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.45) !important;
+  transform: rotate(-8deg) scale(1.1);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.48) !important;
 }
 .pinen-brand-name {
   font-family: 'Outfit', sans-serif;
@@ -135,7 +222,7 @@ body.admin-dash-active::before {
   width: 100%;
   padding: 11px 14px;
   border: none;
-  border-radius: 12px;
+  border-radius: 13px;
   background: transparent;
   color: #334155 !important;
   font: inherit;
@@ -145,7 +232,12 @@ body.admin-dash-active::before {
   cursor: pointer;
   text-decoration: none;
   position: relative;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  transition:
+    background 0.28s var(--ease-spring),
+    color 0.28s var(--ease-spring),
+    transform 0.28s var(--ease-spring),
+    box-shadow 0.28s var(--ease-spring);
 }
 .pinen-nav-btn::before {
   content: "";
@@ -155,26 +247,26 @@ body.admin-dash-active::before {
   height: 60%;
   width: 3.5px;
   background: #2563eb;
-  border-radius: 0 3px 3px 0;
+  border-radius: 0 4px 4px 0;
   opacity: 0;
-  transform: scaleY(0.4);
-  transition: all 0.22s ease;
+  transform: scaleY(0.3);
+  transition: transform 0.28s var(--ease-bounce), opacity 0.25s ease;
 }
 .pinen-nav-btn:hover {
   background: #eff6ff !important;
   color: #1d4ed8 !important;
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 .pinen-nav-btn:hover::before {
-  opacity: 0.8;
+  opacity: 0.85;
   transform: scaleY(1);
 }
 .pinen-nav-btn.active {
   background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%) !important;
   color: #ffffff !important;
   font-weight: 600;
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.32) !important;
-  transform: translateX(2px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.30) !important;
+  transform: translateX(3px);
 }
 .pinen-nav-btn.active::before {
   opacity: 1;
@@ -186,14 +278,15 @@ body.admin-dash-active::before {
   height: 18px;
   flex-shrink: 0;
   color: #64748b !important;
-  transition: color 0.2s, transform 0.2s;
+  transition: color 0.25s ease, transform 0.3s var(--ease-bounce);
 }
 .pinen-nav-btn:hover svg {
   color: #1d4ed8 !important;
-  transform: scale(1.1);
+  transform: scale(1.14) rotate(-4deg);
 }
 .pinen-nav-btn.active svg {
   color: #ffffff !important;
+  transform: scale(1.08);
 }
 .pinen-nav-badge {
   margin-left: auto;
@@ -203,12 +296,15 @@ body.admin-dash-active::before {
   border-radius: 999px;
   background: #e0f2fe !important;
   color: #0369a1 !important;
-  transition: all 0.2s;
+  transition: transform 0.25s var(--ease-bounce), background 0.25s ease, color 0.25s ease;
+}
+.pinen-nav-btn:hover .pinen-nav-badge {
+  transform: scale(1.08);
 }
 .pinen-nav-btn.active .pinen-nav-badge {
   background: #38bdf8 !important;
   color: #082f49 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
 /* Carte Clôture Fin de Mois */
@@ -222,12 +318,12 @@ body.admin-dash-active::before {
   overflow: hidden;
   margin-top: 12px;
   box-shadow: 0 10px 24px rgba(7, 28, 50, 0.35) !important;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.35s var(--ease-spring), border-color 0.35s ease, box-shadow 0.35s ease;
 }
 .pinen-pro-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(125, 211, 252, 0.5) !important;
-  box-shadow: 0 14px 32px rgba(7, 28, 50, 0.45) !important;
+  transform: translateY(-4px);
+  border-color: rgba(125, 211, 252, 0.55) !important;
+  box-shadow: 0 16px 34px rgba(7, 28, 50, 0.48) !important;
 }
 .pinen-pro-card::after {
   content: "G";
@@ -239,6 +335,10 @@ body.admin-dash-active::before {
   font-weight: 800;
   color: rgba(255, 255, 255, 0.04);
   pointer-events: none;
+  transition: transform 0.5s var(--ease-spring);
+}
+.pinen-pro-card:hover::after {
+  transform: scale(1.08) rotate(-6deg);
 }
 .pinen-pro-ico {
   width: 30px;
@@ -275,12 +375,12 @@ body.admin-dash-active::before {
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease, filter 0.25s ease;
 }
 .pinen-pro-btn:hover {
-  background: linear-gradient(135deg, #3b82f6, #0ea5e9) !important;
+  filter: brightness(1.1);
   transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(56, 189, 248, 0.5) !important;
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.48) !important;
 }
 
 /* ── Zone Principale Droite ── */
@@ -289,12 +389,6 @@ body.admin-dash-active::before {
   flex-direction: column;
   gap: 22px;
   min-width: 0;
-  animation: adminFadeDown 0.65s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes adminFadeDown {
-  from { opacity: 0; transform: translateY(-16px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Topbar Header */
@@ -329,14 +423,15 @@ body.admin-dash-active::before {
   background: #ffffff !important;
   border: 1px solid rgba(203, 213, 225, 0.85) !important;
   border-radius: 999px;
-  padding: 7px 15px;
+  padding: 8px 16px;
   gap: 8px;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04) !important;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s var(--ease-spring);
 }
 .pinen-search-box:focus-within {
   border-color: #2563eb !important;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14), 0 8px 20px rgba(37, 99, 235, 0.08) !important;
+  transform: translateY(-1px);
 }
 .pinen-search-box input {
   border: none;
@@ -344,7 +439,11 @@ body.admin-dash-active::before {
   background: transparent;
   font-size: 13px;
   color: #0f172a !important;
-  width: 180px;
+  width: 195px;
+  transition: width 0.3s var(--ease-spring);
+}
+.pinen-search-box:focus-within input {
+  width: 230px;
 }
 .pinen-icon-circle {
   position: relative;
@@ -358,12 +457,13 @@ body.admin-dash-active::before {
   place-items: center;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05) !important;
-  transition: transform 0.2s, box-shadow 0.2s, color 0.2s;
+  transition: transform 0.3s var(--ease-bounce), box-shadow 0.25s ease, color 0.2s ease, border-color 0.25s ease;
 }
 .pinen-icon-circle:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
   color: #2563eb !important;
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2) !important;
+  border-color: #93c5fd !important;
+  box-shadow: 0 10px 22px rgba(37, 99, 235, 0.22) !important;
 }
 .pinen-notif-dot {
   position: absolute;
@@ -386,33 +486,147 @@ body.admin-dash-active::before {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-left: 4px;
+  padding: 5px 12px 5px 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  transition: background 0.25s ease, transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
+}
+.pinen-profile:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
 }
 .pinen-avatar {
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
-  border: 1.5px solid rgba(191, 219, 254, 0.9);
-  color: #1d4ed8 !important;
+  background: linear-gradient(135deg, #1d4ed8, #0284c7) !important;
+  color: #ffffff !important;
   display: grid;
   place-items: center;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15) !important;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+  transition: transform 0.3s var(--ease-bounce);
 }
 .pinen-profile:hover .pinen-avatar {
-  transform: scale(1.1);
+  transform: scale(1.08) rotate(5deg);
 }
 .pinen-profile-info strong {
   display: block;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
   color: #0f172a !important;
 }
 .pinen-profile-info span {
   display: block;
-  font-size: 11.5px;
+  font-size: 11px;
   color: #64748b !important;
+}
+
+/* ── Système de Notifications Toast Flottant ── */
+.admin-toast-container {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 420px;
+  width: calc(100vw - 32px);
+  pointer-events: none;
+}
+.admin-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 18px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #ffffff;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 18px 42px rgba(2, 8, 23, 0.45), 0 0 24px rgba(37, 99, 235, 0.22);
+  position: relative;
+  overflow: hidden;
+  animation: toastSlideIn 0.42s var(--ease-spring) forwards;
+}
+.admin-toast.is-err {
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: 0 18px 42px rgba(2, 8, 23, 0.45), 0 0 24px rgba(239, 68, 68, 0.22);
+}
+.admin-toast.is-hiding {
+  animation: toastSlideOut 0.32s var(--ease-spring) forwards;
+}
+.admin-toast-ico {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-weight: 800;
+  font-size: 14px;
+}
+.admin-toast.is-err .admin-toast-ico {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+.admin-toast-body {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #f1f5f9;
+}
+.admin-toast-body code {
+  background: rgba(56, 189, 248, 0.18);
+  color: #7dd3fc;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.admin-toast-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+  transition: color 0.2s;
+}
+.admin-toast-close:hover {
+  color: #ffffff;
+}
+.admin-toast-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #38bdf8, #10b981);
+  transform-origin: left;
+  animation: toastProgress 5.2s linear forwards;
+}
+.admin-toast.is-err .admin-toast-bar {
+  background: linear-gradient(90deg, #f87171, #ef4444);
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateX(48px) scale(0.94); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes toastSlideOut {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to   { opacity: 0; transform: translateX(48px) scale(0.94); }
+}
+@keyframes toastProgress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
 }
 
 /* ── Grille Bento ── */
@@ -437,7 +651,7 @@ body.admin-dash-active::before {
 .pinen-kpi {
   position: relative;
   background: #ffffff !important;
-  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
   border-radius: 22px !important;
   padding: 20px 22px;
   overflow: hidden;
@@ -446,13 +660,16 @@ body.admin-dash-active::before {
   flex-direction: column;
   justify-content: space-between;
   min-height: 158px;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-  animation: adminCardUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  cursor: pointer;
+  transition:
+    transform 0.38s var(--ease-spring),
+    box-shadow 0.38s var(--ease-spring),
+    border-color 0.3s ease;
 }
 .pinen-kpi:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.09), 0 0 20px rgba(56, 189, 248, 0.14) !important;
-  border-color: rgba(56, 189, 248, 0.45) !important;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 42px rgba(15, 23, 42, 0.10), 0 0 24px rgba(56, 189, 248, 0.16) !important;
+  border-color: rgba(56, 189, 248, 0.55) !important;
 }
 .pinen-kpi::before {
   content: "";
@@ -464,14 +681,22 @@ body.admin-dash-active::before {
   background-image: radial-gradient(rgba(15, 23, 42, 0.06) 2px, transparent 2px);
   background-size: 18px 18px;
   pointer-events: none;
+  transition: transform 0.45s var(--ease-spring);
+}
+.pinen-kpi:hover::before {
+  transform: scale(1.08) translate(-3px, 3px);
 }
 
-/* KPI 1 : Featured Budget Total 100.000 F (Bleu Nuit & Effet Shimmer) */
+/* KPI 1 : Featured Budget Total */
 .pinen-kpi.featured {
   background: linear-gradient(145deg, #071d33 0%, #0d3b66 55%, #124b80 100%) !important;
   color: #ffffff !important;
   border: 1px solid rgba(125, 211, 252, 0.35) !important;
   box-shadow: 0 16px 36px rgba(7, 29, 51, 0.35), 0 0 26px rgba(56, 189, 248, 0.22) !important;
+}
+.pinen-kpi.featured:hover {
+  box-shadow: 0 22px 46px rgba(7, 29, 51, 0.48), 0 0 32px rgba(56, 189, 248, 0.35) !important;
+  border-color: rgba(125, 211, 252, 0.65) !important;
 }
 .pinen-kpi.featured::before {
   background-image: radial-gradient(rgba(125, 211, 252, 0.15) 2px, transparent 2px) !important;
@@ -482,7 +707,7 @@ body.admin-dash-active::before {
   inset: 0;
   background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.14) 50%, transparent 80%);
   transform: translateX(-150%);
-  animation: shimmerSweep 6s infinite;
+  animation: shimmerSweep 6.5s infinite;
   pointer-events: none;
 }
 
@@ -502,15 +727,15 @@ body.admin-dash-active::before {
   width: 44px;
   height: 44px;
   border-radius: 13px;
-  background: #f1f5f9 !important;
-  color: #1e293b !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
   display: grid;
   place-items: center;
-  transition: transform 0.25s, color 0.25s;
+  transition: transform 0.35s var(--ease-bounce), background 0.3s ease, color 0.3s ease;
 }
 .pinen-kpi:hover .pinen-kpi-ico {
-  transform: scale(1.1);
-  color: #2563eb !important;
+  transform: scale(1.12) rotate(-5deg);
+  background: #dbeafe !important;
 }
 .pinen-kpi.featured .pinen-kpi-ico {
   background: #ffffff !important;
@@ -524,6 +749,10 @@ body.admin-dash-active::before {
   background: #dcfce7 !important;
   color: #15803d !important;
   border: 1px solid rgba(34, 197, 94, 0.25);
+  transition: transform 0.25s var(--ease-bounce);
+}
+.pinen-kpi:hover .pinen-pill-delta {
+  transform: scale(1.05);
 }
 .pinen-kpi.featured .pinen-pill-delta {
   background: rgba(56, 189, 248, 0.22) !important;
@@ -556,10 +785,11 @@ body.admin-dash-active::before {
 }
 .pinen-kpi-val {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(24px, 2.4vw, 31px);
+  font-size: clamp(22px, 2.2vw, 29px);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: #0f172a !important;
+  font-variant-numeric: tabular-nums;
 }
 .pinen-kpi.featured .pinen-kpi-val {
   color: #38bdf8 !important;
@@ -586,11 +816,12 @@ body.admin-dash-active::before {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: adminCardUp 0.6s 0.16s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.35s var(--ease-spring), box-shadow 0.35s ease, border-color 0.3s ease;
 }
 .pinen-habbits-card:hover {
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(147, 197, 253, 0.65) !important;
 }
 .pinen-card-head {
   display: flex;
@@ -600,7 +831,7 @@ body.admin-dash-active::before {
 }
 .pinen-card-head h3 {
   font-family: 'Outfit', sans-serif;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
   color: #0f172a !important;
 }
@@ -621,11 +852,13 @@ body.admin-dash-active::before {
   font-weight: 600;
   border: 1px solid #e2e8f0 !important;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s var(--ease-spring);
 }
 .pinen-filter-pill:hover {
-  background: #e2e8f0 !important;
-  color: #0f172a !important;
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+  border-color: #bfdbfe !important;
+  transform: translateY(-1px);
 }
 .pinen-legend {
   display: flex;
@@ -669,7 +902,7 @@ body.admin-dash-active::before {
 }
 .pinen-bars-cols {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
   gap: 12px;
   align-items: end;
   height: 210px;
@@ -682,6 +915,7 @@ body.admin-dash-active::before {
   height: 100%;
   justify-content: flex-end;
   cursor: pointer;
+  position: relative;
 }
 .pinen-bar-pair {
   display: flex;
@@ -695,21 +929,45 @@ body.admin-dash-active::before {
   position: relative;
   cursor: pointer;
   transform-origin: bottom;
-  animation: barGrow 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-  animation-delay: calc(var(--i, 0) * 80ms);
-  transition: transform 0.25s, filter 0.25s, box-shadow 0.25s;
+  height: 0;
+  transition:
+    height 0.85s var(--ease-bounce),
+    transform 0.28s var(--ease-bounce),
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
 }
-.pinen-bar:hover {
-  transform: scaleY(1.08) scaleX(1.1);
-  filter: brightness(1.2);
+.pinen-bar-group:hover .pinen-bar {
+  transform: translateY(-3px) scaleX(1.12);
+  filter: brightness(1.15);
 }
 .pinen-bar.light {
   background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%) !important;
-  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35) !important;
 }
 .pinen-bar.dark {
   background: linear-gradient(180deg, #2563eb 0%, #1e40af 100%) !important;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35) !important;
+}
+.pinen-bar::after {
+  content: attr(data-val);
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: #0f172a;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.22s ease, transform 0.22s var(--ease-spring);
+}
+.pinen-bar-group:hover .pinen-bar::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 .pinen-bar-label {
   font-size: 12px;
@@ -720,50 +978,76 @@ body.admin-dash-active::before {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 86px;
-  transition: color 0.2s;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 .pinen-bar-group:hover .pinen-bar-label {
   color: #1d4ed8 !important;
   font-weight: 700;
+  transform: translateY(-1px);
 }
 
-@keyframes barGrow {
-  from { transform: scaleY(0); }
-  to   { transform: scaleY(1); }
-}
-
-/* ── Carte Droite Haute : Répartition Budget & Filières ── */
+/* ── Carte Droite Haute : Répartition Budget (Donut SVG Animé) ── */
 .pinen-stat-card {
   background: linear-gradient(165deg, #e0f2fe 0%, #bae6fd 55%, #93c5fd 100%) !important;
-  border: 1px solid rgba(186, 215, 240, 0.85) !important;
+  border: 1px solid rgba(186, 215, 240, 0.9) !important;
   border-radius: 24px !important;
   padding: 24px;
   box-shadow: 0 12px 30px rgba(2, 132, 199, 0.12) !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  animation: adminCardUp 0.6s 0.14s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: transform 0.3s ease;
+  transition: transform 0.38s var(--ease-spring), box-shadow 0.38s ease;
 }
 .pinen-stat-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgba(2, 132, 199, 0.20) !important;
 }
 .pinen-pie-wrap {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 18px 0;
+  margin: 14px 0;
 }
 .pinen-pie-svg {
-  width: 210px;
-  height: 210px;
-  filter: drop-shadow(0 12px 22px rgba(37, 99, 235, 0.25)) !important;
-  animation: spinPie 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  width: 196px;
+  height: 196px;
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 12px 22px rgba(37, 99, 235, 0.22)) !important;
 }
-
-@keyframes spinPie {
-  from { transform: rotate(-45deg) scale(0.9); opacity: 0; }
-  to   { transform: rotate(0deg) scale(1); opacity: 1; }
+.pinen-pie-svg circle {
+  transition:
+    stroke-dasharray 0.95s var(--ease-spring),
+    stroke-dashoffset 0.95s var(--ease-spring),
+    stroke-width 0.3s ease;
+}
+.pinen-stat-card:hover .pinen-pie-svg circle.pie-seg-active {
+  stroke-width: 28;
+}
+.pinen-pie-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+}
+.pinen-pie-center strong {
+  font-family: 'Outfit', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+}
+.pinen-pie-center span {
+  font-size: 11px;
+  font-weight: 600;
+  color: #1e3a8a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
 }
 
 .pinen-stat-rows {
@@ -779,6 +1063,12 @@ body.admin-dash-active::before {
   font-size: 13px;
   font-weight: 600;
   color: #0f2b48 !important;
+  padding: 4px 6px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.pinen-stat-row:hover {
+  background: rgba(255, 255, 255, 0.45);
 }
 .pinen-stat-row strong {
   font-family: 'Outfit', sans-serif;
@@ -793,11 +1083,12 @@ body.admin-dash-active::before {
   border-radius: 24px !important;
   padding: 22px 24px;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04) !important;
-  animation: adminCardUp 0.6s 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: transform 0.3s ease;
+  transition: transform 0.38s var(--ease-spring), box-shadow 0.38s ease, border-color 0.3s ease;
 }
 .pinen-growth-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(147, 197, 253, 0.65) !important;
 }
 .pinen-growth-body {
   display: grid;
@@ -819,32 +1110,32 @@ body.admin-dash-active::before {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
   color: #ffffff;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.35s var(--ease-bounce), box-shadow 0.35s ease;
   cursor: pointer;
 }
 .pinen-bubble:hover {
-  transform: scale(1.15) !important;
+  transform: scale(1.16) !important;
   z-index: 10 !important;
 }
 .pinen-bubble.b1 {
   width: 84px; height: 84px; left: 2px; top: 8px;
   background: linear-gradient(135deg, #1e3a8a, #2563eb) !important;
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35) !important;
-  font-size: 19px; z-index: 2;
+  font-size: 18px; z-index: 2;
   animation: bubbleFloat1 4.5s ease-in-out infinite;
 }
 .pinen-bubble.b2 {
   width: 70px; height: 70px; right: 4px; bottom: 10px;
   background: linear-gradient(135deg, #2563eb, #0284c7) !important;
   box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35) !important;
-  font-size: 16px; z-index: 4;
+  font-size: 15px; z-index: 4;
   animation: bubbleFloat2 5.2s ease-in-out infinite;
 }
 .pinen-bubble.b3 {
   width: 52px; height: 52px; left: 36px; bottom: 0;
   background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
   box-shadow: 0 8px 18px rgba(56, 189, 248, 0.35) !important;
-  font-size: 13px; z-index: 3;
+  font-size: 12.5px; z-index: 3;
   animation: bubbleFloat1 3.8s ease-in-out infinite 0.5s;
 }
 .pinen-bubble.b4 {
@@ -852,17 +1143,17 @@ body.admin-dash-active::before {
   background: linear-gradient(135deg, #38bdf8, #7dd3fc) !important;
   color: #082f49 !important;
   box-shadow: 0 8px 16px rgba(125, 211, 252, 0.35) !important;
-  font-size: 12px; z-index: 5;
+  font-size: 11.5px; z-index: 5;
   animation: bubbleFloat2 4.2s ease-in-out infinite 0.8s;
 }
 
 @keyframes bubbleFloat1 {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-7px) scale(1.03); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 @keyframes bubbleFloat2 {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(6px) scale(0.97); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
 }
 
 .pinen-country-list {
@@ -875,10 +1166,13 @@ body.admin-dash-active::before {
   grid-template-columns: 28px 1fr;
   gap: 9px;
   align-items: center;
-  transition: transform 0.2s;
+  padding: 4px 6px;
+  border-radius: 10px;
+  transition: transform 0.25s var(--ease-spring), background 0.25s ease;
 }
 .pinen-country-item:hover {
-  transform: translateX(3px);
+  transform: translateX(4px);
+  background: #f8fafc;
 }
 .pinen-stu-badge {
   width: 28px;
@@ -912,24 +1206,25 @@ body.admin-dash-active::before {
 }
 .pinen-prog-fill {
   height: 100%;
+  width: 0%;
   border-radius: 999px;
   background: linear-gradient(90deg, #1d4ed8, #38bdf8) !important;
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.9s var(--ease-spring);
 }
 
 /* ── Sections Opérationnelles (Inscriptions, Boîte Mail, Cours PDF, Forum) ── */
 .pinen-panel-card {
   background: #ffffff !important;
-  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  border: 1px solid rgba(226, 232, 240, 0.92) !important;
   border-radius: 24px !important;
   padding: 24px 26px;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04) !important;
   color: #0f172a !important;
-  animation: adminCardUp 0.5s ease both;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s var(--ease-spring);
 }
 .pinen-panel-card:hover {
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07) !important;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.07) !important;
+  border-color: rgba(186, 215, 240, 0.95) !important;
 }
 .pinen-panel-head {
   display: flex;
@@ -967,11 +1262,11 @@ body.admin-dash-active::before {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.30) !important;
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.28) !important;
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease, filter 0.25s ease;
 }
 .pinen-btn-green:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%) !important;
+  filter: brightness(1.08);
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(37, 99, 235, 0.42) !important;
 }
@@ -989,11 +1284,12 @@ body.admin-dash-active::before {
   cursor: pointer;
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25) !important;
-  transition: transform 0.18s, box-shadow 0.18s;
+  transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease, filter 0.25s ease;
 }
 .pinen-btn-lime:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35) !important;
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.38) !important;
 }
 .pinen-btn-outline {
   display: inline-flex;
@@ -1008,12 +1304,13 @@ body.admin-dash-active::before {
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.25s var(--ease-spring);
 }
 .pinen-btn-outline:hover {
   background: #eff6ff !important;
   border-color: #93c5fd !important;
   color: #1d4ed8 !important;
+  transform: translateY(-1px);
 }
 .pinen-btn-danger {
   display: inline-flex;
@@ -1027,11 +1324,32 @@ body.admin-dash-active::before {
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: all 0.25s var(--ease-spring);
 }
 .pinen-btn-danger:hover {
   background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
   transform: translateY(-1px);
+}
+
+/* Formulaire tiroir d'ajout d'étudiant avec transition fluide */
+.collapsible-form-wrap {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    max-height 0.45s var(--ease-spring),
+    opacity 0.35s ease,
+    transform 0.35s var(--ease-spring),
+    margin-bottom 0.35s ease;
+  margin-bottom: 0;
+}
+.collapsible-form-wrap.is-open {
+  max-height: 520px;
+  opacity: 1;
+  transform: translateY(0);
+  margin-bottom: 18px;
 }
 
 /* Tableau des Inscriptions */
@@ -1055,12 +1373,19 @@ body.admin-dash-active::before {
   background: #f8fafc !important;
 }
 .pinen-table tbody tr {
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.22s ease, transform 0.22s var(--ease-spring);
+  animation: rowFadeIn 0.35s var(--ease-spring) backwards;
+  animation-delay: calc(var(--row-idx, 0) * 35ms);
 }
 .pinen-table tbody tr:hover {
   background: #f0f7ff !important;
-  transform: translateX(3px);
 }
+
+@keyframes rowFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .pinen-code {
   display: inline-block;
   font-family: monospace;
@@ -1100,7 +1425,36 @@ body.admin-dash-active::before {
 
 @keyframes pendingPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.75; }
+  50% { opacity: 0.72; }
+}
+
+/* État vide élégant */
+.pinen-empty-state {
+  padding: 36px 24px;
+  text-align: center;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.pinen-empty-state svg {
+  color: #2563eb;
+  opacity: 0.75;
+}
+.pinen-empty-state h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 17px;
+  color: #0f172a;
+}
+.pinen-empty-state p {
+  font-size: 13px;
+  color: #64748b;
+  max-width: 460px;
+  line-height: 1.5;
 }
 
 /* Boîte Mail du Site */
@@ -1123,19 +1477,23 @@ body.admin-dash-active::before {
   border: 1px solid #e2e8f0 !important;
   background: #f8fafc !important;
   cursor: pointer;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    transform 0.26s var(--ease-spring),
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 .pinen-mail-item:hover {
   border-color: #2563eb !important;
   background: #eff6ff !important;
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 .pinen-mail-item.active {
   background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%) !important;
   color: #ffffff !important;
   border-color: #2563eb !important;
-  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.28) !important;
-  transform: translateX(4px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.28) !important;
+  transform: translateX(5px);
 }
 .pinen-mail-item.unread {
   border-left: 4px solid #38bdf8 !important;
@@ -1174,6 +1532,14 @@ body.admin-dash-active::before {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03) !important;
+  min-height: 280px;
+}
+.mail-reader-anim {
+  animation: mailReaderFade 0.32s var(--ease-spring);
+}
+@keyframes mailReaderFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Formulaires */
@@ -1203,7 +1569,7 @@ body.admin-dash-active::before {
   font: inherit;
   font-size: 13.5px;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
 }
 .pinen-form input:focus,
 .pinen-form select:focus,
@@ -1218,13 +1584,18 @@ body.admin-dash-active::before {
   border: 1px solid #e2e8f0 !important;
   border-radius: 18px !important;
   padding: 18px;
-  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  transition:
+    transform 0.32s var(--ease-spring),
+    box-shadow 0.32s var(--ease-spring),
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 .pinen-pdf-card:hover,
 .pinen-forum-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  background: #ffffff !important;
   border-color: #93c5fd !important;
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.1) !important;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.10) !important;
 }
 .pinen-pdf-card h4,
 .pinen-forum-card h4 {
@@ -1232,17 +1603,6 @@ body.admin-dash-active::before {
   font-size: 16.5px;
   color: #0f172a !important;
   margin: 6px 0;
-}
-
-/* ── Animations interactives d'entrée & micro-interactions ── */
-@keyframes adminCardUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes tabSlideIn {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 button:active, .pinen-nav-btn:active, .pinen-icon-circle:active {
@@ -1272,6 +1632,7 @@ body.admin-dash-active .portal-wrap {
 
 @media (max-width: 1120px) {
   .pinen-shell { grid-template-columns: 1fr; }
+  .pinen-sidebar { position: static; max-height: none; }
   .pinen-bento { grid-template-columns: 1fr; }
   .pinen-mail-grid { grid-template-columns: 1fr; }
 }
@@ -1295,7 +1656,7 @@ body.admin-dash-active .portal-wrap {
     margin: 0 !important;
   }
 
-  /* ── Sidebar Mobile Réinventée en Barre de Navigation Horizontale ── */
+  /* ── Sidebar Mobile en Barre de Navigation Horizontale ── */
   .pinen-sidebar {
     width: 100% !important;
     max-width: 100% !important;
@@ -1465,7 +1826,8 @@ body.admin-dash-active .portal-wrap {
     padding: 8px 14px !important;
     border-radius: 999px !important;
   }
-  .pinen-search-box input {
+  .pinen-search-box input,
+  .pinen-search-box:focus-within input {
     width: 100% !important;
     font-size: 12.5px !important;
   }
@@ -1517,18 +1879,6 @@ body.admin-dash-active .portal-wrap {
     box-sizing: border-box !important;
     width: 100% !important;
   }
-  .pinen-growth-head {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    margin-bottom: 12px !important;
-  }
-  .pinen-growth-head h3 {
-    font-size: 16px !important;
-  }
-  .pinen-growth-head p {
-    font-size: 11.5px !important;
-  }
   .pinen-bars-stage {
     grid-template-columns: 30px 1fr !important;
     gap: 6px !important;
@@ -1569,8 +1919,8 @@ body.admin-dash-active .portal-wrap {
     margin: 12px 0 !important;
   }
   .pinen-pie-svg {
-    width: 155px !important;
-    height: 155px !important;
+    width: 160px !important;
+    height: 160px !important;
   }
   .pinen-stat-row {
     font-size: 11.5px !important;
@@ -1580,9 +1930,6 @@ body.admin-dash-active .portal-wrap {
   .pinen-growth-body {
     grid-template-columns: 1fr !important;
     gap: 14px !important;
-  }
-  .pinen-bubble-stage {
-    margin: 0 auto 6px !important;
   }
 
   /* ── Panneaux Opérationnels ── */
@@ -1613,23 +1960,7 @@ body.admin-dash-active .portal-wrap {
 
   /* ── Tableau des Inscriptions avec Défilement Horizontal Fluide ── */
   .table-scroll {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    border-radius: 14px !important;
-    border: 1px solid #e2e8f0 !important;
-    margin-top: 12px !important;
-    box-sizing: border-box !important;
-  }
-  .pinen-table {
-    min-width: 680px !important;
-    width: 100% !important;
-  }
-  .pinen-table th,
-  .pinen-table td {
-    padding: 10px 10px !important;
-    font-size: 11.5px !important;
+    display: none !important;
   }
 
   /* ── Boîte Mail Mobile ── */
@@ -1698,7 +2029,7 @@ body.admin-dash-active .portal-wrap {
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease;
   }
   .pinen-stu-card:hover {
     box-shadow: 0 8px 22px rgba(37, 99, 235, 0.08) !important;
@@ -1804,4 +2135,3 @@ body.admin-dash-active .portal-wrap {
 .stu-mobile-cards-wrap {
   display: none;
 }
-

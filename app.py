@@ -166,6 +166,17 @@ def init_db():
                     content TEXT NOT NULL,
                     created_at TIMESTAMP NOT NULL DEFAULT NOW()
                 );
+
+                CREATE TABLE IF NOT EXISTS mailbox_messages (
+                    id SERIAL PRIMARY KEY,
+                    sender VARCHAR(160) NOT NULL,
+                    email VARCHAR(180) NOT NULL,
+                    classe VARCHAR(80) NOT NULL DEFAULT 'BTS 2 - GC-GT',
+                    subject VARCHAR(240) NOT NULL,
+                    body TEXT NOT NULL,
+                    unread BOOLEAN NOT NULL DEFAULT TRUE,
+                    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+                );
             """)
             cur.execute("ALTER TABLE students ADD COLUMN IF NOT EXISTS ecole VARCHAR(160) DEFAULT ''")
             cur.execute("ALTER TABLE forum_replies ADD COLUMN IF NOT EXISTS post_id INTEGER")
@@ -184,7 +195,7 @@ def init_db():
                 END $$;
             """)
 
-            # Supprimer les anciens PDF de démonstration des autres filières BTS (entrées de base uniquement)
+            # Supprimer les anciens PDF de démonstration des autres filières BTS
             legacy_files = [
                 "Cours_Algorithmique_Structures_Donnees_BTS1_IDA.pdf",
                 "Exercices_Corriges_Algo_BTS1_IDA.pdf",
@@ -195,7 +206,7 @@ def init_db():
             cur.execute("DELETE FROM resources WHERE filename = ANY(%s)", (legacy_files,))
             cur.execute("UPDATE resources SET classe = %s WHERE classe <> %s", (FILIERE_CODE, FILIERE_CODE))
 
-            # Insérer les PDF de démonstration de la filière GC-GT s'ils sont absents
+            # Insérer les 5 PDF officiels de la filière GC-GT s'ils sont absents
             samples = generate_sample_pdfs()
             for s in samples:
                 cur.execute("SELECT 1 FROM resources WHERE filename = %s", (s["filename"],))
@@ -206,67 +217,31 @@ def init_db():
                         (s["title"], s["category"], s["classe"], s["subject"], s["filename"])
                     )
 
-            # Insérer une discussion d'exemple sur le forum si vide
+            # Insérer le sujet d'accueil officiel sur le forum si vide
             cur.execute("SELECT COUNT(*) AS c FROM forum_posts")
             if cur.fetchone()["c"] == 0:
                 cur.execute(
                     """INSERT INTO forum_posts (author_name, author_classe, author_role, title, content)
                        VALUES (%s, %s, %s, %s, %s) RETURNING id""",
                     (
-                        "Prof. Coordinateur GGT",
-                        "Encadrement BTS",
+                        "Direction Académique ACADEMIE GGT",
+                        "Direction Académique",
                         "admin",
-                        "Bienvenue sur le Forum d'entraide académique d'ACADEMIE GGT !",
-                        "Posez ici vos questions sur les cours PDF, les TD et les sujets corrigés du cycle BTS. Vos camarades et les enseignants vous répondent."
+                        "Bienvenue sur le Forum Officiel des Géomètres Topographes de Yamoussoukro",
+                        "Cet espace est dédié aux étudiants inscrits en BTS 2 Génie Civil option Géomètre Topographe. Posez ici vos questions sur les cours PDF, les calculs de cheminement, le GNSS, le droit foncier et la préparation aux épreuves du BTS."
                     )
                 )
-            # Migration : les anciennes filières BTS ne sont plus proposées.
-            # Les inscriptions réelles sont rattachées à la filière unique GC-GT ;
-            # seules les anciennes données de démonstration sont supprimées.
-            legacy_codes = (
+
+            # Nettoyage des profils fictifs de la phase de test
+            demo_codes = (
                 "MS-16102026-BTS1IDA", "KA-16102026-BTS2FCGE", "KMA-16102026-BTS1IDA",
                 "YGM-16102026-BTS2RHC", "BCO-16102026-BTS2RIT", "NAE-16102026-BTS1GEC",
-                "DIK-16102026-BTS2GBAT",
+                "DIK-16102026-BTS2GBAT", "MS-16102026-BTS2GCGT", "KA-16102026-BTS2GCGT",
+                "KMA-16102026-BTS2GCGT", "YGM-16102026-BTS2GCGT", "BCO-16102026-BTS2GCGT",
+                "NGAE-16102026-BTS2GCGT", "DIK-16102026-BTS2GCGT"
             )
-            cur.execute("DELETE FROM students WHERE student_code = ANY(%s)", (list(legacy_codes),))
-            cur.execute(
-                "DELETE FROM students WHERE student_code IS NULL AND email LIKE %s AND classe <> %s",
-                ("%@academie-ggt.ci", FILIERE_CODE)
-            )
-            cur.execute("UPDATE students SET classe = %s WHERE classe <> %s", (FILIERE_CODE, FILIERE_CODE))
-
-            # Insérer 10 inscriptions d'étudiants (simulation 10 x 10.000 FCFA = 100.000 FCFA)
-            cur.execute("SELECT COUNT(*) AS c FROM students")
-            if cur.fetchone()["c"] < 10:
-                now = datetime.now()
-                exp = now + timedelta(days=30)
-                mtag = now.strftime("%Y-%m")
-                E = ECOLES_YAMOUSSOUKRO
-                demo_students = [
-                    ("Mohamed Sanogo", "mohsanogo512@gmail.com", "+225 07 00 00 00 00", E[0], "active", "MS-16102026-BTS2GCGT"),
-                    ("Koné Aminata", "aminata.kone@academie-ggt.ci", "+225 05 44 11 22 33", E[1], "active", "KA-16102026-BTS2GCGT"),
-                    ("Kouadio Marc-Arthur", "marc.kouadio@academie-ggt.ci", "+225 07 58 91 02 14", E[0], "active", "KMA-16102026-BTS2GCGT"),
-                    ("Yao Grâce Manuella", "grace.yao@academie-ggt.ci", "+225 01 42 88 73 19", E[2], "active", "YGM-16102026-BTS2GCGT"),
-                    ("Bamba Cheick Oumar", "cheick.bamba@academie-ggt.ci", "+225 07 77 31 45 90", E[3], "active", "BCO-16102026-BTS2GCGT"),
-                    ("N'Guessan Aya Estelle", "estelle.nguessan@academie-ggt.ci", "+225 05 66 20 18 44", E[1], "active", "NGAE-16102026-BTS2GCGT"),
-                    ("Diallo Ibrahim Khalil", "ibrahim.diallo@academie-ggt.ci", "+225 07 08 55 12 67", E[4], "active", "DIK-16102026-BTS2GCGT"),
-                    ("Touré Mariam Sofia", "mariam.toure@academie-ggt.ci", "+225 05 04 92 81 10", E[2], "pending", None),
-                    ("Ouattara Jean-Luc", "jeanluc.ouattara@academie-ggt.ci", "+225 07 89 40 33 21", E[3], "pending", None),
-                    ("Aka Christelle Aurore", "christelle.aka@academie-ggt.ci", "+225 01 51 74 62 09", E[4], "pending", None),
-                ]
-                for fname, em, ph, ecole, st_status, scode in demo_students:
-                    cur.execute("SELECT id FROM students WHERE LOWER(email) = LOWER(%s)", (em,))
-                    if not cur.fetchone():
-                        cur.execute(
-                            """INSERT INTO students (full_name, email, phone, classe, ecole, registered_at, status, student_code, confirmed_at, valid_until, last_payment_month)
-                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
-                            (
-                                fname, em, ph, FILIERE_CODE, ecole, now, st_status, scode,
-                                now if st_status == "active" else None,
-                                exp if st_status == "active" else None,
-                                mtag if st_status == "active" else None,
-                            )
-                        )
+            cur.execute("DELETE FROM students WHERE student_code = ANY(%s)", (list(demo_codes),))
+            cur.execute("DELETE FROM students WHERE email LIKE %s", ("%@academie-ggt.ci",))
         conn.commit()
 
 
@@ -424,10 +399,20 @@ def api_register():
                 (full_name, email, phone, classe, ecole)
             )
             row = cur.fetchone()
+            preview_code = build_student_code(full_name, row["registered_at"], classe, row["id"])
+            cur.execute(
+                """INSERT INTO mailbox_messages (sender, email, classe, subject, body, unread)
+                   VALUES (%s, %s, %s, %s, %s, TRUE)""",
+                (
+                    full_name,
+                    email,
+                    classe,
+                    f"Nouvelle inscription à valider — {full_name} ({ecole})",
+                    f"Bonjour Monsieur l'Administrateur,\n\nUne nouvelle demande d'inscription au programme BTS 2 Génie Civil option Géomètre Topographe a été enregistrée :\n\n• Étudiant : {full_name}\n• Établissement : {ecole}\n• Email : {email}\n• Téléphone : {phone or 'Non renseigné'}\n• Cotisation mensuelle : 10 000 FCFA\n• Identifiant prévu : {preview_code}\n\nVous pouvez approuver son dossier depuis l'onglet Inscriptions."
+                )
+            )
         conn.commit()
 
-    # Aperçu du format d'identifiant qui sera attribué après validation admin
-    preview_code = build_student_code(full_name, row["registered_at"], classe, row["id"])
     return jsonify({
         "ok": True,
         "message": (
@@ -436,6 +421,42 @@ def api_register():
         ),
         "preview_format": preview_code
     })
+
+
+@app.route("/api/student/check-email", methods=["POST"])
+def api_student_check_email():
+    data = request.get_json(force=True)
+    email = (data.get("email") or "").strip().lower()
+    if not email:
+        return jsonify({"error": "Veuillez saisir votre adresse email."}), 400
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT * FROM students WHERE LOWER(email) = %s ORDER BY registered_at DESC LIMIT 1", (email,))
+            student = cur.fetchone()
+    if not student:
+        return jsonify({"error": "Aucun dossier trouvé pour cette adresse email. Veuillez d'abord vous inscrire."}), 404
+    s = compute_effective_status(student)
+    return jsonify({"ok": True, "student": s})
+
+
+@app.route("/api/contact", methods=["POST"])
+def api_contact_mailbox():
+    data = request.get_json(force=True)
+    sender = (data.get("sender") or "Étudiant").strip()
+    email = (data.get("email") or "").strip().lower()
+    subject = (data.get("subject") or "Demande d'assistance portail étudiant").strip()
+    body = (data.get("body") or "").strip()
+    if not email or not body:
+        return jsonify({"error": "Email et message requis."}), 400
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """INSERT INTO mailbox_messages (sender, email, classe, subject, body, unread)
+                   VALUES (%s, %s, %s, %s, %s, TRUE)""",
+                (sender, email, FILIERE_CODE, subject, body)
+            )
+        conn.commit()
+    return jsonify({"ok": True})
 
 
 @app.route("/api/student/login", methods=["POST"])
@@ -608,6 +629,13 @@ def api_admin_overview():
             cur.execute("SELECT * FROM forum_replies ORDER BY created_at ASC")
             replies = cur.fetchall()
 
+            cur.execute("SELECT * FROM mailbox_messages ORDER BY created_at DESC")
+            mailbox = cur.fetchall()
+            for m in mailbox:
+                m["date"] = m["created_at"].strftime("%d/%m/%Y %H:%M")
+                m.pop("created_at", None)
+                m["replies"] = []
+
     replies_by_post = {}
     for rep in replies:
         rep["created_at"] = rep["created_at"].strftime("%d/%m/%Y %H:%M")
@@ -622,7 +650,8 @@ def api_admin_overview():
         "smtp_configured": smtp_configured,
         "students": students,
         "resources": resources,
-        "forum": posts
+        "forum": posts,
+        "mailbox": mailbox
     })
 
 
@@ -684,6 +713,39 @@ def api_admin_revoke(student_id: int):
                 "UPDATE students SET status = 'expired', valid_until = NOW() - INTERVAL '1 second' WHERE id = %s",
                 (student_id,)
             )
+        conn.commit()
+    return jsonify({"ok": True})
+
+
+@app.route("/api/admin/students/<int:student_id>", methods=["DELETE"])
+def api_admin_delete_student(student_id: int):
+    """Supprime définitivement une fiche étudiant."""
+    check_admin()
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM students WHERE id = %s", (student_id,))
+        conn.commit()
+    return jsonify({"ok": True})
+
+
+@app.route("/api/admin/forum/posts/<int:post_id>", methods=["DELETE"])
+def api_admin_delete_post(post_id: int):
+    """Supprime un sujet du forum et ses réponses."""
+    check_admin()
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM forum_posts WHERE id = %s", (post_id,))
+        conn.commit()
+    return jsonify({"ok": True})
+
+
+@app.route("/api/admin/mailbox/<int:mail_id>", methods=["DELETE"])
+def api_admin_delete_mail(mail_id: int):
+    """Supprime un message de la boîte mail du site."""
+    check_admin()
+    with get_db() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM mailbox_messages WHERE id = %s", (mail_id,))
         conn.commit()
     return jsonify({"ok": True})
 

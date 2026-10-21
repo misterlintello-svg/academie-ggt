@@ -1,0 +1,3 @@
+/admin        /admin.html        200
+/etudiant     /etudiant.html     200
+/inscription  /etudiant.html?tab=register  302

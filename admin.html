@@ -7,14 +7,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="portal.css?v=20261016_2" />
-  <link rel="stylesheet" href="admin.css?v=20261016_2" />
+  <link rel="stylesheet" href="portal.css?v=20261021_1" />
+  <link rel="stylesheet" href="admin.css?v=20261021_1" />
 </head>
 <body class="admin-page">
 
-  <!-- Image d'arrière-plan universitaire (Rectorat / Direction au crépuscule doré) -->
+  <!-- Image d'arrière-plan universitaire -->
   <div class="portal-bg" aria-hidden="true"></div>
   <div class="portal-bg-shade" aria-hidden="true"></div>
+
+  <!-- Conteneur de Notifications Toast Flottantes -->
+  <div id="adminToastContainer" class="admin-toast-container" aria-live="polite"></div>
 
   <header class="topbar">
     <a href="index.html" class="brand">
@@ -23,11 +26,11 @@
         <path d="M6 12.5V18.5C6 18.5 8.5 22 13 22C17.5 22 20 18.5 20 18.5V12.5L13 16.5L6 12.5Z" fill="white" opacity="0.9"/>
       </svg>
       <span>ACADEMIE <strong>GGT</strong></span>
-      <span class="badge-pill admin-pill">Lien Administrateur Principal</span>
+      <span class="badge-pill admin-pill">Portail Administrateur Principal</span>
     </a>
     <div class="topbar-links">
       <a href="index.html" class="ghost-link">← Accueil</a>
-      <a href="etudiant.html" class="ghost-link">Lien Étudiants</a>
+      <a href="etudiant.html" class="ghost-link">Portail Étudiants</a>
       <button id="adminLogoutBtn" class="btn-danger-sm" style="display:none">Déconnexion</button>
     </div>
   </header>
@@ -40,7 +43,6 @@
     <section id="adminLoginView" class="glass-auth-stage">
       <div class="glass-card">
 
-        <!-- Emblème géométrique filaire en haut au centre -->
         <div class="glass-crest" aria-hidden="true">
           <svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="10,9 24,17 24,33 10,25"/>
@@ -50,14 +52,12 @@
           <span class="crest-caption">DIRECTION · ACADEMIE GGT</span>
         </div>
 
-        <!-- Onglets style référence -->
         <div class="glass-tabs">
           <button type="button" class="glass-tab active">Connexion Admin</button>
           <a href="etudiant.html?tab=register" class="glass-tab" style="text-decoration:none;display:inline-block;text-align:center">Inscriptions BTS</a>
         </div>
 
-        <!-- Formulaire Administrateur Principal -->
-        <form id="adminLoginForm" class="glass-form">
+        <form id="adminLoginForm" class="glass-form" autocomplete="on">
           <div class="field-group">
             <label for="adminEmail" class="field-label">Email Administrateur Principal</label>
             <div class="field-box">
@@ -77,7 +77,7 @@
                 <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
                 <circle cx="12" cy="16" r="1.2" fill="currentColor"/>
               </svg>
-              <input type="password" id="adminPwd" value="Admin123" placeholder="Entrez le mot de passe administrateur" required />
+              <input type="password" id="adminPwd" placeholder="Saisissez votre mot de passe administrateur" autocomplete="current-password" required />
               <button type="button" class="eye-btn" id="toggleAdminPwd" title="Afficher / masquer le mot de passe">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
                   <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/>
@@ -88,18 +88,11 @@
           </div>
 
           <div class="glass-row-meta">
-            <span>Mot de passe par défaut : <strong>Admin123</strong></span>
+            <span>Accès sécurisé Direction GGT</span>
             <a href="etudiant.html" class="aux-link">Portail Étudiants</a>
           </div>
 
-          <button type="submit" class="btn-ivory">Ouvrir le Tableau de Bord Administrateur</button>
-          <button type="button" id="quickAdminBtn" class="btn-outline-glass" style="margin-top:8px;border-color:rgba(134,239,172,.45);color:#bbf7d0">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3l8 3.5v5.5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6.5L12 3z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-            Accès direct Administrateur Principal (1 clic)
-          </button>
+          <button type="submit" class="btn-ivory" id="adminSubmitBtn">Ouvrir le Tableau de Bord Administrateur</button>
           <div id="adminLoginMsg" class="alert-box" role="alert"></div>
 
           <div class="glass-divider">ou accéder à</div>
@@ -129,12 +122,12 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════════════════
-         INTERFACE ADMINISTRATEUR INSPIRÉE DE planet1.jpg (PinenMFB)
+         INTERFACE ADMINISTRATEUR PRINCIPAL
          ═══════════════════════════════════════════════════════════ -->
     <section id="adminDashView" style="display:none">
       <div class="pinen-shell">
 
-        <!-- ── SIDEBAR GAUCHE BLANCHE ── -->
+        <!-- ── SIDEBAR GAUCHE ── -->
         <aside class="pinen-sidebar">
           <div>
             <div class="pinen-brand">
@@ -148,7 +141,7 @@
             <div class="pinen-nav-section">
               <span class="pinen-nav-label">MENU PRINCIPAL</span>
               <div class="pinen-nav-list">
-                <button type="button" class="pinen-nav-btn active" data-section="bentoOverview">
+                <button type="button" class="pinen-nav-btn active" data-section="all">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z"/>
                   </svg>
@@ -159,7 +152,7 @@
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/>
                   </svg>
                   Inscriptions
-                  <span class="pinen-nav-badge" id="navBadgeInscr">10</span>
+                  <span class="pinen-nav-badge" id="navBadgeInscr">0</span>
                 </button>
                 <button type="button" class="pinen-nav-btn" data-section="secCoursPdf">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
@@ -184,14 +177,14 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
                   </svg>
-                  Budget (10.000 F)
+                  Budget (10 000 F)
                 </button>
                 <button type="button" class="pinen-nav-btn" data-section="secMailbox">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>
                   </svg>
                   Boîte Mail Site
-                  <span class="pinen-nav-badge" id="navBadgeMail">6</span>
+                  <span class="pinen-nav-badge" id="navBadgeMail">0</span>
                 </button>
               </div>
             </div>
@@ -225,9 +218,9 @@
           <div class="pinen-pro-card">
             <div class="pinen-pro-ico">G</div>
             <h4>Clôture Fin de Mois</h4>
-            <p>Chaque identifiant est valable 1 mois exact. Clôturez le mois pour renouveler les cotisations de 10.000 FCFA.</p>
+            <p>Chaque identifiant est valable 1 mois exact. Clôturez le mois pour renouveler les cotisations de 10 000 FCFA.</p>
             <button type="button" id="expireMonthBtn" class="pinen-pro-btn">
-              Clôturer le mois (10.000 F)
+              Clôturer le mois (10 000 F)
             </button>
           </div>
         </aside>
@@ -235,11 +228,11 @@
         <!-- ── ZONE PRINCIPALE DROITE ── -->
         <div class="pinen-main">
 
-          <!-- En-tête Supérieur (identique à planet1.jpg) -->
+          <!-- En-tête Supérieur -->
           <header class="pinen-header">
             <div class="pinen-title-wrap">
               <h1>Rapport Académique & Budget</h1>
-              <p id="smtpStatusText">Vendredi 16 Octobre 2026 · Tarif mensuel : 10.000 FCFA / étudiant (10 inscriptions simulées)</p>
+              <p id="smtpStatusText">Pilotage en direct · Cotisation mensuelle : 10 000 FCFA / étudiant</p>
             </div>
 
             <div class="pinen-header-right">
@@ -247,11 +240,11 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5b625e" stroke-width="2">
                   <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-                <input type="text" id="adminSearchInput" placeholder="Rechercher un étudiant, ID..." />
+                <input type="text" id="adminSearchInput" placeholder="Rechercher un étudiant, école, ID..." />
               </div>
 
               <button type="button" class="pinen-icon-circle" id="topMailBtn" title="Ouvrir la Boîte Mail du Site">
-                <span class="pinen-notif-dot" id="mailNotifDot"></span>
+                <span class="pinen-notif-dot" id="mailNotifDot" style="display:none"></span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
                   <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>
                 </svg>
@@ -259,7 +252,7 @@
 
               <div class="pinen-profile">
                 <div class="pinen-avatar">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
                   </svg>
                 </div>
@@ -271,10 +264,7 @@
             </div>
           </header>
 
-          <!-- Bannière de Notification Globale -->
-          <div id="adminGlobalNotice" class="alert-box" style="display:none;background:linear-gradient(135deg, #1e40af, #0284c7);color:#ffffff;border:none;border-radius:14px;padding:14px 18px;box-shadow:0 8px 24px rgba(30,64,175,0.3)"></div>
-
-          <!-- ── GRILLE BENTO (4 KPIs + Barres Forum + Camembert Budget + Bulles Top Étudiants) ── -->
+          <!-- ── GRILLE BENTO (4 KPIs + Barres Forum + Donut Budget + Bulles Top Étudiants) ── -->
           <div class="pinen-bento" id="bentoOverview">
 
             <!-- Colonne Gauche (4 KPIs + Graphique Barres) -->
@@ -282,177 +272,174 @@
 
               <!-- 4 KPI Cards (2x2) -->
               <div class="pinen-kpi-grid">
-                <!-- KPI 1 : Budget (Carte Vert Forêt Featured) -->
-                <article class="pinen-kpi featured">
+                <!-- KPI 1 : Budget -->
+                <article class="pinen-kpi featured" onclick="switchAdminTab('secInscriptions')" title="Voir le détail des cotisations">
                   <div class="pinen-kpi-top">
                     <div class="pinen-kpi-ico">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
                       </svg>
                     </div>
-                    <span class="pinen-pill-delta" id="kpiBudgetDelta">+100% objectif</span>
+                    <span class="pinen-pill-delta" id="kpiBudgetDelta">0% encaissé</span>
                   </div>
-                  <div class="pinen-kpi-label">Budget Total (10.000 FCFA × 10 inscr.)</div>
+                  <div class="pinen-kpi-label">Budget Mensuel (10 000 FCFA / inscrit)</div>
                   <div class="pinen-kpi-bottom">
-                    <strong class="pinen-kpi-val" id="kpiBudgetTotal">100 000 FCFA</strong>
-                    <span class="pinen-kpi-sub" id="kpiBudgetSub">70.000 F validés<br>30.000 F à approuver</span>
+                    <strong class="pinen-kpi-val" id="kpiBudgetTotal">0 FCFA</strong>
+                    <span class="pinen-kpi-sub" id="kpiBudgetSub">0 F approuvés<br>0 F en attente</span>
                   </div>
                 </article>
 
-                <!-- KPI 2 : Inscriptions à Valider & Approuver -->
-                <article class="pinen-kpi">
+                <!-- KPI 2 : Inscriptions Étudiantes -->
+                <article class="pinen-kpi" onclick="switchAdminTab('secInscriptions')" title="Gérer les inscriptions étudiantes">
                   <div class="pinen-kpi-top">
                     <div class="pinen-kpi-ico">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
                       </svg>
                     </div>
-                    <span class="pinen-pill-delta" id="kpiInscrBadge">+10.9%</span>
+                    <span class="pinen-pill-delta" id="kpiInscrBadge">En direct</span>
                   </div>
-                  <div class="pinen-kpi-label">Inscriptions Simulées (À valider / Approuvées)</div>
+                  <div class="pinen-kpi-label">Inscriptions Étudiantes (BTS 2 GC-GT)</div>
                   <div class="pinen-kpi-bottom">
-                    <strong class="pinen-kpi-val" id="kpiTotalInscr">10</strong>
-                    <span class="pinen-kpi-sub" id="kpiInscrSub">7 approuvées<br>3 à valider</span>
+                    <strong class="pinen-kpi-val" id="kpiTotalInscr">0</strong>
+                    <span class="pinen-kpi-sub" id="kpiInscrSub">0 approuvée(s)<br>0 à valider</span>
                   </div>
                 </article>
 
                 <!-- KPI 3 : Visites & Étudiants Actifs Forum -->
-                <article class="pinen-kpi">
+                <article class="pinen-kpi" onclick="switchAdminTab('secForum')" title="Ouvrir le Forum Académique">
                   <div class="pinen-kpi-top">
                     <div class="pinen-kpi-ico">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
                       </svg>
                     </div>
-                    <span class="pinen-pill-delta">+24.6%</span>
+                    <span class="pinen-pill-delta" id="kpiForumBadge">Actif</span>
                   </div>
-                  <div class="pinen-kpi-label">Visites & Étudiants Actifs sur le Forum</div>
+                  <div class="pinen-kpi-label">Discussions & Réponses sur le Forum</div>
                   <div class="pinen-kpi-bottom">
-                    <strong class="pinen-kpi-val" id="kpiForumVisits">2 048</strong>
-                    <span class="pinen-kpi-sub">Visites étudiants<br>vs mois dernier</span>
+                    <strong class="pinen-kpi-val" id="kpiForumVisits">1 Sujet</strong>
+                    <span class="pinen-kpi-sub" id="kpiForumSub">0 réponse(s)<br>0 étudiant(s) actif(s)</span>
                   </div>
                 </article>
 
                 <!-- KPI 4 : Boîte Mail & Cours PDF -->
-                <article class="pinen-kpi">
+                <article class="pinen-kpi" onclick="switchAdminTab('secMailbox')" title="Ouvrir la Boîte Mail du Site">
                   <div class="pinen-kpi-top">
                     <div class="pinen-kpi-ico">
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
                       </svg>
                     </div>
-                    <span class="pinen-pill-delta">+20.9%</span>
+                    <span class="pinen-pill-delta" id="kpiResourcesBadge">5 PDF en ligne</span>
                   </div>
-                  <div class="pinen-kpi-label">Messages Boîte Mail & Cours PDF Publiés</div>
+                  <div class="pinen-kpi-label">Boîte Mail & Supports PDF Publiés</div>
                   <div class="pinen-kpi-bottom">
-                    <strong class="pinen-kpi-val" id="kpiMailAndPdf">6 Mails · 5 PDF</strong>
-                    <span class="pinen-kpi-sub" id="kpiUnreadSub">3 mails non lus<br>5 supports BTS</span>
+                    <strong class="pinen-kpi-val" id="kpiMailAndPdf">0 Mail · 5 PDF</strong>
+                    <span class="pinen-kpi-sub" id="kpiUnreadSub">0 non lu<br>5 supports BTS</span>
                   </div>
                 </article>
               </div>
 
-              <!-- Graphique Barres Doubles : Statistiques de visite des étudiants les plus actifs sur le forum -->
+              <!-- Graphique Barres Doubles : Statistiques de visite des étudiants -->
               <article class="pinen-habbits-card">
                 <div class="pinen-card-head">
                   <div>
-                    <h3>Statistiques de Visite — Étudiants les Plus Actifs sur le Forum</h3>
-                    <p>Suivi des visites du portail, téléchargements PDF et interventions sur le forum académique</p>
+                    <h3>Statistiques d'Activité — Étudiants & Forum Académique</h3>
+                    <p>Suivi en temps réel des connexions au portail, lectures PDF et interventions sur le forum</p>
                   </div>
-                  <button type="button" class="pinen-filter-pill" onclick="document.getElementById('secForum').scrollIntoView({behavior:'smooth'})">
-                    Ce mois (Oct. 2026) ▾
+                  <button type="button" class="pinen-filter-pill" onclick="switchAdminTab('secForum')">
+                    Accéder au Forum →
                   </button>
                 </div>
 
                 <div class="pinen-legend">
-                  <span><i class="pinen-dot light"></i> Visites & lectures PDF</span>
+                  <span><i class="pinen-dot light"></i> Accès & lectures PDF</span>
                   <span><i class="pinen-dot dark"></i> Interventions & réponses Forum</span>
                 </div>
 
-                <div class="pinen-bars-stage">
+                <div class="pinen-bars-stage" id="forumBarsStage">
                   <div class="pinen-y-axis">
-                    <span>400</span>
-                    <span>300</span>
-                    <span>200</span>
                     <span>100</span>
+                    <span>75</span>
+                    <span>50</span>
+                    <span>25</span>
                     <span>0</span>
                   </div>
-                  <div class="pinen-bars-cols" id="forumActiveBars">
-                    <!-- Généré dynamiquement par JS -->
-                  </div>
+                  <div class="pinen-bars-cols" id="forumActiveBars"></div>
                 </div>
               </article>
 
             </div>
 
-            <!-- Colonne Droite (Camembert Budget + Bulles Top Étudiants Forum) -->
+            <!-- Colonne Droite (Donut Budget + Bulles Top Étudiants Forum) -->
             <div class="pinen-bento-right">
 
-              <!-- Carte Camembert Vert Sauge : Répartition du Budget (10 x 10.000 FCFA) -->
+              <!-- Carte Donut Animé : Répartition du Budget -->
               <article class="pinen-stat-card">
                 <div class="pinen-card-head">
                   <div>
-                    <h3>Statistiques Budget & Filières</h3>
-                    <p>Base : 10.000 FCFA / personne (10 inscr.)</p>
+                    <h3>Répartition du Budget Mensuel</h3>
+                    <p>Tarif officiel : 10 000 FCFA / étudiant inscrit</p>
                   </div>
-                  <span class="pinen-filter-pill" style="background:rgba(255,255,255,.55)">100.000 F ▾</span>
+                  <span class="pinen-filter-pill" style="background:rgba(255,255,255,.65)" id="pieHeaderPill">0 F</span>
                 </div>
 
                 <div class="pinen-pie-wrap">
+                  <!-- Circonférence pour r=72 : 2 * PI * 72 = 452.39 -->
                   <svg class="pinen-pie-svg" viewBox="0 0 200 200">
-                    <!-- Secteur principal : Cotisations Approuvées (70%) -->
-                    <circle cx="100" cy="100" r="88" fill="#1d4ed8" />
-                    <!-- Secteur 2 : Inscriptions en cours de traitement -->
-                    <path d="M100,100 L180,62 A88,88 0 0,1 188,100 Z" fill="#0284c7" stroke="#e0f2fe" stroke-width="2" />
-                    <!-- Secteur 3 : En attente de validation / cotisations -->
-                    <path d="M100,100 L188,100 A88,88 0 0,1 164,160 Z" fill="#f59e0b" stroke="#e0f2fe" stroke-width="2" />
-                    <line x1="100" y1="100" x2="180" y2="62" stroke="#e0f2fe" stroke-width="2" />
+                    <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="24" />
+                    <circle id="pieSegPending" cx="100" cy="100" r="72" fill="none" stroke="#f59e0b" stroke-width="24" stroke-dasharray="0 452.4" stroke-dashoffset="0" stroke-linecap="round" />
+                    <circle id="pieSegApproved" class="pie-seg-active" cx="100" cy="100" r="72" fill="none" stroke="#1d4ed8" stroke-width="24" stroke-dasharray="0 452.4" stroke-dashoffset="0" stroke-linecap="round" />
                   </svg>
+                  <div class="pinen-pie-center">
+                    <strong id="pieCenterPct">0%</strong>
+                    <span id="pieCenterLabel">Encaissé</span>
+                  </div>
                 </div>
 
                 <div class="pinen-stat-rows">
                   <div class="pinen-stat-row">
                     <span>Cotisations Approuvées</span>
-                    <strong id="pieApprovedAmount">70.000 F</strong>
-                    <span class="pinen-pill-delta" id="pieApprovedPct">+70.0%</span>
+                    <strong id="pieApprovedAmount">0 F</strong>
+                    <span class="pinen-pill-delta" id="pieApprovedPct">0%</span>
                   </div>
                   <div class="pinen-stat-row">
                     <span>Inscriptions à Valider</span>
-                    <strong id="piePendingAmount">30.000 F</strong>
-                    <span class="pinen-pill-delta warn" id="piePendingPct">3 en attente</span>
+                    <strong id="piePendingAmount">0 F</strong>
+                    <span class="pinen-pill-delta warn" id="piePendingPct">0 en attente</span>
                   </div>
                   <div class="pinen-stat-row">
-                    <span>Budget Total (10 inscr.)</span>
-                    <strong id="pieTotalAmount">100.000 F</strong>
-                    <span class="pinen-pill-delta">10.000 F/pers.</span>
+                    <span>Budget Total Inscrit</span>
+                    <strong id="pieTotalAmount">0 F</strong>
+                    <span class="pinen-pill-delta">10 000 F/pers.</span>
                   </div>
                 </div>
 
                 <button type="button" id="approveAllQuickBtn" class="pinen-btn-green" style="width:100%;justify-content:center;margin-top:14px">
-                  ✓ Approuver les 10 inscriptions (100.000 FCFA)
+                  ✓ Tout Valider & Approuver
                 </button>
               </article>
 
-              <!-- Carte Bulles Vertes : Croissance & Top Étudiants Actifs du Forum -->
+              <!-- Carte Bulles : Top Étudiants Actifs du Forum -->
               <article class="pinen-growth-card">
                 <div class="pinen-card-head">
                   <div>
-                    <h3>Top Étudiants Actifs (Forum)</h3>
-                    <p>Taux d'assiduité & participation par étudiant</p>
+                    <h3>Participation & Assiduité</h3>
+                    <p>Répartition par établissement & étudiants actifs</p>
                   </div>
-                  <span class="pinen-filter-pill">En direct ▾</span>
+                  <span class="pinen-filter-pill">En direct</span>
                 </div>
 
                 <div class="pinen-growth-body">
                   <div class="pinen-bubbles">
-                    <div class="pinen-bubble b1">87%</div>
-                    <div class="pinen-bubble b4">17%</div>
-                    <div class="pinen-bubble b2">57%</div>
-                    <div class="pinen-bubble b3">37%</div>
+                    <div class="pinen-bubble b1" id="bubbleStat1">100%</div>
+                    <div class="pinen-bubble b4" id="bubbleStat4">BTS2</div>
+                    <div class="pinen-bubble b2" id="bubbleStat2">5 PDF</div>
+                    <div class="pinen-bubble b3" id="bubbleStat3">GC-GT</div>
                   </div>
 
-                  <div class="pinen-country-list" id="topActiveStudentsList">
-                    <!-- Généré dynamiquement par JS -->
-                  </div>
+                  <div class="pinen-country-list" id="topActiveStudentsList"></div>
                 </div>
               </article>
 
@@ -460,57 +447,59 @@
           </div>
 
           <!-- ═══════════════════════════════════════════════════════════
-               SECTION 1 : LES 10 INSCRIPTIONS À VALIDER & BUDGET (10.000 F / PERS.)
+               SECTION 1 : INSCRIPTIONS ÉTUDIANTES & BUDGET (10 000 F / PERS.)
                ═══════════════════════════════════════════════════════════ -->
           <section class="pinen-panel-card" id="secInscriptions">
             <div class="pinen-panel-head">
               <div>
-                <h3>Inscriptions à Valider & Approuver — Budget (10.000 FCFA / personne)</h3>
-                <p>Simulation de <strong>10 inscriptions</strong> soit un budget mensuel de <strong>100.000 FCFA</strong> · Format ID : <code>Initiales-DateInscription-Classe</code> (valable 1 mois)</p>
+                <h3>Gestion des Inscriptions Étudiantes — Cotisation (10 000 FCFA / mois)</h3>
+                <p>Validez les dossiers d'inscription et générez automatiquement l'identifiant mensuel unique : <code>Initiales-DateInscription-BTS2GCGT</code></p>
               </div>
               <div style="display:flex;gap:10px;flex-wrap:wrap">
                 <button type="button" id="approveAllBtn" class="pinen-btn-lime">
-                  ✓ Tout Valider & Approuver (100.000 FCFA)
+                  ✓ Tout Valider & Approuver
                 </button>
                 <button type="button" id="toggleAddStudentBtn" class="pinen-btn-green">
-                  + Simuler une nouvelle inscription (+10.000 F)
+                  + Inscrire un étudiant (+10 000 F)
                 </button>
               </div>
             </div>
 
-            <!-- Formulaire rapide pour simuler une inscription supplémentaire -->
-            <form id="quickAddStudentForm" class="pinen-form" style="display:none;margin-bottom:18px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));display:none">
-              <div>
-                <label>Nom & Prénom de l'étudiant</label>
-                <input type="text" id="simStuName" placeholder="Ex : Konan Franck Olivier" required />
-              </div>
-              <div>
-                <label>Email de l'étudiant</label>
-                <input type="email" id="simStuEmail" placeholder="franck.konan@academie-ggt.ci" required />
-              </div>
-              <div>
-                <label>Téléphone</label>
-                <input type="text" id="simStuPhone" placeholder="+225 07 00 00 00 00" />
-              </div>
-              <div>
-                <label>Filière unique</label>
-                <input type="text" id="simStuClasse" value="BTS 2 - GC-GT" readonly style="background:#eff6ff;font-weight:600;color:#1d4ed8;border:1px solid #bfdbfe" />
-              </div>
-              <div>
-                <label>Établissement d'origine (Yamoussoukro)</label>
-                <select id="simStuEcole" required>
-                  <option value="INP-HB (ESTP Yamoussoukro)">INP-HB (ESTP Yamoussoukro)</option>
-                  <option value="ESBTP Yamoussoukro">ESBTP Yamoussoukro</option>
-                  <option value="EPI-YAKRO">EPI-YAKRO</option>
-                  <option value="ESETEC Yamoussoukro">ESETEC Yamoussoukro</option>
-                  <option value="2IFTP Yamoussoukro">2IFTP Yamoussoukro</option>
-                  <option value="Autre établissement (Yamoussoukro)">Autre établissement (Yamoussoukro)</option>
-                </select>
-              </div>
-              <div style="display:flex;align-items:flex-end">
-                <button type="submit" class="pinen-btn-green" style="width:100%;justify-content:center">Ajouter (+10.000 FCFA)</button>
-              </div>
-            </form>
+            <!-- Formulaire tiroir fluide pour inscrire manuellement un étudiant -->
+            <div id="quickAddStudentWrap" class="collapsible-form-wrap">
+              <form id="quickAddStudentForm" class="pinen-form" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+                <div>
+                  <label for="simStuName">Nom & Prénom(s) de l'étudiant</label>
+                  <input type="text" id="simStuName" placeholder="Ex : Konan Franck Olivier" required />
+                </div>
+                <div>
+                  <label for="simStuEmail">Email de l'étudiant</label>
+                  <input type="email" id="simStuEmail" placeholder="exemple@gmail.com" required />
+                </div>
+                <div>
+                  <label for="simStuPhone">Téléphone / WhatsApp</label>
+                  <input type="text" id="simStuPhone" placeholder="+225 07 00 00 00 00" />
+                </div>
+                <div>
+                  <label for="simStuClasse">Filière unique</label>
+                  <input type="text" id="simStuClasse" value="BTS 2 - GC-GT" readonly style="background:#eff6ff;font-weight:600;color:#1d4ed8;border:1px solid #bfdbfe" />
+                </div>
+                <div>
+                  <label for="simStuEcole">Établissement d'origine (Yamoussoukro)</label>
+                  <select id="simStuEcole" required>
+                    <option value="INP-HB — École Supérieure des Travaux Publics (ESTP)">INP-HB (ESTP Yamoussoukro)</option>
+                    <option value="ESBTP Yamoussoukro">ESBTP Yamoussoukro</option>
+                    <option value="EPI-YAKRO (École Polytechnique Internationale)">EPI-YAKRO</option>
+                    <option value="ESETEC Yamoussoukro">ESETEC Yamoussoukro</option>
+                    <option value="2IFTP (Institut International de Formation Technique et Professionnelle)">2IFTP Yamoussoukro</option>
+                    <option value="Autre établissement de Yamoussoukro">Autre établissement (Yamoussoukro)</option>
+                  </select>
+                </div>
+                <div style="display:flex;align-items:flex-end">
+                  <button type="submit" class="pinen-btn-green" style="width:100%;justify-content:center">Enregistrer l'étudiant</button>
+                </div>
+              </form>
+            </div>
 
             <!-- Mode Mobile : Cartes d'inscriptions interactives tactiles -->
             <div class="stu-mobile-cards-wrap" id="studentsMobileCards"></div>
@@ -541,9 +530,9 @@
             <div class="pinen-panel-head">
               <div>
                 <h3>Boîte Mail du Site — Courriers & Demandes des Étudiants</h3>
-                <p>Réception centralisée sur <strong>mohsanogo512@gmail.com</strong> (justificatifs de paiement 10.000 FCFA, demandes d'identifiants et questions)</p>
+                <p>Réception centralisée liée à <strong>mohsanogo512@gmail.com</strong> (nouvelles inscriptions, demandes de renouvellement et questions)</p>
               </div>
-              <span class="pinen-status active" id="inboxCountBadge">6 messages reçus</span>
+              <span class="pinen-status active" id="inboxCountBadge">0 message reçu</span>
             </div>
 
             <div class="pinen-mail-grid">
@@ -559,7 +548,7 @@
             <div class="pinen-panel-head">
               <div>
                 <h3>Envoyer & Gérer les Fichiers PDF au Niveau des Cours</h3>
-                <p>Publiez de nouveaux <strong>Cours PDF</strong> ou <strong>Exercices & Corrigés PDF</strong> directement accessibles dans l'Espace Étudiant et sur le site</p>
+                <p>Publiez de nouveaux <strong>Cours PDF</strong> ou <strong>Exercices & Corrigés PDF</strong> directement accessibles dans l'Espace Étudiant</p>
               </div>
             </div>
 
@@ -580,11 +569,11 @@
 
                 <label>Module / Matière Topographie</label>
                 <select name="subject" required>
-                  <option value="Levés & Tachéométrie">Levés & Tachéométrie (Stations totales & Cheminements)</option>
-                  <option value="Calculs Topométriques">Calculs Topométriques (Gisement, Relèvement & Polygonation)</option>
-                  <option value="GNSS & Géodésie">GNSS & Géodésie (GPS RTK & Systèmes WGS84/UTM)</option>
-                  <option value="Foncier & Droit Cadastral">Foncier & Droit Cadastral (Bornage, Lotissement & ACD)</option>
-                  <option value="DAO Topo & VRD">DAO Topo & VRD (Covadis, AutoCAD & Voirie)</option>
+                  <option value="Topographie générale">Topographie générale (Stations totales & Cheminements)</option>
+                  <option value="Calculs topométriques">Calculs topométriques (Gisement, Relèvement & Polygonation)</option>
+                  <option value="Géodésie & GNSS">Géodésie & GNSS (GPS RTK & Systèmes WGS84/UTM)</option>
+                  <option value="Foncier, cadastre & bornage">Foncier, cadastre & bornage (Bornage, Lotissement & ACD)</option>
+                  <option value="DAO, VRD et implantation">DAO, VRD et implantation (Covadis, AutoCAD & Voirie)</option>
                   <option value="Projet de Fin d'Études GC-GT">Projet de Fin d'Études GC-GT</option>
                 </select>
 
@@ -592,7 +581,7 @@
                 <input type="file" name="pdf_file" accept=".pdf,application/pdf" required />
 
                 <button type="submit" class="pinen-btn-green" style="justify-content:center;margin-top:4px">
-                  Envoyer le PDF sur le site (Cours & Corrigés)
+                  Publier le PDF dans l'Espace Étudiant
                 </button>
               </form>
 
@@ -604,13 +593,13 @@
           </section>
 
           <!-- ═══════════════════════════════════════════════════════════
-               SECTION 4 : FORUM ACADÉMIQUE (PUBLIER, RÉPONDRE & VISITES)
+               SECTION 4 : FORUM ACADÉMIQUE (PUBLIER, RÉPONDRE & MODÉRER)
                ═══════════════════════════════════════════════════════════ -->
           <section class="pinen-panel-card" id="secForum">
             <div class="pinen-panel-head">
               <div>
                 <h3>Forum Académique — Publier un Sujet & Répondre aux Étudiants</h3>
-                <p>Interagissez avec les étudiants, publiez des annonces de cours et suivez les membres les plus actifs</p>
+                <p>Interagissez avec les étudiants, publiez des annonces officielles et modérez les discussions</p>
               </div>
             </div>
 
@@ -618,7 +607,7 @@
               <form id="adminPostForm" class="pinen-form">
                 <h4 style="font-family:'Outfit',sans-serif;font-size:17px;color:#1d4ed8">Publier sur le Forum en tant qu'Admin</h4>
                 <label>Titre de l'annonce ou du sujet de cours</label>
-                <input type="text" id="admPostTitle" placeholder="Ex : Corrigé du sujet blanc BTS GC-GT disponible" required />
+                <input type="text" id="admPostTitle" placeholder="Ex : Programme des révisions BTS Blanc GC-GT" required />
                 <label>Message destiné aux étudiants</label>
                 <textarea id="admPostContent" rows="4" placeholder="Rédigez votre explication ou annonce officielle..." required></textarea>
                 <button type="submit" class="pinen-btn-green" style="justify-content:center">
@@ -636,59 +625,93 @@
 
   </main>
 
-  <script src="ggt-data.js?v=1"></script>
+  <script src="ggt-data.js?v=20261021_1"></script>
   <script>
     const API = (location.protocol === 'file:') ? 'http://localhost:5000' : '';
-    const FEE_PER_STUDENT = GGT.FEE; // 10.000 FCFA par personne
+    const FEE_PER_STUDENT = GGT.FEE; // 10 000 FCFA par personne
     let adminPwd = sessionStorage.getItem('ggt_admin_pwd') || '';
-    let selectedMailId = 1;
+    let selectedMailId = null;
     let searchFilter = '';
+    let hasEnteredDashboard = false;
+    let currentTabSection = 'all';
+    const counterState = {};
 
     const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-    // Statistiques de visite et d'activité sur le forum des étudiants les plus actifs
-    const ACTIVE_FORUM_STATS = [
-      { name: 'Mohamed S.', fullName: 'Mohamed Sanogo', initials: 'MS', classe: 'BTS 2 - GC-GT', visits: 384, posts: 42, pct: 87 },
-      { name: 'Koné A.', fullName: 'Koné Aminata', initials: 'KA', classe: 'BTS 2 - GC-GT', visits: 342, posts: 28, pct: 76 },
-      { name: 'Kouadio M.', fullName: 'Kouadio Marc-Arthur', initials: 'KM', classe: 'BTS 2 - GC-GT', visits: 295, posts: 34, pct: 68 },
-      { name: 'Yao Grâce', fullName: 'Yao Grâce Manuella', initials: 'YG', classe: 'BTS 2 - GC-GT', visits: 248, posts: 19, pct: 57 },
-      { name: 'Bamba C.', fullName: 'Bamba Cheick Oumar', initials: 'BC', classe: 'BTS 2 - GC-GT', visits: 318, posts: 39, pct: 74 },
-      { name: "N'Guessan E.", fullName: "N'Guessan Aya Estelle", initials: 'NE', classe: 'BTS 2 - GC-GT', visits: 330, posts: 22, pct: 64 }
-    ];
+    // Mise à jour dynamique de la date du jour dans l'en-tête
+    function updateHeaderDate() {
+      const subEl = document.getElementById('smtpStatusText');
+      if (!subEl) return;
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      const capDate = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+      subEl.textContent = `${capDate} · Cotisation mensuelle : 10 000 FCFA / étudiant`;
+    }
+    updateHeaderDate();
 
-    // Données partagées avec le portail étudiant (ggt-data.js)
-    function getDefaultMailbox() { return GGT.defaultDB().mailbox; }
+    // Animation fluide des compteurs numériques
+    function animateCounter(elId, targetNum, formatter = (n) => n.toLocaleString('fr-FR')) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const startNum = counterState[elId] ?? 0;
+      counterState[elId] = targetNum;
+      if (startNum === targetNum) {
+        el.textContent = formatter(targetNum);
+        return;
+      }
+      const duration = 680;
+      const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min((now - t0) / duration, 1);
+        const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+        const current = Math.round(startNum + (targetNum - startNum) * eased);
+        el.textContent = formatter(current);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    // Système de Notifications Toast Flottantes avec barre de progression
+    function showNotice(htmlText, type = 'ok') {
+      const container = document.getElementById('adminToastContainer');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = `admin-toast ${type === 'err' ? 'is-err' : 'is-ok'}`;
+      toast.innerHTML = `
+        <div class="admin-toast-ico">${type === 'err' ? '!' : '✓'}</div>
+        <div class="admin-toast-body">${htmlText}</div>
+        <button type="button" class="admin-toast-close" aria-label="Fermer">×</button>
+        <div class="admin-toast-bar"></div>
+      `;
+      container.appendChild(toast);
+
+      const dismiss = () => {
+        if (toast.classList.contains('is-hiding')) return;
+        toast.classList.add('is-hiding');
+        setTimeout(() => toast.remove(), 320);
+      };
+      toast.querySelector('.admin-toast-close')?.addEventListener('click', dismiss);
+      setTimeout(dismiss, 5200);
+    }
+
     function getLocalDB() {
       const db = GGT.load();
-      if (!db.mailbox) { db.mailbox = getDefaultMailbox(); GGT.save(db); }
+      if (!Array.isArray(db.mailbox)) db.mailbox = [];
+      if (!Array.isArray(db.students)) db.students = [];
       return db;
     }
     function saveLocalDB(db) { GGT.save(db); }
 
     function generateStudentCodeLocal(fullName, regDateStr, classe) {
-      const parts = (fullName || '').trim().split(/[\s\-']+/).filter(Boolean);
-      const initials = parts.map(p => p[0].toUpperCase()).join('') || 'ETU';
-      let ddmmyyyy = '16102026';
-      if (regDateStr && regDateStr.includes('-')) {
-        const [y, m, d] = regDateStr.split('-');
-        ddmmyyyy = `${d}${m}${y}`;
-      } else if (regDateStr && regDateStr.includes('/')) {
-        ddmmyyyy = regDateStr.split(' ')[0].replace(/\//g, '');
-      }
-      const cleanClasse = (classe || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
-      return `${initials}-${ddmmyyyy}-${cleanClasse}`;
+      return GGT.previewCode(fullName, regDateStr);
     }
 
     const formatFCFA = (n) => Number(n || 0).toLocaleString('fr-FR') + ' FCFA';
-
-    const showNotice = (text, type = 'ok') => {
-      const box = document.getElementById('adminGlobalNotice');
-      box.style.display = 'block';
-      box.style.background = type === 'err' ? 'linear-gradient(135deg, #b91c1c, #dc2626)' : 'linear-gradient(135deg, #1d4ed8, #0284c7)';
-      box.innerHTML = text;
-      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      setTimeout(() => { box.style.display = 'none'; }, 6000);
-    };
 
     // Afficher / masquer le mot de passe
     document.getElementById('toggleAdminPwd').addEventListener('click', () => {
@@ -698,6 +721,15 @@
 
     async function doAdminLogin(pwd) {
       const msg = document.getElementById('adminLoginMsg');
+      const submitBtn = document.getElementById('adminSubmitBtn');
+      msg.className = 'alert-box';
+      msg.textContent = '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Vérification sécurisée...';
+      }
+
+      let authenticated = false;
       try {
         const res = await fetch(API + '/api/admin/login', {
           method: 'POST',
@@ -706,78 +738,202 @@
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Mot de passe incorrect');
-        adminPwd = pwd;
-        sessionStorage.setItem('ggt_admin_pwd', pwd);
-        loadDashboard();
+        authenticated = true;
       } catch (err) {
         if (err.message === 'Mot de passe incorrect' || err.message === 'Mot de passe administrateur incorrect.') {
           msg.className = 'alert-box err';
-          msg.textContent = 'Mot de passe incorrect. Utilisez Admin123';
+          msg.textContent = 'Mot de passe administrateur incorrect.';
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Ouvrir le Tableau de Bord Administrateur';
+          }
           return;
         }
+        // Mode autonome statique (Netlify / GitHub Pages)
         if (pwd === 'Admin123') {
-          adminPwd = pwd;
-          sessionStorage.setItem('ggt_admin_pwd', pwd);
-          loadDashboard();
+          authenticated = true;
         } else {
           msg.className = 'alert-box err';
-          msg.textContent = 'Mot de passe incorrect. Utilisez Admin123';
+          msg.textContent = 'Mot de passe administrateur incorrect.';
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Ouvrir le Tableau de Bord Administrateur';
+          }
+          return;
         }
+      }
+
+      if (authenticated) {
+        adminPwd = pwd;
+        sessionStorage.setItem('ggt_admin_pwd', pwd);
+        const loginView = document.getElementById('adminLoginView');
+        loginView.classList.add('is-leaving');
+        setTimeout(() => {
+          loadDashboard(true);
+        }, 340);
       }
     }
 
     document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const pwd = document.getElementById('adminPwd').value.trim();
+      if (!pwd) return;
       await doAdminLogin(pwd);
     });
 
-    document.getElementById('quickAdminBtn')?.addEventListener('click', async () => {
-      const inp = document.getElementById('adminPwd');
-      if (inp) inp.value = 'Admin123';
-      await doAdminLogin('Admin123');
-    });
+    // Mise à jour dynamique du Camembert Donut SVG
+    function updatePieChart(activeCount, pendingOrExpiredCount, totalCount) {
+      const CIRC = 2 * Math.PI * 72; // ~452.39
+      const segApproved = document.getElementById('pieSegApproved');
+      const segPending = document.getElementById('pieSegPending');
+      const centerPct = document.getElementById('pieCenterPct');
+      const centerLbl = document.getElementById('pieCenterLabel');
 
-    function renderForumActiveCharts() {
-      // Barres doubles (Customer Habbits style) avec animation staggered
+      if (!totalCount) {
+        if (segApproved) segApproved.setAttribute('stroke-dasharray', `0 ${CIRC}`);
+        if (segPending) segPending.setAttribute('stroke-dasharray', `0 ${CIRC}`);
+        if (centerPct) centerPct.textContent = '0%';
+        if (centerLbl) centerLbl.textContent = 'Aucun inscrit';
+        return;
+      }
+
+      const approvedRatio = activeCount / totalCount;
+      const pendingRatio = pendingOrExpiredCount / totalCount;
+      const approvedLen = +(approvedRatio * CIRC).toFixed(2);
+      const pendingLen = +(pendingRatio * CIRC).toFixed(2);
+
+      if (segApproved) {
+        segApproved.setAttribute('stroke-dasharray', `${approvedLen} ${CIRC}`);
+        segApproved.setAttribute('stroke-dashoffset', '0');
+      }
+      if (segPending) {
+        segPending.setAttribute('stroke-dasharray', `${pendingLen} ${CIRC}`);
+        segPending.setAttribute('stroke-dashoffset', String(-approvedLen));
+      }
+      const pct = Math.round(approvedRatio * 100);
+      if (centerPct) centerPct.textContent = `${pct}%`;
+      if (centerLbl) centerLbl.textContent = `${activeCount}/${totalCount} validé(s)`;
+    }
+
+    // Graphiques d'activité dynamiques basés sur les vrais étudiants et le forum
+    function renderForumActiveCharts(students, forumPosts, resourcesCount) {
       const barsWrap = document.getElementById('forumActiveBars');
+      const topWrap = document.getElementById('topActiveStudentsList');
+
+      // Calculer les interventions par auteur dans le forum
+      const postCountsByName = {};
+      (forumPosts || []).forEach(p => {
+        if (p.author_role !== 'admin') {
+          postCountsByName[p.author_name] = (postCountsByName[p.author_name] || 0) + 1;
+        }
+        (p.replies || []).forEach(r => {
+          if (r.author_role !== 'admin') {
+            postCountsByName[r.author_name] = (postCountsByName[r.author_name] || 0) + 1;
+          }
+        });
+      });
+
+      const bubble1 = document.getElementById('bubbleStat1');
+      const bubble2 = document.getElementById('bubbleStat2');
+      const bubble3 = document.getElementById('bubbleStat3');
+      const bubble4 = document.getElementById('bubbleStat4');
+      const activeCount = students.filter(s => s.status === 'active').length;
+      const pctActive = students.length ? Math.round((activeCount / students.length) * 100) : 100;
+      if (bubble1) bubble1.textContent = `${pctActive}%`;
+      if (bubble2) bubble2.textContent = `${resourcesCount} PDF`;
+      if (bubble3) bubble3.textContent = `${students.length} Inscr.`;
+      if (bubble4) bubble4.textContent = `${(forumPosts || []).length} Suj.`;
+
+      if (!students.length) {
+        if (barsWrap) {
+          barsWrap.innerHTML = `
+            <div style="grid-column: 1 / -1; height: 175px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #64748b; background: #f8fafc; border-radius: 16px; border: 1px dashed #cbd5e1; padding: 16px;">
+              <strong style="color:#0f172a;font-size:14px;margin-bottom:4px">En attente des premières inscriptions étudiantes</strong>
+              <span style="font-size:12px">Dès que des étudiants s'inscriront et participeront au forum, leurs statistiques s'afficheront ici en temps réel.</span>
+            </div>
+          `;
+        }
+        if (topWrap) {
+          topWrap.innerHTML = `
+            <div style="padding: 14px; border-radius: 12px; background: #f8fafc; border: 1px dashed #cbd5e1; color: #64748b; font-size: 12.5px; line-height: 1.5;">
+              Aucun étudiant inscrit pour le moment.<br>
+              Utilisez <strong>« + Inscrire un étudiant »</strong> ou partagez le lien d'inscription.
+            </div>
+          `;
+        }
+        return;
+      }
+
+      const statsList = students.slice(0, 6).map((s) => {
+        const parts = (s.full_name || 'Étudiant').trim().split(/\s+/);
+        const shortName = parts.length > 1 ? `${parts[0]} ${parts[1][0]}.` : parts[0];
+        const initials = parts.map(p => p[0]).slice(0, 2).join('').toUpperCase() || 'ET';
+        const forumMsgs = postCountsByName[s.full_name] || s.posts_count || 0;
+        const visits = s.visits || (s.status === 'active' ? 24 + forumMsgs * 6 : 5);
+        const pct = Math.min(100, s.status === 'active' ? Math.max(35, 50 + forumMsgs * 12) : 20);
+        return {
+          name: shortName,
+          fullName: s.full_name,
+          initials,
+          ecole: s.ecole || 'Yamoussoukro',
+          visits,
+          posts: forumMsgs,
+          pct
+        };
+      });
+
       if (barsWrap) {
-        barsWrap.innerHTML = ACTIVE_FORUM_STATS.map((s, idx) => {
-          const visitH = Math.round((s.visits / 400) * 165);
-          const postH = Math.round((s.posts / 48) * 165);
+        const maxVal = Math.max(100, ...statsList.map(x => x.visits));
+        barsWrap.innerHTML = statsList.map((s) => {
+          const visitH = Math.max(14, Math.round((s.visits / maxVal) * 160));
+          const postH = Math.max(10, Math.round((Math.max(1, s.posts) / 20) * 160));
           return `
-            <div class="pinen-bar-group" style="--i:${idx}" title="${s.fullName} (${s.classe}) : ${s.visits} visites · ${s.posts} messages forum">
+            <div class="pinen-bar-group" title="${esc(s.fullName)} (${esc(s.ecole)}) : ${s.visits} accès · ${s.posts} message(s) forum">
               <div class="pinen-bar-pair">
-                <div class="pinen-bar light" style="height:${visitH}px" data-val="${s.visits}"></div>
-                <div class="pinen-bar dark" style="height:${postH}px" data-val="${s.posts}"></div>
+                <div class="pinen-bar light" data-h="${visitH}" data-val="${s.visits}"></div>
+                <div class="pinen-bar dark" data-h="${postH}" data-val="${s.posts}"></div>
               </div>
-              <span class="pinen-bar-label">${s.name}</span>
+              <span class="pinen-bar-label">${esc(s.name)}</span>
             </div>
           `;
         }).join('');
+
+        requestAnimationFrame(() => {
+          barsWrap.querySelectorAll('.pinen-bar').forEach((bar, i) => {
+            setTimeout(() => {
+              bar.style.height = `${bar.dataset.h}px`;
+            }, i * 45);
+          });
+        });
       }
 
-      // Top 4 étudiants actifs (Customer Growth style)
-      const topWrap = document.getElementById('topActiveStudentsList');
       if (topWrap) {
-        topWrap.innerHTML = ACTIVE_FORUM_STATS.slice(0, 4).map((s, idx) => `
-          <div class="pinen-country-item" style="--i:${idx}">
-            <div class="pinen-stu-badge">${s.initials}</div>
+        topWrap.innerHTML = statsList.slice(0, 4).map((s) => `
+          <div class="pinen-country-item">
+            <div class="pinen-stu-badge">${esc(s.initials)}</div>
             <div>
               <div class="pinen-country-meta">
-                <span>${s.fullName}</span>
-                <small>${s.visits} vis. · ${s.posts} msg</small>
+                <span>${esc(s.fullName)}</span>
+                <small>${s.visits} acc. · ${s.posts} msg</small>
               </div>
               <div class="pinen-prog-track">
-                <div class="pinen-prog-fill" style="width:${s.pct}%"></div>
+                <div class="pinen-prog-fill" data-w="${s.pct}%"></div>
               </div>
             </div>
           </div>
         `).join('');
+
+        requestAnimationFrame(() => {
+          topWrap.querySelectorAll('.pinen-prog-fill').forEach((fill, i) => {
+            setTimeout(() => {
+              fill.style.width = fill.dataset.w;
+            }, 80 + i * 60);
+          });
+        });
       }
     }
 
-    async function loadDashboard() {
+    async function loadDashboard(isInitialLogin = false) {
       if (!adminPwd) return;
       const localDb = getLocalDB();
       let data = null;
@@ -787,17 +943,10 @@
         });
         if (res.ok) {
           data = await res.json();
-          if (data.students && data.students.length >= 10) {
-            localDb.students = data.students;
-          } else {
-            data.students = localDb.students;
-          }
-          if (data.resources && data.resources.length) {
-            localDb.resources = data.resources;
-          }
-          if (data.forum && data.forum.length) {
-            localDb.forum = data.forum;
-          }
+          if (Array.isArray(data.students)) localDb.students = data.students;
+          if (Array.isArray(data.resources) && data.resources.length) localDb.resources = data.resources;
+          if (Array.isArray(data.forum) && data.forum.length) localDb.forum = data.forum;
+          if (Array.isArray(data.mailbox)) localDb.mailbox = data.mailbox;
           saveLocalDB(localDb);
         }
       } catch (_) {}
@@ -806,16 +955,28 @@
         data = {
           admin_email: 'mohsanogo512@gmail.com',
           smtp_configured: false,
-          students: localDb.students,
-          resources: localDb.resources,
-          forum: localDb.forum
+          students: localDb.students || [],
+          resources: localDb.resources || [],
+          forum: localDb.forum || [],
+          mailbox: localDb.mailbox || []
         };
       }
 
+      const loginView = document.getElementById('adminLoginView');
+      const dashView = document.getElementById('adminDashView');
       document.body.classList.add('admin-dash-active');
-      document.getElementById('adminLoginView').style.display = 'none';
-      document.getElementById('adminDashView').style.display = 'block';
+      loginView.style.display = 'none';
+      loginView.classList.remove('is-leaving');
+      dashView.style.display = 'block';
       document.getElementById('adminLogoutBtn').style.display = 'inline-flex';
+
+      if (isInitialLogin || !hasEnteredDashboard) {
+        hasEnteredDashboard = true;
+        dashView.classList.add('is-entering');
+        setTimeout(() => {
+          dashView.classList.remove('is-entering');
+        }, 980);
+      }
 
       const st = data.students || [];
       const totalCount = st.length;
@@ -823,24 +984,30 @@
       const pendingCount = st.filter(s => s.status === 'pending').length;
       const expiredCount = st.filter(s => s.status === 'expired').length;
 
-      // Calculs Budget (10.000 FCFA / personne)
-      const totalSimulatedBudget = totalCount * FEE_PER_STUDENT;
+      // Calculs Budget (10 000 FCFA / personne)
+      const totalBudget = totalCount * FEE_PER_STUDENT;
       const approvedBudget = activeCount * FEE_PER_STUDENT;
       const pendingBudget = (pendingCount + expiredCount) * FEE_PER_STUDENT;
       const approvedPct = totalCount ? Math.round((activeCount / totalCount) * 100) : 0;
 
-      document.getElementById('kpiBudgetTotal').textContent = formatFCFA(totalSimulatedBudget);
+      animateCounter('kpiBudgetTotal', totalBudget, (n) => n.toLocaleString('fr-FR') + ' FCFA');
       document.getElementById('kpiBudgetDelta').textContent = `${approvedPct}% encaissé`;
-      document.getElementById('kpiBudgetSub').innerHTML = `${ approvedBudget.toLocaleString('fr-FR') } F approuvés<br>${ pendingBudget.toLocaleString('fr-FR') } F à valider`;
+      document.getElementById('kpiBudgetSub').innerHTML = `${approvedBudget.toLocaleString('fr-FR')} F approuvés<br>${pendingBudget.toLocaleString('fr-FR')} F à valider`;
 
-      document.getElementById('kpiTotalInscr').textContent = totalCount;
-      document.getElementById('kpiInscrBadge').textContent = pendingCount > 0 ? `${pendingCount} à valider` : '100% validé';
-      document.getElementById('kpiInscrSub').innerHTML = `${activeCount} approuvées<br>${pendingCount} en attente`;
+      animateCounter('kpiTotalInscr', totalCount, (n) => String(n));
+      document.getElementById('kpiInscrBadge').textContent = pendingCount > 0 ? `${pendingCount} à valider` : (totalCount > 0 ? '100% validé' : 'Prêt');
+      document.getElementById('kpiInscrSub').innerHTML = `${activeCount} approuvée(s)<br>${pendingCount} en attente`;
 
-      const mails = localDb.mailbox || getDefaultMailbox();
+      const forumPosts = data.forum || [];
+      const totalReplies = forumPosts.reduce((acc, p) => acc + (p.replies ? p.replies.length : 0), 0);
+      document.getElementById('kpiForumVisits').textContent = `${forumPosts.length} Sujet${forumPosts.length > 1 ? 's' : ''}`;
+      document.getElementById('kpiForumSub').innerHTML = `${totalReplies} réponse(s)<br>${activeCount} étudiant(s) actif(s)`;
+
+      const mails = data.mailbox || localDb.mailbox || [];
       const unreadMails = mails.filter(m => m.unread).length;
       const pdfCount = (data.resources || []).length;
-      document.getElementById('kpiMailAndPdf').textContent = `${mails.length} Mails · ${pdfCount} PDF`;
+      document.getElementById('kpiMailAndPdf').textContent = `${mails.length} Mail${mails.length > 1 ? 's' : ''} · ${pdfCount} PDF`;
+      document.getElementById('kpiResourcesBadge').textContent = `${pdfCount} PDF en ligne`;
       document.getElementById('kpiUnreadSub').innerHTML = `${unreadMails} non lu(s)<br>${pdfCount} supports BTS`;
 
       document.getElementById('navBadgeInscr').textContent = totalCount;
@@ -849,22 +1016,26 @@
       const dot = document.getElementById('mailNotifDot');
       if (dot) dot.style.display = unreadMails > 0 ? 'block' : 'none';
 
-      // Mise à jour de la carte Camembert Budget
+      // Mise à jour de la carte Donut Budget
+      document.getElementById('pieHeaderPill').textContent = `${totalBudget.toLocaleString('fr-FR')} F`;
       document.getElementById('pieApprovedAmount').textContent = approvedBudget.toLocaleString('fr-FR') + ' F';
-      document.getElementById('pieApprovedPct').textContent = `+${approvedPct}%`;
+      document.getElementById('pieApprovedPct').textContent = `${approvedPct}%`;
       document.getElementById('piePendingAmount').textContent = pendingBudget.toLocaleString('fr-FR') + ' F';
       document.getElementById('piePendingPct').textContent = pendingCount + expiredCount > 0 ? `${pendingCount + expiredCount} à valider` : '0 en attente';
-      document.getElementById('pieTotalAmount').textContent = totalSimulatedBudget.toLocaleString('fr-FR') + ' F';
+      document.getElementById('pieTotalAmount').textContent = totalBudget.toLocaleString('fr-FR') + ' F';
+      updatePieChart(activeCount, pendingCount + expiredCount, totalCount);
 
-      renderForumActiveCharts();
+      renderForumActiveCharts(st, forumPosts, pdfCount);
       renderStudents(st);
       renderMailbox(mails);
       renderAdminPdfs(data.resources || []);
-      renderAdminForum(data.forum || []);
+      renderAdminForum(forumPosts);
     }
 
     function renderStudents(students) {
       const tbody = document.getElementById('studentsTableBody');
+      const mobileWrap = document.getElementById('studentsMobileCards');
+
       const filtered = students.filter(s => {
         if (!searchFilter) return true;
         const q = searchFilter.toLowerCase();
@@ -875,57 +1046,65 @@
                (s.student_code || '').toLowerCase().includes(q);
       });
 
-      const mobileWrap = document.getElementById('studentsMobileCards');
-
       if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="8" class="empty">Aucune inscription correspondante.</td></tr>';
-        if (mobileWrap) mobileWrap.innerHTML = '<div class="empty-card" style="padding:24px;text-align:center;color:#64748b;background:#fff;border-radius:14px">Aucune inscription correspondante.</div>';
+        const emptyHtml = searchFilter
+          ? `<div class="pinen-empty-state">
+               <h4>Aucun résultat pour « ${esc(searchFilter)} »</h4>
+               <p>Vérifiez l'orthographe du nom, de l'école ou de l'identifiant recherché.</p>
+             </div>`
+          : `<div class="pinen-empty-state">
+               <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>
+               <h4>Aucune inscription enregistrée pour le moment</h4>
+               <p>Les étudiants qui s'inscrivent depuis la page d'accueil ou le portail étudiant apparaîtront automatiquement ici. Vous pouvez aussi inscrire un étudiant manuellement.</p>
+             </div>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="padding:18px">${emptyHtml}</td></tr>`;
+        if (mobileWrap) mobileWrap.innerHTML = emptyHtml;
         return;
       }
 
-      // 1. Rendu Mobile : Cartes d'étudiants ergonomiques
+      // 1. Rendu Mobile
       if (mobileWrap) {
         mobileWrap.innerHTML = filtered.map((s, idx) => {
           const previewCode = s.student_code || generateStudentCodeLocal(s.full_name, s.registered_at, s.classe);
-          const initials = (s.full_name || 'ET').split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+          const initials = (s.full_name || 'ET').split(' ').filter(Boolean).map(p => p[0]).slice(0, 2).join('').toUpperCase();
           const badge = s.status === 'active'
             ? '<span class="pinen-status active">✓ Approuvé</span>'
             : s.status === 'pending'
-            ? '<span class="pinen-status pending">⏳ À valider (10.000 F)</span>'
+            ? '<span class="pinen-status pending">⏳ À valider (10 000 F)</span>'
             : '<span class="pinen-status expired">Expiré</span>';
 
           const mailSubject = encodeURIComponent(`[ACADEMIE GGT] Votre identifiant d'accès (${s.classe})`);
           const mailBody = encodeURIComponent(
-            `Bonjour ${s.full_name},\n\nVotre inscription aux cours de renforcement ACADEMIE GGT (${s.classe} — ${s.ecole || 'Yamoussoukro'}) et votre cotisation mensuelle de 10.000 FCFA sont confirmées.\n\nVoici votre identifiant personnel unique (valable 1 mois) :\n${previewCode}\n\nExpire le : ${s.valid_until || 'Dans 30 jours'}\nPortail étudiant : etudiant.html\n\nCordialement,\nL'Administration ACADEMIE GGT`
+            `Bonjour ${s.full_name},\n\nVotre inscription aux cours de renforcement ACADEMIE GGT (${s.classe} — ${s.ecole || 'Yamoussoukro'}) et votre cotisation mensuelle de 10 000 FCFA sont confirmées.\n\nVoici votre identifiant personnel unique (valable 1 mois) :\n${previewCode}\n\nExpire le : ${s.valid_until || 'Dans 30 jours'}\n\nCordialement,\nL'Administration ACADEMIE GGT`
           );
 
           return `
             <article class="pinen-stu-card">
               <div class="stu-c-top">
-                <div class="stu-c-avatar">${initials}</div>
+                <div class="stu-c-avatar">${esc(initials)}</div>
                 <div class="stu-c-meta">
-                  <strong>#${idx + 1} · ${s.full_name}</strong>
-                  <small>${s.email}${s.phone ? ' · ' + s.phone : ''}</small>
+                  <strong>#${idx + 1} · ${esc(s.full_name)}</strong>
+                  <small>${esc(s.email)}${s.phone ? ' · ' + esc(s.phone) : ''}</small>
                 </div>
                 ${badge}
               </div>
               <div class="stu-c-details">
-                <span class="stu-c-pill school">${s.ecole || 'INP-HB Yamoussoukro'}</span>
-                <span class="stu-c-pill class">${s.classe || 'BTS 2 GC-GT'}</span>
+                <span class="stu-c-pill school">${esc(s.ecole || 'Yamoussoukro')}</span>
+                <span class="stu-c-pill class">${esc(s.classe || 'BTS 2 - GC-GT')}</span>
                 <span class="stu-c-pill fee">10 000 FCFA</span>
               </div>
               <div class="stu-c-code-row">
                 <span class="code-label">Identifiant :</span>
-                <code class="pinen-code">${s.student_code || ('Prévu : ' + previewCode)}</code>
+                <code class="pinen-code">${esc(s.student_code || ('Prévu : ' + previewCode))}</code>
               </div>
               <div class="stu-c-actions">
                 ${s.status === 'pending' ? `
                   <button class="pinen-btn-lime full" onclick="confirmStudent(${s.id})">
-                    ✓ Valider & Approuver (+10.000 F)
+                    ✓ Valider & Approuver (+10 000 F)
                   </button>
                 ` : s.status === 'expired' ? `
                   <button class="pinen-btn-lime full" onclick="confirmStudent(${s.id})">
-                    ↻ Réactiver 1 mois (+10.000 F)
+                    ↻ Réactiver 1 mois (+10 000 F)
                   </button>
                 ` : `
                   <button class="pinen-btn-outline" onclick="confirmStudent(${s.id})">
@@ -935,69 +1114,75 @@
                     Suspendre
                   </button>
                 `}
-                <a class="pinen-btn-outline full" href="mailto:${s.email}?subject=${mailSubject}&body=${mailBody}">
+                <a class="pinen-btn-outline full" href="mailto:${esc(s.email)}?subject=${mailSubject}&body=${mailBody}">
                   ✉ Envoyer l'identifiant par Mail
                 </a>
+                <button class="pinen-btn-danger full" onclick="deleteStudent(${s.id})">
+                  🗑 Supprimer ce dossier
+                </button>
               </div>
             </article>
           `;
         }).join('');
       }
 
-      // 2. Rendu Desktop / Écrans larges : Tableau classique
+      // 2. Rendu Desktop
       tbody.innerHTML = filtered.map((s, idx) => {
         const badge = s.status === 'active'
           ? '<span class="pinen-status active">✓ Approuvé · Actif (1 mois)</span>'
           : s.status === 'pending'
-          ? '<span class="pinen-status pending">⏳ À valider (10.000 F)</span>'
+          ? '<span class="pinen-status pending">⏳ À valider (10 000 F)</span>'
           : '<span class="pinen-status expired">Expiré (Fin de mois)</span>';
 
         const previewCode = s.student_code || generateStudentCodeLocal(s.full_name, s.registered_at, s.classe);
         const mailSubject = encodeURIComponent(`[ACADEMIE GGT] Votre identifiant d'accès (${s.classe})`);
         const mailBody = encodeURIComponent(
-          `Bonjour ${s.full_name},\n\nVotre inscription aux cours de renforcement ACADEMIE GGT (${s.classe} — ${s.ecole || 'Yamoussoukro'}) et votre cotisation mensuelle de 10.000 FCFA sont confirmées.\n\nVoici votre identifiant personnel unique (valable 1 mois) :\n${previewCode}\n\nExpire le : ${s.valid_until || 'Dans 30 jours'}\nPortail étudiant : etudiant.html\n\nCordialement,\nL'Administration ACADEMIE GGT`
+          `Bonjour ${s.full_name},\n\nVotre inscription aux cours de renforcement ACADEMIE GGT (${s.classe} — ${s.ecole || 'Yamoussoukro'}) et votre cotisation mensuelle de 10 000 FCFA sont confirmées.\n\nVoici votre identifiant personnel unique (valable 1 mois) :\n${previewCode}\n\nExpire le : ${s.valid_until || 'Dans 30 jours'}\n\nCordialement,\nL'Administration ACADEMIE GGT`
         );
 
         return `
-          <tr>
+          <tr style="--row-idx:${idx}">
             <td><strong>#${idx + 1}</strong></td>
             <td>
-              <strong style="color:#0f172a">${s.full_name}</strong><br>
-              <small style="color:#64748b">${s.email}${s.phone ? ' · ' + s.phone : ''}</small>
+              <strong style="color:#0f172a">${esc(s.full_name)}</strong><br>
+              <small style="color:#64748b">${esc(s.email)}${s.phone ? ' · ' + esc(s.phone) : ''}</small>
             </td>
             <td>
-              <strong style="color:#1d4ed8;font-size:12.5px">${s.ecole || 'INP-HB (ESTP Yamoussoukro)'}</strong>
+              <strong style="color:#1d4ed8;font-size:12.5px">${esc(s.ecole || 'Yamoussoukro')}</strong>
             </td>
-            <td><span class="pinen-status active" style="font-size:11px">${s.classe || 'BTS 2 - GC-GT'}</span></td>
+            <td><span class="pinen-status active" style="font-size:11px">${esc(s.classe || 'BTS 2 - GC-GT')}</span></td>
             <td>
               <strong style="color:#0284c7">10 000 FCFA</strong><br>
               <small style="color:#64748b">${s.status === 'active' ? 'Encaissé' : 'En attente'}</small>
             </td>
-            <td><code class="pinen-code">${s.student_code || ('Prévu : ' + previewCode)}</code></td>
+            <td><code class="pinen-code">${esc(s.student_code || ('Prévu : ' + previewCode))}</code></td>
             <td>
               ${badge}<br>
-              <small style="color:#656d68">${s.valid_until ? 'Jusqu\'au ' + s.valid_until : 'En attente d\'approbation'}</small>
+              <small style="color:#64748b">${s.valid_until ? 'Jusqu\'au ' + esc(s.valid_until) : 'En attente d\'approbation'}</small>
             </td>
             <td class="actions-cell">
               ${s.status === 'pending' ? `
                 <button class="pinen-btn-lime" onclick="confirmStudent(${s.id})">
-                  ✓ Valider & Approuver (+10.000 F)
+                  ✓ Valider (+10 000 F)
                 </button>
               ` : s.status === 'expired' ? `
                 <button class="pinen-btn-lime" onclick="confirmStudent(${s.id})">
-                  ↻ Réactiver 1 mois (+10.000 F)
+                  ↻ Réactiver (+10 000 F)
                 </button>
               ` : `
                 <button class="pinen-btn-outline" onclick="confirmStudent(${s.id})">
-                  ↻ Prolonger 1 mois
+                  ↻ Prolonger
                 </button>
                 <button class="pinen-btn-danger" onclick="revokeStudent(${s.id})">
                   Suspendre
                 </button>
               `}
-              <a class="pinen-btn-outline" href="mailto:${s.email}?subject=${mailSubject}&body=${mailBody}">
-                ✉ Envoyer ID
+              <a class="pinen-btn-outline" href="mailto:${esc(s.email)}?subject=${mailSubject}&body=${mailBody}">
+                ✉ Mail
               </a>
+              <button class="pinen-btn-danger" onclick="deleteStudent(${s.id})" title="Supprimer cette inscription">
+                🗑
+              </button>
             </td>
           </tr>
         `;
@@ -1013,7 +1198,7 @@
         const data = await res.json();
         if (res.ok) {
           showNotice(
-            `<strong>✓ Inscription approuvée (+10.000 FCFA) pour ${data.student.full_name}</strong> — Identifiant généré : <code>${data.student.student_code}</code> (valable 1 mois jusqu'au ${data.student.valid_until}).`,
+            `<strong>Inscription approuvée (+10 000 FCFA)</strong> pour ${esc(data.student.full_name)} — Identifiant : <code>${esc(data.student.student_code)}</code> (valable jusqu'au ${esc(data.student.valid_until)}).`,
             'ok'
           );
           loadDashboard();
@@ -1034,15 +1219,37 @@
         s.valid_until = exp.toLocaleDateString('fr-FR');
         saveLocalDB(db);
         showNotice(
-          `<strong>✓ Inscription approuvée (+10.000 FCFA) pour ${s.full_name}</strong> — Identifiant attribué : <code>${s.student_code}</code> (valable 1 mois jusqu'au ${s.valid_until}).`,
+          `<strong>Inscription approuvée (+10 000 FCFA)</strong> pour ${esc(s.full_name)} — Identifiant attribué : <code>${esc(s.student_code)}</code> (valable jusqu'au ${esc(s.valid_until)}).`,
           'ok'
         );
         loadDashboard();
       }
     };
 
+    window.deleteStudent = async (id) => {
+      const db = getLocalDB();
+      const target = db.students.find(x => x.id === id);
+      if (!confirm(`Voulez-vous vraiment supprimer le dossier de ${target ? target.full_name : 'cet étudiant'} ?`)) return;
+
+      try {
+        await fetch(`${API}/api/admin/students/${id}`, {
+          method: 'DELETE',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+      } catch (_) {}
+
+      db.students = db.students.filter(x => x.id !== id);
+      saveLocalDB(db);
+      showNotice(`Le dossier étudiant a été supprimé.`, 'ok');
+      loadDashboard();
+    };
+
     async function approveAllStudents() {
       const db = getLocalDB();
+      if (!db.students.length) {
+        showNotice(`Aucune inscription en attente à valider pour le moment.`, 'err');
+        return;
+      }
       const now = new Date();
       const exp = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
@@ -1065,7 +1272,7 @@
       saveLocalDB(db);
       const totalF = (db.students.length * FEE_PER_STUDENT).toLocaleString('fr-FR');
       showNotice(
-        `<strong>✓ Toutes les ${db.students.length} inscriptions sont désormais approuvées !</strong> Budget mensuel encaissé : <strong>${totalF} FCFA</strong> (10.000 FCFA / étudiant).`,
+        `<strong>Toutes les ${db.students.length} inscription(s) sont approuvées !</strong> Budget mensuel validé : <strong>${totalF} FCFA</strong>.`,
         'ok'
       );
       loadDashboard();
@@ -1074,46 +1281,43 @@
     document.getElementById('approveAllBtn')?.addEventListener('click', approveAllStudents);
     document.getElementById('approveAllQuickBtn')?.addEventListener('click', approveAllStudents);
 
-    // Simuler une nouvelle inscription (+10.000 FCFA)
+    // Tiroir fluide d'inscription manuelle d'un étudiant
     document.getElementById('toggleAddStudentBtn')?.addEventListener('click', () => {
-      const f = document.getElementById('quickAddStudentForm');
-      f.style.display = f.style.display === 'none' ? 'grid' : 'none';
+      const wrap = document.getElementById('quickAddStudentWrap');
+      if (wrap) {
+        wrap.classList.toggle('is-open');
+        if (wrap.classList.contains('is-open')) {
+          document.getElementById('simStuName')?.focus();
+        }
+      }
     });
 
     document.getElementById('quickAddStudentForm')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const full_name = document.getElementById('simStuName').value.trim();
-      const email = document.getElementById('simStuEmail').value.trim();
+      const email = document.getElementById('simStuEmail').value.trim().toLowerCase();
       const phone = document.getElementById('simStuPhone').value.trim();
       const classe = document.getElementById('simStuClasse').value || 'BTS 2 - GC-GT';
       const ecole = document.getElementById('simStuEcole')?.value || 'INP-HB (ESTP Yamoussoukro)';
       if (!full_name || !email) return;
 
+      let registeredOnServer = false;
       try {
-        await fetch(API + '/api/register', {
+        const res = await fetch(API + '/api/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ full_name, email, phone, classe, ecole })
         });
+        if (res.ok) registeredOnServer = true;
       } catch (_) {}
 
-      const db = getLocalDB();
-      db.students.unshift({
-        id: Date.now(),
-        full_name,
-        email,
-        phone,
-        classe,
-        ecole,
-        registered_at: new Date().toLocaleDateString('fr-FR'),
-        student_code: null,
-        status: 'pending',
-        valid_until: null
-      });
-      saveLocalDB(db);
+      if (!registeredOnServer) {
+        GGT.registerStudent({ full_name, email, phone, classe, ecole });
+      }
+
       e.target.reset();
-      e.target.style.display = 'none';
-      showNotice(`<strong>✓ Nouvelle inscription simulée ajoutée (${full_name} — ${ecole})</strong>. Cliquez sur « Valider & Approuver (+10.000 F) » pour générer son identifiant.`, 'ok');
+      document.getElementById('quickAddStudentWrap')?.classList.remove('is-open');
+      showNotice(`<strong>Nouvel étudiant inscrit (${esc(full_name)})</strong>. Cliquez sur « Valider (+10 000 F) » pour activer son identifiant mensuel.`, 'ok');
       loadDashboard();
     });
 
@@ -1130,12 +1334,12 @@
         s.status = 'expired';
         saveLocalDB(db);
       }
-      showNotice('Accès de l\'étudiant suspendu. Il devra renouveler sa cotisation de 10.000 FCFA.', 'err');
+      showNotice('Accès de l\'étudiant suspendu. Il devra renouveler sa cotisation mensuelle de 10 000 FCFA.', 'err');
       loadDashboard();
     };
 
     document.getElementById('expireMonthBtn').addEventListener('click', async () => {
-      if (!confirm('Confirmer la clôture de fin de mois ? Tous les identifiants étudiants deviendront expirés jusqu\'au règlement du nouveau mois (10.000 FCFA / étudiant).')) return;
+      if (!confirm('Confirmer la clôture de fin de mois ? Tous les identifiants étudiants deviendront expirés jusqu\'au règlement du nouveau mois (10 000 FCFA / étudiant).')) return;
       try {
         await fetch(API + '/api/admin/expire-month', {
           method: 'POST',
@@ -1146,7 +1350,7 @@
       const db = getLocalDB();
       db.students.forEach(s => { if (s.status === 'active') s.status = 'expired'; });
       saveLocalDB(db);
-      showNotice('<strong>Clôture mensuelle effectuée : tous les identifiants sont expirés jusqu\'à validation du nouveau mois (10.000 FCFA / personne).</strong>', 'ok');
+      showNotice('<strong>Clôture mensuelle effectuée :</strong> tous les identifiants sont expirés jusqu\'à validation du nouveau mois.', 'ok');
       loadDashboard();
     });
 
@@ -1156,48 +1360,70 @@
       const readerEl = document.getElementById('adminMailReader');
       const badgeEl = document.getElementById('inboxCountBadge');
       const unreadCount = mails.filter(m => m.unread).length;
-      if (badgeEl) badgeEl.textContent = `${mails.length} messages · ${unreadCount} non lu(s)`;
+      if (badgeEl) badgeEl.textContent = `${mails.length} message(s) · ${unreadCount} non lu(s)`;
 
-      if (!mails.find(m => m.id === selectedMailId) && mails.length) {
+      if (!mails.length) {
+        listEl.innerHTML = `
+          <div class="pinen-empty-state" style="padding:24px 16px">
+            <h4>Boîte de réception vide</h4>
+            <p>Les nouvelles inscriptions et messages des étudiants s'afficheront automatiquement ici.</p>
+          </div>
+        `;
+        readerEl.innerHTML = `
+          <div class="pinen-empty-state" style="height:100%;justify-content:center;border:none;background:transparent">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+            <h4>Aucun courrier sélectionné</h4>
+            <p>Réception centralisée liée à <strong>mohsanogo512@gmail.com</strong>.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (!mails.find(m => m.id === selectedMailId)) {
         selectedMailId = mails[0].id;
       }
 
       listEl.innerHTML = mails.map(m => `
         <div class="pinen-mail-item ${m.id === selectedMailId ? 'active' : ''} ${m.unread ? 'unread' : ''}" onclick="selectMail(${m.id})">
           <div class="pinen-mail-top">
-            <strong>${m.sender}</strong>
-            <small>${m.date}</small>
+            <strong>${esc(m.sender)}</strong>
+            <small>${esc(m.date)}</small>
           </div>
-          <div class="pinen-mail-subj">${m.subject}</div>
-          <div class="pinen-mail-snip">${m.body}</div>
+          <div class="pinen-mail-subj">${esc(m.subject)}</div>
+          <div class="pinen-mail-snip">${esc(m.body)}</div>
         </div>
       `).join('');
 
-      const current = mails.find(m => m.id === selectedMailId);
-      if (!current) {
-        readerEl.innerHTML = '<p class="empty">Sélectionnez un message pour le lire.</p>';
-        return;
-      }
+      renderMailReaderOnly(mails);
+    }
+
+    function renderMailReaderOnly(mails) {
+      const readerEl = document.getElementById('adminMailReader');
+      const current = (mails || []).find(m => m.id === selectedMailId);
+      if (!current) return;
 
       readerEl.innerHTML = `
-        <div>
+        <div class="mail-reader-anim">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:1px solid #e2e8f0;padding-bottom:14px;margin-bottom:16px">
             <div>
-              <span class="pinen-status active" style="margin-bottom:6px">${current.classe}</span>
-              <h4 style="font-family:'Outfit',sans-serif;font-size:19px;color:#0f172a">${current.subject}</h4>
-              <small style="color:#64748b">De : <strong>${current.sender}</strong> &lt;${current.email}&gt; · À : <strong>mohsanogo512@gmail.com</strong></small>
+              <span class="pinen-status active" style="margin-bottom:6px">${esc(current.classe || 'BTS 2 - GC-GT')}</span>
+              <h4 style="font-family:'Outfit',sans-serif;font-size:19px;color:#0f172a">${esc(current.subject)}</h4>
+              <small style="color:#64748b">De : <strong>${esc(current.sender)}</strong> &lt;${esc(current.email)}&gt; · À : <strong>mohsanogo512@gmail.com</strong></small>
             </div>
-            <small style="color:#64748b;white-space:nowrap">${current.date}</small>
+            <div style="display:flex;align-items:center;gap:8px">
+              <small style="color:#64748b;white-space:nowrap">${esc(current.date)}</small>
+              <button type="button" class="pinen-btn-danger" onclick="deleteMail(${current.id})" title="Supprimer ce message">🗑</button>
+            </div>
           </div>
-          <div style="white-space:pre-line;font-size:14px;line-height:1.65;color:#1e293b;margin-bottom:18px">${current.body}</div>
+          <div style="white-space:pre-line;font-size:14px;line-height:1.65;color:#1e293b;margin-bottom:18px">${esc(current.body)}</div>
 
           ${(current.replies && current.replies.length) ? `
             <div style="border-top:1px solid #e2e8f0;padding-top:12px;margin-bottom:16px">
               <strong style="font-size:12px;color:#1d4ed8;text-transform:uppercase">Vos réponses envoyées :</strong>
               ${current.replies.map(r => `
                 <div style="background:#f0f9ff;border:1px solid #bae6fd;padding:10px 14px;border-radius:10px;margin-top:8px;font-size:13px;color:#0f172a">
-                  ${r.text}
-                  <div style="font-size:11px;color:#64748b;margin-top:4px">Envoyé le ${r.date}</div>
+                  ${esc(r.text)}
+                  <div style="font-size:11px;color:#64748b;margin-top:4px">Envoyé le ${esc(r.date)}</div>
                 </div>
               `).join('')}
             </div>
@@ -1205,9 +1431,9 @@
         </div>
 
         <form id="mailReplyForm" style="display:flex;gap:10px;border-top:1px solid #e2e8f0;padding-top:14px">
-          <input type="text" id="mailReplyInput" placeholder="Répondre directement à ${current.sender}..." style="flex:1;padding:10px 14px;border-radius:999px;border:1px solid #cbd5e1;outline:none;font-size:13.5px" required />
+          <input type="text" id="mailReplyInput" placeholder="Répondre directement à ${esc(current.sender)}..." style="flex:1;padding:10px 14px;border-radius:999px;border:1px solid #cbd5e1;outline:none;font-size:13.5px" required />
           <button type="submit" class="pinen-btn-green">Répondre</button>
-          <a href="mailto:${current.email}?subject=${encodeURIComponent('Re: ' + current.subject)}" class="pinen-btn-outline">Ouvrir Gmail</a>
+          <a href="mailto:${esc(current.email)}?subject=${encodeURIComponent('Re: ' + current.subject)}" class="pinen-btn-outline">Ouvrir Gmail</a>
         </form>
       `;
 
@@ -1222,8 +1448,8 @@
           m.replies = m.replies || [];
           m.replies.push({ text: txt, date: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) });
           saveLocalDB(db);
-          showNotice(`✓ Réponse envoyée à <strong>${current.sender}</strong> (${current.email}).`, 'ok');
-          loadDashboard();
+          showNotice(`Réponse enregistrée pour <strong>${esc(current.sender)}</strong> (${esc(current.email)}).`, 'ok');
+          renderMailReaderOnly(db.mailbox);
         }
       });
     }
@@ -1231,27 +1457,54 @@
     window.selectMail = (id) => {
       selectedMailId = id;
       const db = getLocalDB();
-      const m = (db.mailbox || []).find(x => x.id === id);
-      if (m) {
+      const mails = db.mailbox || [];
+      const m = mails.find(x => x.id === id);
+      if (m && m.unread) {
         m.unread = false;
         saveLocalDB(db);
       }
+      // Mise à jour fluide sans recharger tout le dashboard
+      document.querySelectorAll('.pinen-mail-item').forEach(el => {
+        el.classList.remove('active');
+      });
+      renderMailbox(mails);
+      const unreadMails = mails.filter(x => x.unread).length;
+      document.getElementById('navBadgeMail').textContent = unreadMails || mails.length;
+      const dot = document.getElementById('mailNotifDot');
+      if (dot) dot.style.display = unreadMails > 0 ? 'block' : 'none';
+    };
+
+    window.deleteMail = async (id) => {
+      try {
+        await fetch(`${API}/api/admin/mailbox/${id}`, {
+          method: 'DELETE',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+      } catch (_) {}
+      const db = getLocalDB();
+      db.mailbox = (db.mailbox || []).filter(m => m.id !== id);
+      saveLocalDB(db);
+      showNotice('Message supprimé de la boîte de réception.', 'ok');
       loadDashboard();
     };
 
     // ── COURS & EXERCICES PDF ──
     function renderAdminPdfs(list) {
       const wrap = document.getElementById('adminPdfList');
+      if (!list.length) {
+        wrap.innerHTML = `<div class="pinen-empty-state" style="grid-column:1/-1"><h4>Aucun PDF publié</h4><p>Utilisez le formulaire ci-contre pour ajouter votre premier support PDF.</p></div>`;
+        return;
+      }
       wrap.innerHTML = list.map(r => `
         <article class="pinen-pdf-card">
           <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-            <span class="pinen-status active">${r.classe}</span>
+            <span class="pinen-status active">${esc(r.classe)}</span>
             <small style="font-weight:700;color:#0284c7;font-size:11px">${r.category === 'cours' ? 'COURS PDF' : 'EXERCICE & CORRIGÉ'}</small>
           </div>
-          <h4>${r.title}</h4>
-          <p style="font-size:12.5px;color:#646c67;margin-bottom:12px">${r.subject || 'Cycle BTS'} · ${r.created_at}</p>
+          <h4>${esc(r.title)}</h4>
+          <p style="font-size:12.5px;color:#64748b;margin-bottom:12px">${esc(r.subject || 'Cycle BTS')} · ${esc(r.created_at)}</p>
           <div style="display:flex;gap:8px">
-            <a href="${r.url}" target="_blank" class="pinen-btn-green" style="padding:7px 14px;font-size:12px">Ouvrir le PDF</a>
+            <a href="${esc(r.url)}" target="_blank" rel="noopener" class="pinen-btn-green" style="padding:7px 14px;font-size:12px">Ouvrir le PDF</a>
             <button class="pinen-btn-danger" onclick="deletePdf(${r.id})">Supprimer</button>
           </div>
         </article>
@@ -1259,6 +1512,7 @@
     }
 
     window.deletePdf = async (id) => {
+      if (!confirm('Supprimer ce support PDF de la bibliothèque étudiante ?')) return;
       try {
         await fetch(`${API}/api/admin/resources/${id}`, {
           method: 'DELETE',
@@ -1268,6 +1522,7 @@
       const db = getLocalDB();
       db.resources = db.resources.filter(r => r.id !== id);
       saveLocalDB(db);
+      showNotice('Support PDF supprimé.', 'ok');
       loadDashboard();
     };
 
@@ -1282,7 +1537,7 @@
         });
         if (res.ok) {
           e.target.reset();
-          showNotice('✓ Nouveau document PDF envoyé et publié au niveau des cours !', 'ok');
+          showNotice('<strong>Nouveau support PDF publié</strong> et disponible dans l\'Espace Étudiant !', 'ok');
           loadDashboard();
           return;
         }
@@ -1290,40 +1545,45 @@
 
       const db = getLocalDB();
       const file = fd.get('pdf_file');
-      const objUrl = file ? URL.createObjectURL(file) : 'uploads/pdfs/BTS2_GCGT_Leves_Tacheometrie_Polygonation.pdf';
+      const objUrl = file ? URL.createObjectURL(file) : 'uploads/pdfs/Cours_Topographie_Generale_Leves_BTS2_GCGT.pdf';
       db.resources.unshift({
         id: Date.now(),
         title: fd.get('title'),
         category: fd.get('category'),
         classe: fd.get('classe'),
-        subject: fd.get('subject') || 'Général',
+        subject: fd.get('subject') || 'Topographie générale',
         filename: file ? file.name : 'Document.pdf',
         url: objUrl,
         created_at: new Date().toLocaleDateString('fr-FR')
       });
       saveLocalDB(db);
       e.target.reset();
-      showNotice('✓ Nouveau document PDF envoyé et publié au niveau des cours !', 'ok');
+      showNotice('<strong>Nouveau support PDF publié</strong> et disponible dans l\'Espace Étudiant !', 'ok');
       loadDashboard();
     });
 
     // ── FORUM ACADÉMIQUE ──
     function renderAdminForum(posts) {
       const wrap = document.getElementById('adminForumList');
+      if (!posts.length) {
+        wrap.innerHTML = `<div class="pinen-empty-state"><h4>Aucun sujet sur le forum</h4><p>Publiez une annonce officielle ou un sujet de cours avec le formulaire ci-contre.</p></div>`;
+        return;
+      }
       wrap.innerHTML = posts.map(p => `
         <article class="pinen-forum-card">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;margin-bottom:6px">
-            <strong style="color:${p.author_role === 'admin' ? '#1d4ed8' : '#0f172a'}">${p.author_name}</strong>
-            <span class="pinen-status active">${p.author_classe}</span>
-            <span style="color:#64748b;margin-left:auto">${p.created_at}</span>
+            <strong style="color:${p.author_role === 'admin' ? '#1d4ed8' : '#0f172a'}">${esc(p.author_name)}</strong>
+            <span class="pinen-status active">${esc(p.author_classe)}</span>
+            <span style="color:#64748b;margin-left:auto">${esc(p.created_at)}</span>
+            <button type="button" class="pinen-btn-danger" style="padding:4px 9px;font-size:11px" onclick="deleteForumPost(${p.id})" title="Supprimer ce sujet">🗑</button>
           </div>
-          <h4>${p.title}</h4>
-          <p style="font-size:14px;color:#334155;line-height:1.55;margin-bottom:12px">${p.content}</p>
+          <h4>${esc(p.title)}</h4>
+          <p style="font-size:14px;color:#334155;line-height:1.55;margin-bottom:12px">${esc(p.content)}</p>
           <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
             ${(p.replies || []).map(r => `
               <div style="background:#f0f9ff;border:1px solid #e0f2fe;padding:9px 13px;border-radius:10px;font-size:13px;color:#0f172a">
-                <strong style="color:#1d4ed8">${r.author_name}</strong> <small style="color:#64748b">(${r.author_classe} · ${r.created_at})</small>
-                <p style="margin-top:3px">${r.content}</p>
+                <strong style="color:#1d4ed8">${esc(r.author_name)}</strong> <small style="color:#64748b">(${esc(r.author_classe)} · ${esc(r.created_at)})</small>
+                <p style="margin-top:3px">${esc(r.content)}</p>
               </div>
             `).join('')}
           </div>
@@ -1347,7 +1607,7 @@
               body: JSON.stringify({ content })
             });
             if (res.ok) {
-              showNotice('✓ Votre réponse a été publiée sur le forum académique.', 'ok');
+              showNotice('Votre réponse officielle a été publiée sur le forum.', 'ok');
               loadDashboard();
               return;
             }
@@ -1363,15 +1623,30 @@
               author_role: 'admin',
               author_classe: 'Direction Académique',
               content,
-              created_at: new Date().toLocaleDateString('fr-FR')
+              created_at: GGT.formatDateTimeFR()
             });
             saveLocalDB(db);
           }
-          showNotice('✓ Votre réponse a été publiée sur le forum académique.', 'ok');
+          showNotice('Votre réponse officielle a été publiée sur le forum.', 'ok');
           loadDashboard();
         });
       });
     }
+
+    window.deleteForumPost = async (postId) => {
+      if (!confirm('Supprimer ce sujet du forum ?')) return;
+      try {
+        await fetch(`${API}/api/admin/forum/posts/${postId}`, {
+          method: 'DELETE',
+          headers: { 'X-Admin-Password': adminPwd }
+        });
+      } catch (_) {}
+      const db = getLocalDB();
+      db.forum = (db.forum || []).filter(p => String(p.id) !== String(postId));
+      saveLocalDB(db);
+      showNotice('Sujet supprimé du forum.', 'ok');
+      loadDashboard();
+    };
 
     document.getElementById('adminPostForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -1386,7 +1661,7 @@
         });
         if (res.ok) {
           e.target.reset();
-          showNotice('✓ Nouveau sujet publié sur le Forum Académique.', 'ok');
+          showNotice('Nouveau sujet publié sur le Forum Académique.', 'ok');
           loadDashboard();
           return;
         }
@@ -1400,33 +1675,34 @@
         author_classe: 'Direction Académique',
         title,
         content,
-        created_at: new Date().toLocaleDateString('fr-FR'),
+        created_at: GGT.formatDateTimeFR(),
         replies: []
       });
       saveLocalDB(db);
       e.target.reset();
-      showNotice('✓ Nouveau sujet publié sur le Forum Académique.', 'ok');
+      showNotice('Nouveau sujet publié sur le Forum Académique.', 'ok');
       loadDashboard();
     });
 
-    // Système de Navigation par Onglets Mobile & Desktop (Fluide & Animé)
-    function switchAdminTab(targetSection) {
+    // Système de Navigation par Onglets Mobile & Desktop (Transitions fluides)
+    window.switchAdminTab = function switchAdminTab(targetSection) {
+      currentTabSection = targetSection || 'all';
       const isMobile = window.innerWidth <= 900;
       const allSections = ['bentoOverview', 'secInscriptions', 'secMailbox', 'secCoursPdf', 'secForum'];
 
-      // Active state sur les boutons
+      // État actif unique sur le bouton correspondant
       document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(b => {
-        if (b.dataset.section === targetSection || (targetSection === 'bentoOverview' && b.dataset.section === 'all')) {
-          b.classList.add('active');
-        } else {
-          b.classList.remove('active');
-        }
+        b.classList.toggle('active', b.dataset.section === currentTabSection);
       });
 
-      if (!isMobile && (targetSection === 'all' || !targetSection)) {
-        allSections.forEach(id => {
+      if (!isMobile && currentTabSection === 'all') {
+        allSections.forEach((id) => {
           const el = document.getElementById(id);
-          if (el) el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
+          if (!el) return;
+          el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
+          el.classList.remove('section-anim-in');
+          void el.offsetWidth;
+          el.classList.add('section-anim-in');
         });
         return;
       }
@@ -1434,39 +1710,27 @@
       allSections.forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
-        if (id === targetSection || (targetSection === 'all' && id === 'bentoOverview')) {
+        const shouldShow = (id === currentTabSection) || (isMobile && currentTabSection === 'all' && id === 'bentoOverview');
+        if (shouldShow) {
           el.style.display = id === 'bentoOverview' ? 'grid' : 'block';
-          el.style.animation = 'none';
-          void el.offsetHeight;
-          el.style.animation = 'adminCardUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both';
+          el.classList.remove('section-anim-in');
+          void el.offsetWidth;
+          el.classList.add('section-anim-in');
         } else {
           el.style.display = 'none';
         }
       });
 
-      if (isMobile) {
-        const main = document.querySelector('.pinen-main');
-        if (main) main.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const main = document.querySelector('.pinen-main');
+      if (main) {
+        main.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }
+    };
 
     document.querySelectorAll('.pinen-nav-btn[data-section]').forEach(btn => {
       btn.addEventListener('click', () => {
         switchAdminTab(btn.dataset.section);
       });
-    });
-
-    // Basculer vue tableau / cartes
-    document.getElementById('toggleTableViewBtn')?.addEventListener('click', () => {
-      const mc = document.getElementById('studentsMobileCards');
-      const ts = document.getElementById('studentsTableScroll');
-      if (ts.style.display === 'block') {
-        ts.style.display = 'none';
-        mc.style.display = 'flex';
-      } else {
-        ts.style.display = 'block';
-        mc.style.display = 'none';
-      }
     });
 
     document.getElementById('topMailBtn')?.addEventListener('click', () => {
@@ -1481,17 +1745,17 @@
 
     const doLogout = () => {
       sessionStorage.removeItem('ggt_admin_pwd');
+      adminPwd = '';
       document.body.classList.remove('admin-dash-active');
       location.reload();
     };
     document.getElementById('adminLogoutBtn')?.addEventListener('click', doLogout);
     document.getElementById('sidebarLogoutBtn')?.addEventListener('click', doLogout);
 
-    if (adminPwd || new URLSearchParams(location.search).get('preview') === 'admin') {
-      if (!adminPwd) adminPwd = 'Admin123';
-      loadDashboard();
+    if (adminPwd) {
+      loadDashboard(true);
       if (window.innerWidth <= 900) {
-        switchAdminTab('bentoOverview');
+        switchAdminTab('all');
       }
     }
   </script>

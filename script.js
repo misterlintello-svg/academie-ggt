@@ -97,10 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const btn = cform.querySelector('.cform-btn');
     const full_name = document.getElementById('homeRegName')?.value.trim() || '';
-    const email = document.getElementById('homeRegEmail')?.value.trim() || '';
+    const email = (document.getElementById('homeRegEmail')?.value.trim() || '').toLowerCase();
     const phone = document.getElementById('homeRegPhone')?.value.trim() || '';
     const ecole = document.getElementById('homeRegEcole')?.value.trim() || '';
-    const classe = 'BTS 2 - GC-GT';
+    const classe = window.GGT?.FILIERE_CODE || 'BTS 2 - GC-GT';
 
     if (!full_name || !isEmail(email) || !ecole) {
       if (regFeedback) {
@@ -112,6 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btn.disabled = true;
     btn.textContent = 'Enregistrement en cours...';
+    const localReg = window.GGT
+      ? window.GGT.registerStudent({ full_name, email, phone, classe, ecole })
+      : { ok: true, preview: 'XX-JJMMAAAA-BTS2GCGT' };
+
     const apiBase = (location.protocol === 'file:') ? 'http://localhost:5000' : '';
     try {
       const res = await fetch(apiBase + '/api/register', {
@@ -127,38 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       cform.reset();
     } catch (err) {
-      // Fallback local immédiat
-      const parts = full_name.split(/\s+/).filter(Boolean);
-      const initials = parts.map(p => p[0].toUpperCase()).join('') || 'ETU';
-      const now = new Date();
-      const dd = String(now.getDate()).padStart(2, '0');
-      const mm = String(now.getMonth() + 1).padStart(2, '0');
-      const yyyy = now.getFullYear();
-      const preview = `${initials}-${dd}${mm}${yyyy}-BTS2GCGT`;
-      try {
-        const raw = localStorage.getItem('ggt_local_db');
-        const db = raw ? JSON.parse(raw) : { students: [], resources: [], forum: [] };
-        db.students = db.students || [];
-        db.students.unshift({
-          id: Date.now(),
-          full_name,
-          email: email.toLowerCase(),
-          phone,
-          classe,
-          ecole,
-          registered_at: now.toISOString().slice(0, 10),
-          student_code: null,
-          status: 'pending',
-          confirmed_at: null,
-          valid_until: null
-        });
-        localStorage.setItem('ggt_local_db', JSON.stringify(db));
-      } catch (_) {}
-      if (regFeedback) {
-        regFeedback.style.color = '#86efac';
-        regFeedback.innerHTML = `✓ Inscription enregistrée (${ecole}) ! L'administrateur principal (<a href="admin.html" style="color:#fff;text-decoration:underline">Portail Admin</a>) va confirmer votre accès mensuel.<br><strong>Identifiant prévu : ${preview}</strong>`;
+      if (!localReg.ok) {
+        if (regFeedback) {
+          regFeedback.style.color = '#fca5a5';
+          regFeedback.textContent = localReg.error;
+        }
+      } else {
+        if (regFeedback) {
+          regFeedback.style.color = '#86efac';
+          regFeedback.innerHTML = `✓ Inscription enregistrée (${ecole}) ! Votre demande a été transmise à l'administrateur principal (<a href="admin.html" style="color:#fff;text-decoration:underline">Portail Admin</a>) pour validation de votre accès mensuel.<br><strong>Identifiant prévu : ${localReg.preview}</strong>`;
+        }
+        cform.reset();
       }
-      cform.reset();
     } finally {
       btn.disabled = false;
       btn.textContent = 'Valider mon inscription étudiant';
@@ -186,34 +170,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const planetData = [
     {
       step: 'PILIER 01 / 04',
-      title: 'L\'innovation au cœur du terrain',
-      desc: 'Fondée sur la conviction que la pratique forge l\'excellence, ACADEMIE GGT accompagne les étudiants du Cycle BTS avec des cours en PDF, des exercices corrigés et un suivi mensuel rigoureux.',
-      m1: 'Cycle BTS', m1Label: 'BTS 1 & BTS 2 toutes filières',
+      title: 'La précision topographique du terrain à l\'examen',
+      desc: 'Conçue spécifiquement pour la 2e année de BTS Génie Civil option Géomètre Topographe à Yamoussoukro, ACADEMIE GGT rassemble cours PDF, corrigés de calculs et suivi mensuel.',
+      m1: 'BTS 2 GC-GT', m1Label: 'Filière Géomètre Topographe',
       m2: '100% PDF', m2Label: 'Cours + Exercices & Corrigés',
       rot: 0
     },
     {
       step: 'PILIER 02 / 04',
-      title: 'Un identifiant unique par étudiant',
-      desc: 'Chaque étudiant inscrit reçoit, après confirmation de l\'administrateur principal, un identifiant personnel composé de ses initiales, sa date d\'inscription et sa classe BTS.',
+      title: 'Un identifiant mensuel unique par étudiant',
+      desc: 'Chaque étudiant inscrit reçoit, après confirmation de l\'administrateur principal, un identifiant personnel composé de ses initiales, sa date d\'inscription et sa filière BTS2GCGT.',
       m1: '1 Mois', m1Label: 'Validité exacte de chaque accès',
-      m2: 'Auto-ID', m2Label: 'Initiales + Date + Classe',
+      m2: 'Auto-ID', m2Label: 'Initiales + Date + BTS2GCGT',
       rot: -90
     },
     {
       step: 'PILIER 03 / 04',
-      title: 'Exercices types & corrigés détaillés',
-      desc: 'Tous les chapitres sont accompagnés de fiches de TD et de sujets types BTS intégralement corrigés en PDF pour s\'entraîner efficacement aux examens.',
-      m1: '7 Filières', m1Label: 'IDA, FCGE, RHC, GEC, RIT, GBAT, LOG',
+      title: 'Calculs topométriques & sujets types corrigés',
+      desc: 'Tous les chapitres sont accompagnés de fiches de TD et de sujets types BTS intégralement corrigés en PDF : cheminements, gisements, GNSS, bornage foncier et VRD.',
+      m1: '5 Modules', m1Label: 'Topo, Calculs, GNSS, Foncier, VRD',
       m2: '24h/24', m2Label: 'Téléchargement direct des PDF',
       rot: -180
     },
     {
       step: 'PILIER 04 / 04',
-      title: 'Forum d\'entraide académique',
-      desc: 'Les étudiants échangent leurs questions, méthodes et démonstrations sur le forum intégré sous la supervision de l\'administrateur principal d\'ACADEMIE GGT.',
-      m1: '98%', m1Label: 'Taux de réussite au BTS',
-      m2: 'Direct', m2Label: 'Questions & réponses entre pairs',
+      title: 'Forum d\'entraide inter-écoles de Yamoussoukro',
+      desc: 'Les étudiants de l\'INP-HB, ESBTP, EPI-YAKRO, ESETEC et 2IFTP échangent leurs questions et méthodes de calcul sous la supervision du coordinateur d\'ACADEMIE GGT.',
+      m1: '5 Écoles', m1Label: 'Réseau étudiant Yamoussoukro',
+      m2: 'Direct', m2Label: 'Questions & réponses vérifiées',
       rot: -270
     }
   ];

@@ -63,19 +63,19 @@
                 <rect x="3" y="5" width="18" height="14" rx="2.5"/>
                 <path d="M3.5 6.5L12 13L20.5 6.5"/>
               </svg>
-              <input type="email" id="loginEmail" value="mohsanogo512@gmail.com" placeholder="vous@exemple.com" autocomplete="email" />
+              <input type="email" id="loginEmail" placeholder="vous@exemple.com" autocomplete="email" required />
             </div>
           </div>
 
           <div class="field-group">
-            <label for="studentCodeInput" class="field-label">Identifiant mensuel unique (Ex : MS-16102026-BTS2GCGT)</label>
+            <label for="studentCodeInput" class="field-label">Identifiant mensuel unique (Initiales-Date-BTS2GCGT)</label>
             <div class="field-box">
               <svg class="field-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <rect x="5" y="11" width="14" height="10" rx="2"/>
                 <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
                 <circle cx="12" cy="16" r="1.2" fill="currentColor"/>
               </svg>
-              <input type="text" id="studentCodeInput" value="MS-16102026-BTS2GCGT" placeholder="Ex : MS-16102026-BTS2GCGT" autocomplete="off" required style="letter-spacing:0.06em" />
+              <input type="text" id="studentCodeInput" placeholder="Ex : XX-JJMMAAAA-BTS2GCGT" autocomplete="off" required style="letter-spacing:0.06em" />
               <button type="button" class="eye-btn" id="toggleStudentCode" aria-label="Afficher ou masquer l'identifiant">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                   <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/>
@@ -86,10 +86,10 @@
           </div>
 
           <div class="field-aux-row">
-            <button type="button" class="aux-link" id="forgotCodeBtn">Identifiant oublié ou expiré ?</button>
+            <button type="button" class="aux-link" id="forgotCodeBtn">Vérifier le statut de mon dossier / Identifiant oublié ?</button>
           </div>
 
-          <button type="submit" class="btn-ivory">Se connecter</button>
+          <button type="submit" class="btn-ivory">Se connecter à mon espace</button>
           <div id="loginMsg" class="alert-box" role="alert"></div>
         </form>
 
@@ -102,7 +102,7 @@
                 <circle cx="12" cy="8" r="4"/>
                 <path d="M4 20c1.8-3.8 5-6 8-6s6.2 2.2 8 6"/>
               </svg>
-              <input type="text" id="regName" placeholder="Mohamed Sanogo" required />
+              <input type="text" id="regName" placeholder="Nom et Prénom(s)" required />
             </div>
           </div>
 
@@ -163,15 +163,9 @@
           <div id="regMsg" class="alert-box" role="alert"></div>
         </form>
 
-        <div class="glass-divider">ou continuer avec</div>
+        <div class="glass-divider">accès rapides</div>
 
         <div class="glass-alt-actions">
-          <button type="button" id="quickDemoStudentBtn" class="btn-outline-glass" style="border-color:rgba(125,211,252,0.5);background:rgba(56,140,200,0.16)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#bae6fd" stroke-width="2">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
-            Accès direct à l'Espace Étudiant (MS-16102026-BTS2GCGT)
-          </button>
           <a href="admin.html" class="btn-outline-glass">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M12 2L4 5v6c0 5.5 3.4 10.7 8 12 4.6-1.3 8-6.5 8-12V5l-8-3Z"/>
@@ -323,8 +317,8 @@
                   <h3 class="exp-title">Levés au tachéomètre & Polygonation</h3>
                   <p class="exp-sub">Mise en station, rayonnement, cheminements polygonaux encadrés et nivellement direct.</p>
                   <div class="exp-actions">
-                    <a href="uploads/pdfs/BTS2_GCGT_Leves_Tacheometrie_Polygonation.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
-                    <a href="uploads/pdfs/Exercices_Corriges_Calculs_Topometriques_BTS2_GCGT.pdf" target="_blank" class="exp-pill-btn">Exercices & Corrigé</a>
+                    <a href="uploads/pdfs/Cours_Topographie_Generale_Leves_BTS2_GCGT.pdf" target="_blank" rel="noopener" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                    <a href="uploads/pdfs/Exercices_Corriges_Cheminements_BTS2_GCGT.pdf" target="_blank" rel="noopener" class="exp-pill-btn">Exercices & Corrigé</a>
                   </div>
                 </div>
               </div>
@@ -341,7 +335,7 @@
                   <h3 class="exp-title">Gisements, Relèvements & Compensation</h3>
                   <p class="exp-sub">Fermeture angulaire, calculs de coordonnées (X, Y), relèvement de Hansen et formule de Gauss.</p>
                   <div class="exp-actions">
-                    <a href="uploads/pdfs/Exercices_Corriges_Calculs_Topometriques_BTS2_GCGT.pdf" target="_blank" class="exp-pill-btn primary">Exercices & Corrigé PDF</a>
+                    <a href="uploads/pdfs/Exercices_Corriges_Cheminements_BTS2_GCGT.pdf" target="_blank" rel="noopener" class="exp-pill-btn primary">Exercices & Corrigé PDF</a>
                   </div>
                 </div>
               </div>
@@ -358,7 +352,7 @@
                   <h3 class="exp-title">GNSS, Géodésie & WGS84 / UTM 30N</h3>
                   <p class="exp-sub">Positionnement différentiel RTK, pivot/mobile, ellipsoïde et projection UTM 30 Nord Côte d'Ivoire.</p>
                   <div class="exp-actions">
-                    <a href="uploads/pdfs/BTS2_GCGT_GNSS_Geodesie_Spatiale.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                    <a href="uploads/pdfs/Cours_GNSS_Geodesie_BTS2_GCGT.pdf" target="_blank" rel="noopener" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
                   </div>
                 </div>
               </div>
@@ -375,7 +369,7 @@
                   <h3 class="exp-title">Bornage, Foncier & Procédure ACD</h3>
                   <p class="exp-sub">Bornage contradictoire, morcellement, lotissements et constitution du dossier technique.</p>
                   <div class="exp-actions">
-                    <a href="uploads/pdfs/BTS2_GCGT_Droit_Foncier_Bornage_Cadastre.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                    <a href="uploads/pdfs/Sujet_Corrige_Bornage_Foncier_BTS2_GCGT.pdf" target="_blank" rel="noopener" class="exp-pill-btn primary">Ouvrir le Sujet & Corrigé PDF</a>
                   </div>
                 </div>
               </div>
@@ -392,7 +386,7 @@
                   <h3 class="exp-title">DAO Covadis, MNT 3D & Voiries (VRD)</h3>
                   <p class="exp-sub">Semis de points, courbes de niveau, profils en long/travers et calculs de cubatures.</p>
                   <div class="exp-actions">
-                    <a href="uploads/pdfs/BTS2_GCGT_DAO_Topo_Covadis_VRD.pdf" target="_blank" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
+                    <a href="uploads/pdfs/Cours_DAO_VRD_Implantation_BTS2_GCGT.pdf" target="_blank" rel="noopener" class="exp-pill-btn primary">Ouvrir le Cours PDF</a>
                   </div>
                 </div>
               </div>
@@ -453,11 +447,11 @@
 
   </main>
 
-  <script src="ggt-data.js?v=1"></script>
+  <script src="ggt-data.js?v=20261021_1"></script>
   <script>
     const API = location.protocol === 'file:' ? 'http://localhost:5000' : '';
-    const DEMO_CODE = 'MS-16102026-BTS2GCGT';
-    const CODE_KEY = 'ggt_student_code_v3';
+    const CODE_KEY = 'ggt_prod_student_code_v1';
+    try { localStorage.removeItem('ggt_student_code_v3'); } catch (_) {}
     let currentCode = localStorage.getItem(CODE_KEY) || '';
     let currentStudent = null;
     let allResources = [];
@@ -502,17 +496,69 @@
       inp.type = inp.type === 'password' ? 'text' : 'password';
     });
 
-    document.getElementById('quickDemoStudentBtn').addEventListener('click', async () => {
-      document.getElementById('studentCodeInput').value = DEMO_CODE;
-      currentCode = DEMO_CODE;
-      localStorage.setItem(CODE_KEY, currentCode);
-      await loadPortal();
-    });
-
-    document.getElementById('forgotCodeBtn').addEventListener('click', () => {
+    /* ───────── Vérification de dossier / Demande de renouvellement ───────── */
+    document.getElementById('forgotCodeBtn').addEventListener('click', async () => {
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
       const msg = document.getElementById('loginMsg');
-      msg.className = 'alert-box ok';
-      msg.innerHTML = `Identifiant actif de démonstration : <code>${DEMO_CODE}</code>. Chaque identifiant est composé des <strong>initiales + date d'inscription + filière</strong> et reste valable <strong>1 mois exact</strong>.`;
+      if (!email || !email.includes('@')) {
+        msg.className = 'alert-box err';
+        msg.textContent = 'Veuillez saisir votre adresse email étudiant ci-dessus pour vérifier le statut de votre dossier.';
+        document.getElementById('loginEmail').focus();
+        return;
+      }
+
+      msg.className = 'alert-box';
+      msg.textContent = 'Recherche de votre dossier étudiant...';
+
+      let studentRecord = null;
+      try {
+        const res = await fetch(API + '/api/student/check-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (res.ok && data.found) {
+          studentRecord = data.student;
+        }
+      } catch (_) {}
+
+      if (!studentRecord) {
+        const db = getLocalStore();
+        studentRecord = (db.students || []).find(s => (s.email || '').toLowerCase() === email) || null;
+      }
+
+      if (!studentRecord) {
+        msg.className = 'alert-box err';
+        msg.innerHTML = `Aucun dossier trouvé pour <strong>${esc(email)}</strong>. Passez à l'onglet <strong>Inscription</strong> pour enregistrer votre demande d'accès.`;
+        return;
+      }
+
+      if (studentRecord.status === 'active' && studentRecord.student_code) {
+        document.getElementById('studentCodeInput').value = studentRecord.student_code;
+        msg.className = 'alert-box ok';
+        msg.innerHTML = `<strong>✓ Dossier actif (${esc(studentRecord.full_name)})</strong><br>Votre identifiant mensuel est : <code>${esc(studentRecord.student_code)}</code> (valable jusqu'au ${esc(studentRecord.valid_until || '—')}). Cliquez sur <strong>Se connecter à mon espace</strong>.`;
+      } else if (studentRecord.status === 'pending') {
+        msg.className = 'alert-box ok';
+        msg.innerHTML = `<strong>⏳ Dossier en attente de validation</strong> (${esc(studentRecord.full_name)}).<br>L'administrateur principal a bien reçu votre inscription et va générer votre identifiant mensuel.`;
+      } else {
+        msg.className = 'alert-box err';
+        msg.innerHTML = `<strong>Identifiant mensuel expiré</strong> (${esc(studentRecord.full_name)}).<br><button type="button" id="reqRenewBtn" style="margin-top:8px;padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.35);background:rgba(255,255,255,0.14);color:#fff;cursor:pointer;font-weight:600">Demander le renouvellement à l'Administrateur</button>`;
+        document.getElementById('reqRenewBtn')?.addEventListener('click', async () => {
+          const subject = `Demande de renouvellement — ${studentRecord.full_name} (${studentRecord.ecole || 'BTS 2 GC-GT'})`;
+          const body = `L'étudiant(e) ${studentRecord.full_name} (${studentRecord.email}) sollicite le renouvellement de son identifiant mensuel (${studentRecord.student_code || 'expiré'}).`;
+          try {
+            await fetch(API + '/api/contact', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ sender_name: studentRecord.full_name, sender_email: studentRecord.email, subject, body })
+            });
+          } catch (_) {}
+          GGT.pushMail({ from: `${studentRecord.full_name} (${studentRecord.email})`, subject, body });
+          msg.className = 'alert-box ok';
+          msg.innerHTML = `<strong>✓ Demande transmise !</strong> L'administrateur principal a reçu votre demande de renouvellement dans sa messagerie.`;
+        });
+      }
     });
 
     const params = new URLSearchParams(location.search);
@@ -530,7 +576,7 @@
       msg.textContent = 'Enregistrement en cours...';
       const payload = {
         full_name: document.getElementById('regName').value.trim(),
-        email: document.getElementById('regEmail').value.trim(),
+        email: document.getElementById('regEmail').value.trim().toLowerCase(),
         phone: document.getElementById('regPhone').value.trim(),
         classe: GGT.FILIERE_CODE,
         ecole: document.getElementById('regEcole').value.trim()
@@ -540,6 +586,10 @@
         msg.textContent = 'Veuillez renseigner votre nom, votre email et votre école de provenance à Yamoussoukro.';
         return;
       }
+
+      // Toujours synchroniser le stockage local de production (étudiants + boîte de réception Admin)
+      const localReg = GGT.registerStudent(payload);
+
       try {
         const res = await fetch(API + '/api/register', {
           method: 'POST',
@@ -552,17 +602,13 @@
         msg.innerHTML = `<strong>✓ ${esc(data.message)}</strong><br><small>Format prévu de votre identifiant : <code>${esc(data.preview_format)}</code></small>`;
         e.target.reset();
       } catch (err) {
-        const db = getLocalStore();
-        const preview = GGT.previewCode(payload.full_name);
-        db.students.unshift({
-          id: Date.now(), full_name: payload.full_name, email: payload.email, phone: payload.phone,
-          classe: payload.classe, ecole: payload.ecole,
-          registered_at: new Date().toLocaleDateString('fr-FR'),
-          status: 'pending', student_code: null, valid_until: null
-        });
-        saveLocalStore(db);
+        if (!localReg.ok) {
+          msg.className = 'alert-box err';
+          msg.textContent = localReg.error;
+          return;
+        }
         msg.className = 'alert-box ok';
-        msg.innerHTML = `<strong>✓ Inscription enregistrée !</strong> Votre demande est en attente de confirmation par l'administrateur principal.<br><small>Format prévu de votre identifiant : <code>${esc(preview)}</code></small>`;
+        msg.innerHTML = `<strong>✓ Inscription enregistrée !</strong> Votre demande a été transmise à l'administrateur principal pour validation.<br><small>Format prévu de votre identifiant : <code>${esc(localReg.preview)}</code></small>`;
         e.target.reset();
       }
     });
@@ -571,14 +617,20 @@
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const code = document.getElementById('studentCodeInput').value.trim().toUpperCase();
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
       const msg = document.getElementById('loginMsg');
+      if (!code) {
+        msg.className = 'alert-box err';
+        msg.textContent = 'Veuillez saisir votre identifiant mensuel unique.';
+        return;
+      }
       msg.className = 'alert-box';
       msg.textContent = 'Vérification de votre identifiant mensuel...';
       try {
         const res = await fetch(API + '/api/student/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ student_code: code })
+          body: JSON.stringify({ student_code: code, email })
         });
         const data = await res.json();
         if (!res.ok) {
@@ -590,16 +642,18 @@
         localStorage.setItem(CODE_KEY, code);
         await loadPortal();
       } catch (err) {
-        if (err.fromServer) {
-          msg.className = 'alert-box err';
-          msg.textContent = err.message;
-          return;
-        }
         const db = getLocalStore();
-        const found = db.students.find(s => (s.student_code || '').toUpperCase() === code);
+        const found = (db.students || []).find(s => (s.student_code || '').toUpperCase() === code);
         if (!found) {
           msg.className = 'alert-box err';
-          msg.innerHTML = `Identifiant introuvable. Utilisez <code>${DEMO_CODE}</code> ou attendez la confirmation de l'administrateur.`;
+          msg.textContent = err.fromServer
+            ? err.message
+            : "Identifiant introuvable. Vérifiez votre saisie ou assurez-vous que l'administrateur a validé votre inscription.";
+          return;
+        }
+        if (email && found.email && found.email.toLowerCase() !== email) {
+          msg.className = 'alert-box err';
+          msg.textContent = "L'adresse email saisie ne correspond pas à cet identifiant mensuel.";
           return;
         }
         if (found.status !== 'active') {
@@ -802,14 +856,14 @@
       });
     });
 
-    document.getElementById('spaceScrollCue').addEventListener('click', (e) => {
+    document.getElementById('spaceScrollCue')?.addEventListener('click', (e) => {
       e.preventDefault();
       scrollToSection('secModules');
     });
-    document.getElementById('icoMyId').addEventListener('click', () => {
+    document.getElementById('icoMyId')?.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       const chip = document.getElementById('spaceChip');
-      chip.animate(
+      chip?.animate(
         [{ boxShadow: '0 0 0 0 rgba(125,211,252,.8)' }, { boxShadow: '0 0 0 22px rgba(125,211,252,0)' }],
         { duration: 1100, iterations: 2 }
       );
