@@ -243,6 +243,11 @@
                 <input type="text" id="adminSearchInput" placeholder="Rechercher un étudiant, école, ID..." />
               </div>
 
+              <button type="button" class="pinen-btn-outline" id="openSupabaseModalBtn" style="padding:8px 13px;border-radius:999px;font-size:12px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap" title="Configurer ou vérifier la base de données Cloud Supabase">
+                <span id="sbStatusDot" style="width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block"></span>
+                <span id="sbStatusLabel">Base Cloud Supabase</span>
+              </button>
+
               <button type="button" class="pinen-icon-circle" id="topMailBtn" title="Ouvrir la Boîte Mail du Site">
                 <span class="pinen-notif-dot" id="mailNotifDot" style="display:none"></span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
@@ -623,9 +628,57 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════════════════
+         MODALE DE CONFIGURATION CLOUD SUPABASE (POSTGRESQL + STORAGE)
+         ═══════════════════════════════════════════════════════════════════ -->
+    <div id="supabaseConfigModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,0.68);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:18px">
+      <div style="background:#ffffff;color:#0f172a;width:100%;max-width:600px;border-radius:22px;padding:26px 28px;box-shadow:0 25px 60px rgba(0,0,0,0.35);border:1px solid #e2e8f0;max-height:92vh;overflow-y:auto">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px">
+          <div>
+            <span style="display:inline-block;padding:4px 10px;border-radius:999px;background:#dcfce7;color:#15803d;font-size:11px;font-weight:700;letter-spacing:0.04em;margin-bottom:6px">SUPABASE POSTGRESQL CLOUD · GRATUIT & ILLIMITÉ DANS LE TEMPS</span>
+            <h3 style="font-family:'Outfit',sans-serif;font-size:21px;color:#0f172a;margin:0">Connexion à la Base de Données Supabase</h3>
+          </div>
+          <button type="button" id="closeSupabaseModalBtn" style="background:#f1f5f9;border:none;width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;color:#475569">×</button>
+        </div>
+
+        <p style="font-size:13.5px;color:#475569;line-height:1.55;margin-bottom:16px">
+          Reliez votre site Netlify à votre projet <strong>Supabase</strong> pour synchroniser en temps réel toutes les inscriptions étudiantes, les identifiants mensuels, les cours PDF et le forum entre tous les téléphones et votre ordinateur.
+        </p>
+
+        <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:#334155;line-height:1.6">
+          <strong style="color:#0f172a;display:block;margin-bottom:6px">Étapes rapides (2 minutes sur <a href="https://supabase.com/dashboard" target="_blank" rel="noopener" style="color:#1d4ed8;text-decoration:underline">supabase.com</a>) :</strong>
+          1. Créez un projet gratuit sur Supabase puis ouvrez <strong>SQL Editor → New Query</strong>.<br>
+          2. Cliquez sur <button type="button" id="copySqlSchemaBtn" style="padding:3px 9px;border-radius:6px;border:1px solid #0284c7;background:#e0f2fe;color:#0369a1;font-weight:700;cursor:pointer;font-size:11.5px">📋 Copier le Script SQL des Tables</button>, collez-le dans Supabase et cliquez sur <strong>Run</strong>.<br>
+          3. Allez dans <strong>Project Settings → API</strong> et collez ci-dessous votre <strong>Project URL</strong> et votre clé <strong>anon public</strong>.
+        </div>
+
+        <form id="supabaseConfigForm" class="pinen-form" style="gap:12px">
+          <div>
+            <label style="display:block;font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:5px">1. Supabase Project URL</label>
+            <input type="url" id="sbInputUrl" placeholder="https://xxxxxxxxxxxx.supabase.co" required style="width:100%" />
+          </div>
+          <div>
+            <label style="display:block;font-size:12.5px;font-weight:700;color:#1e293b;margin-bottom:5px">2. Supabase API Key (anon / public)</label>
+            <input type="text" id="sbInputKey" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required style="width:100%;font-family:monospace;font-size:12px" />
+          </div>
+
+          <div id="sbTestResult" style="display:none;padding:11px 14px;border-radius:11px;font-size:13px;line-height:1.45"></div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+            <button type="submit" class="pinen-btn-green" id="sbSaveAndTestBtn" style="flex:1;justify-content:center">
+              ⚡ Tester & Activer Supabase Cloud
+            </button>
+            <button type="button" class="pinen-btn-danger" id="sbDisconnectBtn" style="padding:10px 14px">
+              Déconnecter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
   </main>
 
-  <script src="ggt-data.js?v=20261021_1"></script>
+  <script src="ggt-data.js?v=20261026_1"></script>
   <script>
     const API = (location.protocol === 'file:') ? 'http://localhost:5000' : '';
     const FEE_PER_STUDENT = GGT.FEE; // 10 000 FCFA par personne
@@ -1454,7 +1507,7 @@
       });
     }
 
-    window.selectMail = (id) => {
+    window.selectMail = async (id) => {
       selectedMailId = id;
       const db = getLocalDB();
       const mails = db.mailbox || [];
@@ -1462,6 +1515,12 @@
       if (m && m.unread) {
         m.unread = false;
         saveLocalDB(db);
+        try {
+          await fetch(`${API}/api/admin/mailbox/${id}/read`, {
+            method: 'POST',
+            headers: { 'X-Admin-Password': adminPwd }
+          });
+        } catch (_) {}
       }
       // Mise à jour fluide sans recharger tout le dashboard
       document.querySelectorAll('.pinen-mail-item').forEach(el => {
@@ -1741,6 +1800,93 @@
       searchFilter = e.target.value.trim();
       const db = getLocalDB();
       renderStudents(db.students || []);
+    });
+
+    // ── CONFIGURATION & ÉTAT EN DIRECT DE LA BASE CLOUD SUPABASE ──
+    function refreshSupabaseBadge() {
+      const dot = document.getElementById('sbStatusDot');
+      const lbl = document.getElementById('sbStatusLabel');
+      const btn = document.getElementById('openSupabaseModalBtn');
+      if (!dot || !lbl) return;
+      if (GGT.SUPABASE && GGT.SUPABASE.isConfigured()) {
+        dot.style.background = '#16a34a';
+        dot.style.boxShadow = '0 0 0 3px rgba(22,163,74,0.22)';
+        lbl.textContent = 'Supabase Cloud : Connecté';
+        if (btn) btn.style.borderColor = '#86efac';
+      } else {
+        dot.style.background = '#f59e0b';
+        dot.style.boxShadow = 'none';
+        lbl.textContent = 'Connecter Supabase Cloud';
+        if (btn) btn.style.borderColor = '';
+      }
+    }
+    refreshSupabaseBadge();
+
+    const sbModal = document.getElementById('supabaseConfigModal');
+    document.getElementById('openSupabaseModalBtn')?.addEventListener('click', () => {
+      const cfg = GGT.SUPABASE.getConfig();
+      document.getElementById('sbInputUrl').value = cfg.url || '';
+      document.getElementById('sbInputKey').value = cfg.anonKey || '';
+      document.getElementById('sbTestResult').style.display = 'none';
+      if (sbModal) sbModal.style.display = 'flex';
+    });
+
+    document.getElementById('closeSupabaseModalBtn')?.addEventListener('click', () => {
+      if (sbModal) sbModal.style.display = 'none';
+    });
+    sbModal?.addEventListener('click', (e) => {
+      if (e.target === sbModal) sbModal.style.display = 'none';
+    });
+
+    document.getElementById('copySqlSchemaBtn')?.addEventListener('click', async () => {
+      try {
+        const res = await fetch('supabase_schema.sql');
+        const sqlText = await res.text();
+        await navigator.clipboard.writeText(sqlText);
+        showNotice('<strong>Script SQL copié !</strong> Collez-le dans <em>Supabase → SQL Editor → New Query</em> puis cliquez sur <strong>Run</strong>.', 'ok');
+      } catch (_) {
+        showNotice('Ouvrez le fichier <code>supabase_schema.sql</code> à la racine du projet et copiez son contenu dans Supabase SQL Editor.', 'ok');
+      }
+    });
+
+    document.getElementById('supabaseConfigForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('sbInputUrl').value.trim();
+      const key = document.getElementById('sbInputKey').value.trim();
+      const resBox = document.getElementById('sbTestResult');
+      const btn = document.getElementById('sbSaveAndTestBtn');
+      btn.disabled = true;
+      btn.textContent = 'Vérification de la base Supabase...';
+      resBox.style.display = 'block';
+      resBox.style.background = '#f1f5f9';
+      resBox.style.color = '#334155';
+      resBox.textContent = 'Connexion à votre instance PostgreSQL Supabase en cours...';
+
+      const check = await GGT.SUPABASE.testConnection(url, key);
+      btn.disabled = false;
+      btn.textContent = '⚡ Tester & Activer Supabase Cloud';
+
+      if (check.ok) {
+        GGT.SUPABASE.setConfig(url, key);
+        refreshSupabaseBadge();
+        resBox.style.background = '#dcfce7';
+        resBox.style.color = '#14532d';
+        resBox.innerHTML = `<strong>✓ ${esc(check.message)}</strong><br>Toutes vos inscriptions, validations et publications sont désormais synchronisées sur Supabase.`;
+        showNotice('<strong>Base Cloud Supabase connectée avec succès !</strong> Synchronisation en direct activée.', 'ok');
+        await loadDashboard();
+      } else {
+        resBox.style.background = '#fee2e2';
+        resBox.style.color = '#7f1d1d';
+        resBox.innerHTML = `<strong>⚠ ${esc(check.error)}</strong>`;
+      }
+    });
+
+    document.getElementById('sbDisconnectBtn')?.addEventListener('click', () => {
+      GGT.SUPABASE.setConfig('', '');
+      refreshSupabaseBadge();
+      if (sbModal) sbModal.style.display = 'none';
+      showNotice('Connexion Supabase Cloud désactivée sur ce navigateur.', 'err');
+      loadDashboard();
     });
 
     const doLogout = () => {

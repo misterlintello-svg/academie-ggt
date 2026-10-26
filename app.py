@@ -60,8 +60,8 @@ def add_cors_headers(response):
 # ─────────────────────────────────────────────────────────────
 def ensure_database():
     """Crée la base PostgreSQL `academie_ggt` si elle n'existe pas en local."""
-    if os.getenv("DATABASE_URL"):
-        return  # Sur Render ou PostgreSQL managé, la base est déjà provisionnée
+    if os.getenv("SUPABASE_DB_URL") or os.getenv("DATABASE_URL"):
+        return  # Sur Supabase ou PostgreSQL Cloud managé, la base est déjà provisionnée
     try:
         with psycopg.connect(
             host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASS,
@@ -76,10 +76,13 @@ def ensure_database():
 
 
 def get_db():
-    database_url = os.getenv("DATABASE_URL")
+    database_url = os.getenv("SUPABASE_DB_URL") or os.getenv("DATABASE_URL")
     if database_url:
         if database_url.startswith("postgres://"):
             database_url = database_url.replace("postgres://", "postgresql://", 1)
+        if ("supabase.co" in database_url or "supabase.com" in database_url) and "sslmode=" not in database_url:
+            sep = "&" if "?" in database_url else "?"
+            database_url = f"{database_url}{sep}sslmode=require"
         return psycopg.connect(database_url, row_factory=dict_row)
     return psycopg.connect(
         host=DB_HOST, port=DB_PORT, user=DB_USER, password=DB_PASS,
