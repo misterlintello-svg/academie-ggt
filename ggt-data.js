@@ -14,8 +14,8 @@
   // Collez ici votre URL et votre clé "anon public" Supabase pour que
   // tous les appareils (téléphones étudiants & PC Admin) soient synchronisés :
   // ─────────────────────────────────────────────────────────────
-  const DEFAULT_SUPABASE_URL = '';      // Ex: 'https://xxxxxxxxxxxx.supabase.co'
-  const DEFAULT_SUPABASE_ANON_KEY = ''; // Ex: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+  const DEFAULT_SUPABASE_URL = 'https://rjzmxjgeylwobfybczrn.supabase.co';
+  const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_e6ORfcldZdnHZegrTI77-Q_TDzjc_sp';
 
   const SB_URL_KEY = 'ggt_supabase_url';
   const SB_ANON_KEY = 'ggt_supabase_anon_key';
